@@ -4,6 +4,13 @@ export interface User {
   name: string;
 }
 
+export interface UserLoginMethod {
+  id: string;
+  method: string;
+  userId: string;
+  providerUserId: string;
+}
+
 export interface UserPaymentMethodDetail {
   id: string;
   paymentMethodId: string;
