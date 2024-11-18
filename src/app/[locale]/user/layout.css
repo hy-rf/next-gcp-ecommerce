@@ -1,0 +1,21 @@
+.user-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  nav {
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+
+    & > a:first-child {
+      margin-bottom: 1rem;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: #444444f1;
+    position: relative;
+  }
+}

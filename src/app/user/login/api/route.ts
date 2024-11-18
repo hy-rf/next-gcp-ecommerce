@@ -12,39 +12,36 @@ export async function POST(req: NextRequest) {
   const googleUserId = body.id;
   var token: string = "";
   const db = database();
-  const userLoginMethodSnapshot = await db.collection("UserLoginMethod").where("method", "==", "google").where("providerUserId", "==", googleUserId).limit(1).get();
-  if(!userLoginMethodSnapshot.empty) {
+  const userLoginMethodSnapshot = await db
+    .collection("UserLoginMethod")
+    .where("method", "==", "google")
+    .where("providerUserId", "==", googleUserId)
+    .limit(1)
+    .get();
+  if (!userLoginMethodSnapshot.empty) {
     const userId = userLoginMethodSnapshot.docs[0].data().userId;
-    token = jwt.sign(
-      { userId },
-      process.env.JWT_SECRET!,
-      { expiresIn: "1h" }
-    );
+    token = jwt.sign({ userId }, process.env.JWT_SECRET!);
     db.collection("User").doc(userId).update({
-      lastLogin: new Date().toISOString()
+      lastLogin: new Date().toISOString(),
     });
   } else {
     const newUser: User = {
       email: "",
       name: "",
-      lastLogin: new Date().toISOString()
-    }
+      lastLogin: new Date().toISOString(),
+    };
     const newUserRef = await db.collection("User").add(newUser);
     const newUserLoginMethod: UserLoginMethod = {
       method: "google",
       userId: newUserRef.id,
-      providerUserId: googleUserId
-    }
+      providerUserId: googleUserId,
+    };
     db.collection("UserLoginMethod").add(newUserLoginMethod);
-    token = jwt.sign(
-      { userId: newUserRef.id },
-      process.env.JWT_SECRET!,
-      { expiresIn: "1h" }
-    );
+    token = jwt.sign({ userId: newUserRef.id }, process.env.JWT_SECRET!);
   }
-  
+
   return Response.json({
     code: 200,
-    message: token
+    message: token,
   });
 }

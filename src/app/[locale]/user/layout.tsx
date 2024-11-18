@@ -1,13 +1,20 @@
+import Link from "next/link";
+import "./layout.css";
+
 export default function UserLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <h1>User</h1>
-      <h2>Login methods</h2>
+    <div className="user-container">
+      <nav>
+        <Link href={"/user"}>
+          <h2>User</h2>
+        </Link>
+        <Link href={"/user/login-method"}>Authorization</Link>
+      </nav>
       <div>{children}</div>
-    </>
+    </div>
   );
 }
