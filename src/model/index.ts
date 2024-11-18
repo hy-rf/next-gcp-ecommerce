@@ -1,12 +1,15 @@
+import { DocumentReference } from "@google-cloud/firestore";
+
+
 export interface User {
   email: string;
   name: string;
-  lastLogin: string;
+  lastLogin: Date;
 }
 
 export interface UserLoginMethod {
   method: string;
-  userId: string;
+  userId: DocumentReference;
   providerUserId: string;
 }
 
@@ -85,6 +88,14 @@ export interface OrderItem {
   cartId: string;
   quantity: number;
   unitPrice: number;
+}
+
+export interface StoreSubmission {
+  name: string;
+  description: string;
+  createdUserId: string;
+  submittedAt: string;
+  status: string;
 }
 
 export interface Store {

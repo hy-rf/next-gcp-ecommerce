@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const token = searchParams.get("token")!;
   const decoded: JwtPayload = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
   const db = database();
-  const userLoginMethodSnapshot = (await db.collection("UserLoginMethod").where("userId", "==", decoded.userId).get()).docs;
+  const userLoginMethodSnapshot = (await db.collection("UserLoginMethod").where("userId", "==", db.collection("User").doc(decoded.userId)).get()).docs;
   const loginMethods: string[] = [];
   for(var i=0; i< userLoginMethodSnapshot.length; i++) {
     loginMethods.push(userLoginMethodSnapshot[i].data().method);

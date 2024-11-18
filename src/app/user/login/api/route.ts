@@ -22,18 +22,18 @@ export async function POST(req: NextRequest) {
     );
     const userSnapshot = db.collection("User").doc(userId);
     userSnapshot.update({
-      lastLogin: new Date().toISOString()
+      lastLogin: new Date(new Date().toISOString())
     });
   } else {
     const newUser: User = {
       email: "",
       name: "",
-      lastLogin: new Date().toISOString()
+      lastLogin: new Date(new Date().toISOString())
     }
     const newUserRef = await db.collection("User").add(newUser);
     const newUserLoginMethod: UserLoginMethod = {
       method: "google",
-      userId: newUserRef.id,
+      userId: db.collection("User").doc(newUserRef.id),
       providerUserId: googleUserId
     }
     db.collection("UserLoginMethod").add(newUserLoginMethod);
