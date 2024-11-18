@@ -1,4 +1,3 @@
-import { DocumentReference } from "@google-cloud/firestore";
 
 
 export interface User {
@@ -9,7 +8,7 @@ export interface User {
 
 export interface UserLoginMethod {
   method: string;
-  userId: DocumentReference;
+  userId: string;
   providerUserId: string;
 }
 

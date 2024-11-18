@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     const newUserRef = await db.collection("User").add(newUser);
     const newUserLoginMethod: UserLoginMethod = {
       method: "google",
-      userId: db.collection("User").doc(newUserRef.id),
+      userId: newUserRef.id,
       providerUserId: googleUserId
     }
     db.collection("UserLoginMethod").add(newUserLoginMethod);
