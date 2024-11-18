@@ -24,7 +24,15 @@ interface PostBody {
 }
 
 export async function POST(req: NextRequest) {
-  const body: PostBody = await req.json();
+  var body: PostBody;
+  try {
+    body = await req.json();
+  } catch {
+    return Response.json({
+      code: 400,
+      message: "Invalid request",
+    });
+  }
   const db = database();
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(

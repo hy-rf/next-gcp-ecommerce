@@ -11,25 +11,21 @@ export interface UserLoginMethod {
 }
 
 export interface UserPaymentMethodDetail {
-  id: string;
   paymentMethodId: string;
   userId: string;
   detail: string;
 }
 
 export interface PaymentMethod {
-  id: string;
   name: string;
 }
 
 export interface UserShippingInfo {
-  id: string;
   userId: string;
   shippingMethodId: string;
 }
 
 export interface ShippingMethod {
-  id: string;
   name: string;
   description: string;
 }
@@ -58,26 +54,22 @@ export interface SubCategory {
 }
 
 export interface CartItem {
-  id: string;
   productId: string;
   cartId: string;
   quantity: number;
 }
 
 export interface Cart {
-  id: string;
   userId: string;
 }
 
 export interface Order {
-  id: string;
   userId: string;
   total: number;
   createdAt: Date;
 }
 
 export interface OrderItem {
-  id: string;
   productId: string;
   cartId: string;
   quantity: number;
@@ -93,7 +85,6 @@ export interface StoreSubmission {
 }
 
 export interface Store {
-  id: string;
   name: string;
   description: string;
   createdUserId: string;
@@ -102,7 +93,6 @@ export interface Store {
 }
 
 export interface Coupon {
-  id: string;
   name: string;
   description: string;
   storeId: string;
@@ -112,7 +102,6 @@ export interface Coupon {
 }
 
 export interface DeliveryProcess {
-  id: string;
   orderId: string;
   deliveryDetail: string;
 }
