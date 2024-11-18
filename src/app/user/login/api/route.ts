@@ -1,17 +1,25 @@
 import database from "@/lib/database/database";
 import { User, UserLoginMethod } from "@/model";
 import { NextRequest } from "next/server";
+import jwt from "jsonwebtoken";
 
 interface PostBody {
   id: string;
 }
+
 export async function POST(req: NextRequest) {
   const body: PostBody = await req.json();
   const googleUserId = body.id;
+  var token: string = "";
   const db = database();
   const userLoginMethodSnapshot = await db.collection("UserLoginMethod").where("method", "==", "google").where("providerUserId", "==", googleUserId).limit(1).get();
   if(!userLoginMethodSnapshot.empty) {
     const userId = userLoginMethodSnapshot.docs[0].data().userId;
+    token = jwt.sign(
+      { userId },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1h" }
+    );
     const userSnapshot = db.collection("User").doc(userId);
     userSnapshot.update({
       lastLogin: new Date().toISOString()
@@ -20,7 +28,7 @@ export async function POST(req: NextRequest) {
     const newUser: User = {
       email: "",
       name: "",
-      lastLogin: new Date()
+      lastLogin: new Date().toISOString()
     }
     const newUserRef = await db.collection("User").add(newUser);
     const newUserLoginMethod: UserLoginMethod = {
@@ -28,11 +36,16 @@ export async function POST(req: NextRequest) {
       userId: newUserRef.id,
       providerUserId: googleUserId
     }
-    db.collection("UserLoginMethod").add(newUserLoginMethod)
+    db.collection("UserLoginMethod").add(newUserLoginMethod);
+    token = jwt.sign(
+      { userId: newUserRef.id },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1h" }
+    );
   }
   
   return Response.json({
     code: 200,
-    message: "success",
+    message: token
   });
 }

@@ -1,0 +1,64 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100vh;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  height: 70px;
+  border: 1px solid gray;
+  transition: 0.3s ease;
+  background-color: rgba(128, 128, 128, 0.9);
+  display: flex;
+  padding: 0 1rem;
+  align-content: center;
+
+  a {
+    text-decoration: none;
+    color: white;
+    vertical-align: central;
+    line-height: 70px;
+  }
+
+  & > a:nth-child(1) {
+    margin-right: auto;
+  }
+
+  & > a:not(:first-child) {
+    margin-left: 1rem;
+  }
+}
+
+main {
+  padding: calc(70px + 1rem) 1rem 0;
+  flex-grow: 1;
+  width: 100%;
+  min-height: auto;
+  min-height: auto;
+}
+footer {
+  position: relative;
+  margin-top: auto;
+  width: 100%;
+  bottom: 0;
+  background-color: rgba(128, 128, 128, 0.3);
+  padding: 8px;
+  p {
+    text-align: center;
+    color: rgba(32, 16, 64, 0.9);
+  }
+}

@@ -1,28 +1,16 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import type React from "react";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import "./layout.css";
+import Header from "./_component/Header";
 
 export const metadata: Metadata = {
   title: "E-Commerce | Everything",
   description: "E-Commerce | Everything",
-  keywords: [
-    "E-Commerce", "Everything", "Business"
-  ],
+  keywords: ["E-Commerce", "Everything", "Business"],
   openGraph: {
     title: "E-Commerce | Everything",
     description: "E-Commerce | Everything",
-  }
+  },
 };
 
 export default function RootLayout({
@@ -32,8 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body>
+        <Header />
+        <main>{children}</main>
+        <footer>
+          <p>@ 2023 E-Shop. All Rights Reserved.</p>
+        </footer>
       </body>
     </html>
   );

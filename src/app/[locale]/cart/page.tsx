@@ -1,7 +1,7 @@
 export default async function Page() {
   return (
     <>
-      <p>product list</p>
+      <p>cart list</p>
     </>
   );
 }

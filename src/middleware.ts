@@ -26,10 +26,10 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     (mod) => mod.default
   );
   const localizationStringKeys = Object.getOwnPropertyNames(dict);
-  console.log(localizationStringKeys, response.url);
+  console.log(localizationStringKeys);
+  
 
   const currentLocal = request.cookies.get("locale")?.value;
-  console.log(currentLocal);
 
   const { pathname } = request.nextUrl;
   if (

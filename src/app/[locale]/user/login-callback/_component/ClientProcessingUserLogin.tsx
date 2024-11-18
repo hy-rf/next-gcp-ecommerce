@@ -24,6 +24,7 @@ export default function ClientProcessingUserLogin() {
           }),
         }).then((res) => res.json());
         if ((await loginResult).code == 200) {
+          localStorage.setItem("token", (await loginResult).message);
           location.replace("/");
         }
       } catch (error) {
