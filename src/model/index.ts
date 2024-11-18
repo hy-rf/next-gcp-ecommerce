@@ -1,11 +1,10 @@
 export interface User {
-  id: string;
   email: string;
   name: string;
+  lastLogin: Date;
 }
 
 export interface UserLoginMethod {
-  id: string;
   method: string;
   userId: string;
   providerUserId: string;
