@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
   var token: string = "";
   const db = database();
   const userLoginMethodSnapshot = await db.collection("UserLoginMethod").where("method", "==", "google").where("providerUserId", "==", googleUserId).limit(1).get();
+  const localDate = new Date();
   if(!userLoginMethodSnapshot.empty) {
     const userId = userLoginMethodSnapshot.docs[0].data().userId;
     token = jwt.sign(
@@ -20,15 +21,14 @@ export async function POST(req: NextRequest) {
       process.env.JWT_SECRET!,
       { expiresIn: "1h" }
     );
-    const userSnapshot = db.collection("User").doc(userId);
-    userSnapshot.update({
-      lastLogin: new Date(new Date().toISOString())
+    userId.update({
+      lastLogin: new Date().toISOString()
     });
   } else {
     const newUser: User = {
       email: "",
       name: "",
-      lastLogin: new Date(new Date().toISOString())
+      lastLogin: new Date().toISOString()
     }
     const newUserRef = await db.collection("User").add(newUser);
     const newUserLoginMethod: UserLoginMethod = {

@@ -4,7 +4,7 @@ import { DocumentReference } from "@google-cloud/firestore";
 export interface User {
   email: string;
   name: string;
-  lastLogin: Date;
+  lastLogin: string;
 }
 
 export interface UserLoginMethod {
