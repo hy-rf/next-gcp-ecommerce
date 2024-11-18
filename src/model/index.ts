@@ -1,5 +1,3 @@
-
-
 export interface User {
   email: string;
   name: string;
@@ -37,7 +35,6 @@ export interface ShippingMethod {
 }
 
 export interface Product {
-  id: string;
   name: string;
   description: string;
   price: number;
@@ -45,19 +42,17 @@ export interface Product {
   imageUrl: string[];
   categoryId: string;
   subCategoryId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   createdShopId: string;
   salePrice: number;
 }
 
 export interface Category {
-  id: string;
   name: string;
 }
 
 export interface SubCategory {
-  id: string;
   name: string;
   categoryId: string;
 }
@@ -120,4 +115,10 @@ export interface DeliveryProcess {
   id: string;
   orderId: string;
   deliveryDetail: string;
+}
+
+export interface tokenPayload {
+  userId: string;
+  iat?: number;
+  exp?: number;
 }
