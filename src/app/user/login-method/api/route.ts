@@ -23,10 +23,7 @@ export async function GET() {
   for (let i = 0; i < userLoginMethodSnapshot.length; i++) {
     loginMethods.push(userLoginMethodSnapshot[i].data().method);
   }
-  return NextResponse.json({
-    message: "Token verified successfully!",
-    loginMethods,
-  });
+  return NextResponse.json(loginMethods);
 }
 
 export async function POST(req: NextRequest) {
