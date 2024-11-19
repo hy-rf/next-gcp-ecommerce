@@ -13,6 +13,7 @@ export default function UserLayout({
           <h2>User</h2>
         </Link>
         <Link href={"/user/login-method"}>Authorization</Link>
+        <Link href={"/user/store"}>Store</Link>
       </nav>
       <div>{children}</div>
     </div>

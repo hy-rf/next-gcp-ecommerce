@@ -2,9 +2,35 @@ import database from "@/lib/database/database";
 import { StoreSubmission, tokenPayload } from "@/model";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function GET() {
-  return Response.error();
+  const tokenInRequestCookie = (await cookies()).get("token");
+  if (!tokenInRequestCookie) {
+    return Response.error();
+  }
+  const token = tokenInRequestCookie.value;
+  const decoded: tokenPayload = jwt.verify(
+    token,
+    process.env.JWT_SECRET!
+  ) as tokenPayload;
+  const db = database();
+  const storeSubmittedByAuthorizedUserSnapshot = (
+    await db
+      .collection("StoreSubmission")
+      .where("createdUserId", "==", decoded.userId)
+      .get()
+  ).docs;
+  const storeSubmittedByAuthorizedUser: StoreSubmission[] = [];
+  for (let i = 0; i < storeSubmittedByAuthorizedUserSnapshot.length; i++) {
+    storeSubmittedByAuthorizedUser.push(
+      storeSubmittedByAuthorizedUserSnapshot[i].data() as StoreSubmission
+    );
+  }
+  return Response.json({
+    message: "Store submissions get success",
+    storeSubmittedByAuthorizedUser,
+  });
 }
 
 interface PostBody {
@@ -23,9 +49,10 @@ export async function POST(req: NextRequest) {
     });
   }
   const db = database();
+  const token = (await cookies()).get("token")!.value;
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
-      req.headers.get("Authorization")!,
+      token,
       process.env.JWT_SECRET!
     ) as tokenPayload;
     return payload.userId;
