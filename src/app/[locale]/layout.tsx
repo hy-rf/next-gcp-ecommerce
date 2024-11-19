@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import type React from "react";
 import "./layout.css";
 import Header from "./_component/Header";
+import { Dictionary } from "@/model";
+import getDictionary from "@/dictionary/dictionary";
+
+type Params = {
+  locale: string;
+};
 
 export const metadata: Metadata = {
   title: "E-Commerce | Everything",
@@ -13,13 +19,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<Params>;
+}) {
+  const { locale } = await params;
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
         <Header />
         <main>{children}</main>
