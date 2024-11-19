@@ -11,7 +11,7 @@ interface PostBody {
 export async function POST(req: NextRequest) {
   const body: PostBody = await req.json();
   const googleUserId = body.id;
-  var token: string = "";
+  let token: string = "";
   const db = database();
   const userLoginMethodSnapshot = await db
     .collection("UserLoginMethod")

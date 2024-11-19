@@ -13,7 +13,7 @@ interface PostBody {
 }
 
 export async function POST(req: NextRequest) {
-  var body: PostBody;
+  let body: PostBody;
   try {
     body = await req.json();
   } catch {

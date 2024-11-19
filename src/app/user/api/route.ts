@@ -1,11 +1,10 @@
 import database from "@/lib/database/database";
 import { tokenPayload } from "@/model";
 import { verify } from "jsonwebtoken";
-import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 
-export async function GET(req: NextRequest) {
-  console.log("test", await (await cookies()).get("token"));
+export async function GET() {
+  console.log("test", (await cookies()).get("token"));
   const tokenInRequestCookie = (await cookies()).get("token");
   if (!tokenInRequestCookie) {
     return Response.error();

@@ -1,7 +1,7 @@
 import database from "@/lib/database/database";
 import { Category, Product, SubCategory, tokenPayload } from "@/model";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
 export async function GET() {
@@ -24,15 +24,7 @@ interface PostBody {
 }
 
 export async function POST(req: NextRequest) {
-  var body: PostBody;
-  try {
-    body = await req.json();
-  } catch {
-    return Response.json({
-      code: 400,
-      message: "Invalid request",
-    });
-  }
+  const body: PostBody = await req.json();
   const db = database();
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
@@ -55,7 +47,7 @@ export async function POST(req: NextRequest) {
   }
 
   // check if category is created
-  var categoryId: string = "";
+  let categoryId: string = "";
   const categoryref = db
     .collection("Category")
     .where("name", "==", body.category);
@@ -70,7 +62,7 @@ export async function POST(req: NextRequest) {
   }
 
   // check if subcategory is created
-  var subCategoryId: string = "";
+  let subCategoryId: string = "";
   const subCategoryref = db
     .collection("SubCategory")
     .where("name", "==", body.subCategory);

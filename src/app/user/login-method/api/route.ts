@@ -4,7 +4,7 @@ import database from "@/lib/database/database";
 import { tokenPayload } from "@/model";
 import { cookies } from "next/headers";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const tokenInRequestCookie = (await cookies()).get("token");
   if (!tokenInRequestCookie) {
     return Response.error();
@@ -20,17 +20,13 @@ export async function GET(req: NextRequest) {
     await db.collection("UserLoginMethod").where("userId", "==", userRef).get()
   ).docs;
   const loginMethods: string[] = [];
-  for (var i = 0; i < userLoginMethodSnapshot.length; i++) {
+  for (let i = 0; i < userLoginMethodSnapshot.length; i++) {
     loginMethods.push(userLoginMethodSnapshot[i].data().method);
   }
   return NextResponse.json({
     message: "Token verified successfully!",
     loginMethods,
   });
-}
-
-interface PostBody {
-  method: string;
 }
 
 export async function POST(req: NextRequest) {

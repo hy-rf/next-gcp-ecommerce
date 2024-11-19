@@ -8,6 +8,7 @@ export default function Page() {
       const userInfo = await fetch(`/user/api`)
         .then((res) => res.json())
         .then((ret) => console.log(ret));
+      console.log(userInfo);
     })();
   }, []);
 

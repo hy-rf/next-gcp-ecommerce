@@ -1,6 +1,6 @@
 export default async function Page() {
-  var oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
-  var params = {
+  const oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
+  const params = {
     client_id:
       "981674263788-sfp6ddbl5pn1in3vmvgpbvre83bjigjm.apps.googleusercontent.com",
     redirect_uri: `${process.env.URL}/user/login-callback`,

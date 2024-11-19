@@ -1,9 +1,8 @@
 import { NextRequest } from "next/server";
 import database from "@/lib/database/database";
-import { Store, StoreSubmission, tokenPayload } from "@/model";
-import jwt from "jsonwebtoken";
+import { Store, StoreSubmission } from "@/model";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   return Response.json({
     message: "success",
   });
@@ -14,7 +13,7 @@ interface PostBody {
 }
 
 export async function POST(req: NextRequest) {
-  var body: PostBody;
+  let body: PostBody;
   try {
     body = await req.json();
   } catch {
@@ -24,13 +23,6 @@ export async function POST(req: NextRequest) {
     });
   }
   const db = database();
-  const userId: string = (() => {
-    const payload: tokenPayload = jwt.verify(
-      req.headers.get("Authorization")!,
-      process.env.JWT_SECRET!
-    ) as tokenPayload;
-    return payload.userId;
-  })();
   // TODO: if user is not admin response unauthorized
   const storeSubmission: StoreSubmission = (
     await db.collection("StoreSubmission").doc(body.id).get()
