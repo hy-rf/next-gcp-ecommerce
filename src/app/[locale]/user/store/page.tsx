@@ -3,15 +3,32 @@ import StoreSubmissions from "./_component/StoreSubmissions";
 
 export default function Page() {
   return (
-    <>
-      <p>my store</p>
-      <nav>
-        <Link href={"/user/store/submit"}>Create my First Store</Link>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <h3>Store</h3>
+      <nav
+        style={{
+          display: "flex",
+          alignContent: "center",
+        }}
+      >
+        <Link
+          style={{
+            marginLeft: "auto",
+          }}
+          href={"/user/store/submit"}
+        >
+          Create Store
+        </Link>
       </nav>
       <div>
         <h3>My Store Submissions</h3>
         <StoreSubmissions />
       </div>
-    </>
+    </div>
   );
 }

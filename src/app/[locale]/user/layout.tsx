@@ -15,7 +15,13 @@ export default function UserLayout({
         <Link href={"/user/login-method"}>Authorization</Link>
         <Link href={"/user/store"}>Store</Link>
       </nav>
-      <div>{children}</div>
+      <div
+        style={{
+          flexGrow: 1,
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

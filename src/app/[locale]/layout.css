@@ -6,6 +6,11 @@
   padding: 0;
 }
 
+html {
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+    "Arial", sans-serif;
+}
+
 html,
 body {
   position: relative;
