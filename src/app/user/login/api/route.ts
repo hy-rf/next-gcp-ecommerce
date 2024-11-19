@@ -2,6 +2,7 @@ import database from "@/lib/database/database";
 import { User, UserLoginMethod } from "@/model";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 interface PostBody {
   id: string;
@@ -39,6 +40,8 @@ export async function POST(req: NextRequest) {
     db.collection("UserLoginMethod").add(newUserLoginMethod);
     token = jwt.sign({ userId: newUserRef.id }, process.env.JWT_SECRET!);
   }
+  const cookieStore = await cookies();
+  cookieStore.set("token", token);
 
   return Response.json({
     code: 200,

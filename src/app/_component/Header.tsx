@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export default function Header() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   useEffect(() => {
-    if (localStorage.getItem("token")) setLoggedIn(true);
+    if (/token/.test(document.cookie)) setLoggedIn(true);
   }, []);
 
   return (

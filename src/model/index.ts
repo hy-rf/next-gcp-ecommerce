@@ -10,23 +10,15 @@ export interface UserLoginMethod {
   providerUserId: string;
 }
 
-export interface UserPaymentMethodDetail {
-  paymentMethodId: string;
-  userId: string;
-  detail: string;
-}
-
 export interface PaymentMethod {
   name: string;
-}
-
-export interface UserShippingInfo {
   userId: string;
-  shippingMethodId: string;
+  description: string;
 }
 
-export interface ShippingMethod {
+export interface Address {
   name: string;
+  userId: string;
   description: string;
 }
 

@@ -10,7 +10,7 @@ function getLocale(request: NextRequest, locales: Array<string>) {
   });
   const languages =
     new Negotiator({ headers: negotiatorHeaders }).languages() ?? [];
-    const defaultLocale = "en-US";
+  const defaultLocale = "en-US";
 
   return matchLocale(languages, locales, defaultLocale);
 }
@@ -18,7 +18,7 @@ function getLocale(request: NextRequest, locales: Array<string>) {
 export async function middleware(request: NextRequest, response: NextResponse) {
   // return if it is api request after check
   const pathDevidedBySlash = request.nextUrl.pathname.split("/");
-  if ("api" === pathDevidedBySlash[pathDevidedBySlash.length -1 ]) {
+  if ("api" === pathDevidedBySlash[pathDevidedBySlash.length - 1]) {
     return;
   }
 
@@ -27,7 +27,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   );
   const localizationStringKeys = Object.getOwnPropertyNames(dict);
   console.log(localizationStringKeys);
-  
 
   const currentLocal = request.cookies.get("locale")?.value;
 
@@ -48,14 +47,13 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-
   if (pathnameHasLocale) {
-    return
-  };
+    return;
+  }
   if (currentLocal) {
-    request.cookies.set("locale", currentLocal)
+    request.cookies.set("locale", currentLocal);
     request.nextUrl.pathname = `/${currentLocal}${pathname}`;
-    return NextResponse.redirect(request.nextUrl)
+    return NextResponse.redirect(request.nextUrl);
   }
 
   // Redirect if there is no locale
