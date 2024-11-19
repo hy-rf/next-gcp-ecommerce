@@ -22,23 +22,10 @@ export async function middleware(request: NextRequest) {
     return;
   }
 
-  const dict = await import("@/dictionary/en-US.json").then(
-    (mod) => mod.default
-  );
-  const localizationStringKeys = Object.getOwnPropertyNames(dict);
-  console.log(localizationStringKeys);
-
   const currentLocal = request.cookies.get("locale")?.value;
 
   const { pathname } = request.nextUrl;
-  if (
-    [
-      "/favicon.ico",
-      "/googlec943e120b8428ef8.html",
-      "/logo.webp",
-      "/sitemap.xml",
-    ].includes(pathname)
-  ) {
+  if (["/favicon.ico"].includes(pathname)) {
     return;
   }
 

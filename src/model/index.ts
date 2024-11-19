@@ -103,3 +103,7 @@ export interface tokenPayload {
   iat?: number;
   exp?: number;
 }
+
+export interface Dictionary {
+  title: string;
+}
