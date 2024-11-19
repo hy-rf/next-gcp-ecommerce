@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import type React from "react";
 import "./layout.css";
 import Header from "./_component/Header";
-import { Dictionary } from "@/model";
-import getDictionary from "@/dictionary/dictionary";
 
 type Params = {
   locale: string;
