@@ -11,7 +11,31 @@ export default function NewProduct() {
   const [subCategory, setSubCategory] = useState("");
   const [image, setImage] = useState<File[] | null>(null);
   async function handleSubmitNewProduct() {
-    console.log(image);
+    if (
+      name == "" ||
+      description == "" ||
+      price == "" ||
+      category == "" ||
+      subCategory == "" ||
+      image?.length == 0 ||
+      image == null
+    ) {
+      return;
+    }
+    const res = await fetch("/product/api", {
+      method: "post",
+      body: JSON.stringify({
+        name: name,
+        description: description,
+        price: price,
+        stock: 1,
+        imageList: image,
+        category: category,
+        subCategory: subCategory,
+        createdShopId: "7I9C1WozQl20WtsDkvut",
+      }),
+    }).then((res) => res.json());
+    console.log(res);
   }
   return (
     <div>
