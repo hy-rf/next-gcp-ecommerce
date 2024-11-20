@@ -13,15 +13,6 @@ export default function NewProduct() {
   async function handleSubmitNewProduct() {
     console.log(image);
   }
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = event.target.files;
-    if (fileList) {
-      setImage(Array.from(fileList)); // Convert FileList to File[]
-    } else {
-      setImage(null); // Handle null case
-    }
-  };
-
   return (
     <div>
       <h2>Add New Product</h2>
