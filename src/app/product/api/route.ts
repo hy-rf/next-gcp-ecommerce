@@ -3,8 +3,6 @@ import { Category, Product, SubCategory, tokenPayload } from "@/model";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
-import storage from "@/lib/database/storage";
-import { Readable } from "stream";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -19,7 +17,7 @@ interface PostBody {
   description: string;
   price: number;
   stock: number;
-  imageList: File[];
+  imageList: string[];
   category: string;
   subCategory: string;
   createdShopId: string;
@@ -87,78 +85,13 @@ export async function POST(req: NextRequest) {
   }
 
   // upload images to cloud storage
-  const st = storage();
-  const bucketName = "";
-  const path = "images/";
-
-  function webReadableToNodeReadable(
-    webStream: ReadableStream<Uint8Array>
-  ): Readable {
-    const nodeReadable = new Readable({
-      async read() {
-        const reader = webStream.getReader();
-        try {
-          let result = await reader.read();
-          while (!result.done) {
-            this.push(result.value);
-            result = await reader.read();
-          }
-          this.push(null); // Signal end of stream
-        } catch (err) {
-          this.emit("error", err);
-        }
-      },
-    });
-    return nodeReadable;
-  }
-
-  async function uploadFilesAndGetUrls(files: File[]): Promise<string[]> {
-    const urls: string[] = [];
-
-    for (const file of files) {
-      const destination = `${path}${file.name}`;
-
-      try {
-        // Convert the Web ReadableStream to a Node.js Readable stream
-        const nodeStream = webReadableToNodeReadable(file.stream());
-
-        // Create a reference to the file in the bucket
-        const fileRef = st.bucket(bucketName).file(destination);
-
-        // Pipe the file stream to the destination
-        await new Promise<void>((resolve, reject) => {
-          const writeStream = fileRef.createWriteStream({
-            metadata: {
-              contentType: file.type, // Use the File's MIME type
-            },
-          });
-
-          nodeStream
-            .pipe(writeStream)
-            .on("finish", resolve)
-            .on("error", reject);
-        });
-
-        console.log(`Uploaded: ${file.name} to ${bucketName}/${destination}`);
-
-        // Get public URL
-        const publicUrl = `https://storage.googleapis.com/${bucketName}/${destination}`;
-        urls.push(publicUrl);
-      } catch (error) {
-        console.error(`Error uploading ${file.name}:`, error);
-      }
-    }
-
-    return urls;
-  }
-  const urls: string[] = await uploadFilesAndGetUrls(body.imageList);
 
   const newProduct: Product = {
     name: body.name,
     description: body.description,
     price: body.price,
     stock: body.stock,
-    imageUrl: urls,
+    imageUrl: [""],
     categoryId: categoryId,
     subCategoryId: subCategoryId,
     createdAt: new Date().toISOString(),

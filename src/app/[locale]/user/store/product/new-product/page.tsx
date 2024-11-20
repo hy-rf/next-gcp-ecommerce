@@ -3,6 +3,31 @@
 import { useState } from "react";
 import DragNdrop from "./_component/DragNDrop";
 
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      if (reader.result) {
+        resolve(reader.result as string); // Resolving the Base64 string
+      } else {
+        reject("Failed to read file");
+      }
+    };
+
+    reader.onerror = (error) => {
+      reject(error);
+    };
+
+    reader.readAsDataURL(file); // Read the file as a data URL (Base64)
+  });
+}
+
+async function filesToBase64(files: File[]): Promise<string[]> {
+  const base64Promises = files.map((file) => fileToBase64(file));
+  return Promise.all(base64Promises); // Wait for all files to be converted
+}
+
 export default function NewProduct() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -22,6 +47,8 @@ export default function NewProduct() {
     ) {
       return;
     }
+    const imageBytes: string[] = await filesToBase64(image);
+
     const res = await fetch("/product/api", {
       method: "post",
       body: JSON.stringify({
@@ -29,7 +56,7 @@ export default function NewProduct() {
         description: description,
         price: price,
         stock: 1,
-        imageList: image,
+        imageList: imageBytes,
         category: category,
         subCategory: subCategory,
         createdShopId: "7I9C1WozQl20WtsDkvut",
