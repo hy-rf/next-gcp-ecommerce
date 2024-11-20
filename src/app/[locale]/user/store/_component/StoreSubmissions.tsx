@@ -11,7 +11,7 @@ export default function StoreSubmissions() {
         res.json()
       );
 
-      setStoreSubmissions(res.storeSubmittedByAuthorizedUser);
+      setStoreSubmissions(res);
     })();
   }, []);
   return (
@@ -19,7 +19,9 @@ export default function StoreSubmissions() {
       {storeSubmissions?.map((ele, index) => {
         return (
           <div key={index}>
-            <a>{ele.name}</a>
+            <a href={`/store-submission/${ele.id}`}>
+              <p>{ele.name}</p>
+            </a>
             <p>{ele.description}</p>
           </div>
         );

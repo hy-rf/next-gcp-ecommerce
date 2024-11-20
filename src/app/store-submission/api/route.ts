@@ -4,7 +4,9 @@ import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("userId");
   const tokenInRequestCookie = (await cookies()).get("token");
   if (!tokenInRequestCookie) {
     return Response.error();
@@ -15,22 +17,23 @@ export async function GET() {
     process.env.JWT_SECRET!
   ) as tokenPayload;
   const db = database();
-  const storeSubmittedByAuthorizedUserSnapshot = (
-    await db
-      .collection("StoreSubmission")
-      .where("createdUserId", "==", decoded.userId)
-      .get()
-  ).docs;
+  const storeSubmittedByAuthorizedUserSnapshot = userId
+    ? (
+        await db
+          .collection("StoreSubmission")
+          .where("createdUserId", "==", decoded.userId)
+          .get()
+      ).docs
+    : (await db.collection("StoreSubmission").get()).docs;
   const storeSubmittedByAuthorizedUser: StoreSubmission[] = [];
-  for (let i = 0; i < storeSubmittedByAuthorizedUserSnapshot.length; i++) {
-    storeSubmittedByAuthorizedUser.push(
-      storeSubmittedByAuthorizedUserSnapshot[i].data() as StoreSubmission
-    );
+  for (const snapshot of storeSubmittedByAuthorizedUserSnapshot) {
+    const storeData = snapshot.data() as Partial<StoreSubmission>; // Ensure partial typing for data
+    storeSubmittedByAuthorizedUser.push({
+      id: snapshot.id,
+      ...storeData,
+    } as StoreSubmission);
   }
-  return Response.json({
-    message: "Store submissions get success",
-    storeSubmittedByAuthorizedUser,
-  });
+  return Response.json(storeSubmittedByAuthorizedUser);
 }
 
 interface PostBody {

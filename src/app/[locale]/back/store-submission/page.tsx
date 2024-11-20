@@ -1,0 +1,20 @@
+import fetchData from "@/lib/fetchData";
+import { StoreSubmission } from "@/model";
+import { cookies } from "next/headers";
+import StoreSubmissionItem from "./_component/StoreSubmissionItem";
+
+export default async function Page() {
+  const storeSubmissions: StoreSubmission[] = await fetchData<
+    StoreSubmission[]
+  >(`${process.env.URL}/store-submission/api`, {
+    headers: { Cookie: (await cookies()).toString() },
+  });
+  return (
+    <>
+      <h3>Store Submissions</h3>
+      {storeSubmissions.map((ele) => {
+        return <StoreSubmissionItem key={ele.id} ele={ele} />;
+      })}
+    </>
+  );
+}

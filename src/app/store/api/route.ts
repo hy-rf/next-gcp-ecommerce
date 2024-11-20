@@ -2,10 +2,15 @@ import { NextRequest } from "next/server";
 import database from "@/lib/database/database";
 import { Store, StoreSubmission } from "@/model";
 
-export async function GET() {
-  return Response.json({
-    message: "success",
-  });
+export async function GET(req: NextRequest) {
+  const db = database();
+  // get store document with certain id
+  const storeSnapshot = await db
+    .collection("Store")
+    .doc(req.nextUrl.searchParams.get("id")!)
+    .get();
+
+  return Response.json(storeSnapshot.data());
 }
 
 interface PostBody {
@@ -32,7 +37,7 @@ export async function POST(req: NextRequest) {
     description: storeSubmission.description,
     createdUserId: storeSubmission.createdUserId,
     ownerUserId: storeSubmission.createdUserId,
-    coupon: [],
+    // coupon: [],
   };
   const newStoreRef = (await db.collection("Store").add(newStore)).id;
   // TODO: send an email to notify store was approved

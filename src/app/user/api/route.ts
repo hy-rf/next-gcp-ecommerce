@@ -4,7 +4,6 @@ import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  console.log("test", (await cookies()).get("token"));
   const tokenInRequestCookie = (await cookies()).get("token");
   if (!tokenInRequestCookie) {
     return Response.error();

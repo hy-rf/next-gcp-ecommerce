@@ -69,6 +69,7 @@ export interface OrderItem {
 }
 
 export interface StoreSubmission {
+  id?: string;
   name: string;
   description: string;
   createdUserId: string;
@@ -81,7 +82,7 @@ export interface Store {
   description: string;
   createdUserId: string;
   ownerUserId: string;
-  coupon: Coupon[];
+  // coupon?: Coupon[];
 }
 
 export interface Coupon {

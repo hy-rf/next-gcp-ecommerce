@@ -26,6 +26,9 @@ export default function Page() {
         </Link>
       </nav>
       <div>
+        <h3>My Stores</h3>
+      </div>
+      <div>
         <h3>My Store Submissions</h3>
         <StoreSubmissions />
       </div>

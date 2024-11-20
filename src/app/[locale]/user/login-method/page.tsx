@@ -1,4 +1,4 @@
-import fetchData from "@/lib/fetchDate";
+import fetchData from "@/lib/fetchData";
 import { cookies } from "next/headers";
 
 export default async function Page() {
