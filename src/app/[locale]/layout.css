@@ -31,6 +31,7 @@ header {
   display: flex;
   padding: 0 1rem;
   align-content: center;
+  z-index: 99;
 
   a {
     text-decoration: none;

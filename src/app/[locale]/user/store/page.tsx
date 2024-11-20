@@ -24,6 +24,9 @@ export default function Page() {
         >
           Create Store
         </Link>
+        <Link href={"/user/store/product/new-product"}>
+          New Product for my Store
+        </Link>
       </nav>
       <div>
         <h3>My Stores</h3>

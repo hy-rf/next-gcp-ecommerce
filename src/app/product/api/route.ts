@@ -24,11 +24,16 @@ interface PostBody {
 }
 
 export async function POST(req: NextRequest) {
+  const tokenInRequestCookie = (await cookies()).get("token");
+  if (!tokenInRequestCookie) {
+    return Response.error();
+  }
+  const token = tokenInRequestCookie.value;
   const body: PostBody = await req.json();
   const db = database();
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
-      req.headers.get("Authorization")!,
+      token,
       process.env.JWT_SECRET!
     ) as tokenPayload;
     return payload.userId;
