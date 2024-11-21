@@ -62,7 +62,37 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - **Method**: `GET`
 - **Description**: Get stores owned by authenticated user.
 - **Parameters**: None
-
+- **Response**:
+  ```json
+  [
+    {
+      "name": "string",
+      "description": "string",
+      "createdUserId": "string",
+      "ownerUserId": "string"
+    }
+  ]
+  ```
+  
 ---
 
 ### Get all store submissions
+
+---
+
+### Get stores by given id
+- **Endpoint**: `/store/api`
+- **Method**: `GET`
+- **Description**: Get stores owned by authenticated user.
+- **Parameters**: `id:string`
+- **Response**:
+  ```json
+  {
+    "name": "string",
+    "description": "string",
+    "createdUserId": "string",
+    "ownerUserId": "string"
+  }
+  ```
+
+---
