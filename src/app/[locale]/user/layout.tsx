@@ -1,16 +1,20 @@
 import Link from "next/link";
 import "./layout.css";
-
-export default function UserLayout({
+import getDictionary from "@/dictionary/dictionary";
+type Params = Promise<{ locale: string }>;
+export default async function UserLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Params;
 }>) {
+  const dict = await getDictionary((await params).locale);
   return (
     <div className="user-container">
-      <nav>
+      <nav className="left-sidebar">
         <Link href={"/user"}>
-          <h2>User</h2>
+          <h2>{dict.user_layout_title}</h2>
         </Link>
         <Link href={"/user/login-method"}>Authorization</Link>
         <Link href={"/user/store"}>Store</Link>

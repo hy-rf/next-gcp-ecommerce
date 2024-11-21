@@ -107,4 +107,5 @@ export interface tokenPayload {
 
 export interface Dictionary {
   title: string;
+  user_layout_title: string;
 }

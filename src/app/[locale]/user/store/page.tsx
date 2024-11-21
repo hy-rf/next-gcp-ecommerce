@@ -1,7 +1,8 @@
 import Link from "next/link";
 import StoreSubmissions from "./_component/StoreSubmissions";
+import StoreList from "./_component/StoreList";
 
-export default function Page() {
+export default async function Page() {
   return (
     <div
       style={{
@@ -30,6 +31,7 @@ export default function Page() {
       </nav>
       <div>
         <h3>My Stores</h3>
+        <StoreList />
       </div>
       <div>
         <h3>My Store Submissions</h3>
