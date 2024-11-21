@@ -3,6 +3,8 @@ import { Category, Product, SubCategory, tokenPayload } from "@/model";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
+import storage from "@/lib/database/storage";
+import { randomUUID } from "crypto";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -85,13 +87,42 @@ export async function POST(req: NextRequest) {
   }
 
   // upload images to cloud storage
+  const myBucket = storage().bucket("mybucket3rv");
+  const directory = "photo/";
+
+  async function uploadBase64ImagesAndGetUrls(
+    images: string[]
+  ): Promise<string[]> {
+    const urls: string[] = [];
+
+    for (const image of images) {
+      const randomFileName = randomUUID();
+      const destination = `${directory}${randomFileName}`;
+
+      try {
+        // Create a reference to the file in the bucket
+        const fileRef = myBucket.file(destination);
+
+        // Upload the buffer directly to the bucket
+        await fileRef.save(image);
+
+        // Get public URL
+        const publicUrl = `https://storage.googleapis.com/mybucket3rv/${destination}`;
+        urls.push(publicUrl);
+      } catch (error) {
+        console.error(`Error uploading ${randomFileName}:`, error);
+      }
+    }
+    return urls;
+  }
+  const urls = await uploadBase64ImagesAndGetUrls(body.imageList);
 
   const newProduct: Product = {
     name: body.name,
     description: body.description,
     price: body.price,
     stock: body.stock,
-    imageUrl: [""],
+    imageUrl: urls,
     categoryId: categoryId,
     subCategoryId: subCategoryId,
     createdAt: new Date().toISOString(),
@@ -102,6 +133,6 @@ export async function POST(req: NextRequest) {
   const newProductRef = await db.collection("Product").add(newProduct);
   return Response.json({
     code: 200,
-    message: newProductRef.id,
+    message: (await newProductRef.get()).data(),
   });
 }

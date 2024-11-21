@@ -62,7 +62,7 @@ export default function NewProduct() {
         createdShopId: "7I9C1WozQl20WtsDkvut",
       }),
     }).then((res) => res.json());
-    console.log(res);
+    console.log(res.code);
   }
   return (
     <div>
