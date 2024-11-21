@@ -2,18 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import database from "@/lib/database/database";
 import { tokenPayload } from "@/model";
-import { cookies } from "next/headers";
+import getTokenPayload from "@/lib/getTokenPayload";
 
 export async function GET() {
-  const tokenInRequestCookie = (await cookies()).get("token");
-  if (!tokenInRequestCookie) {
+  const decoded = await getTokenPayload();
+  if (!decoded) {
     return Response.error();
   }
-  const token = tokenInRequestCookie.value;
-  const decoded: tokenPayload = jwt.verify(
-    token,
-    process.env.JWT_SECRET!
-  ) as tokenPayload;
   const db = database();
   const userRef = decoded.userId;
   const userLoginMethodSnapshot = (
@@ -30,7 +25,7 @@ export async function POST(req: NextRequest) {
   const token = req.headers.get("Authorization")!;
   const decoded: tokenPayload = jwt.verify(
     token,
-    process.env.JWT_SECRET!
+    process.env.JWT_SECRET!,
   ) as tokenPayload;
   return Response.json(decoded);
 }
