@@ -6,12 +6,21 @@ import jwt from "jsonwebtoken";
 import storage from "@/lib/database/storage";
 import { randomUUID } from "crypto";
 
-export async function GET() {
-  const cookieStore = await cookies();
-  cookieStore.set("token", "test");
-  return Response.json({
-    message: "success",
-  });
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const storeId = searchParams.get("storeId");
+  if (!storeId) {
+    return Response.error();
+  }
+  const db = database();
+  const storeRef = db
+    .collection("Product")
+    .where("createdShopId", "==", storeId);
+  const productSnapshot = await storeRef.get();
+  const products: Product[] = productSnapshot.docs.map((doc) =>
+    doc.data(),
+  ) as Product[];
+  return Response.json(products);
 }
 
 interface PostBody {
@@ -36,7 +45,7 @@ export async function POST(req: NextRequest) {
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
       token,
-      process.env.JWT_SECRET!
+      process.env.JWT_SECRET!,
     ) as tokenPayload;
     return payload.userId;
   })();
@@ -91,7 +100,7 @@ export async function POST(req: NextRequest) {
   const directory = "photo/";
 
   async function uploadBase64ImagesAndGetUrls(
-    images: string[]
+    images: string[],
   ): Promise<string[]> {
     const urls: string[] = [];
 

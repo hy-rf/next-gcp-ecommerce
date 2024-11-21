@@ -10,8 +10,10 @@ export default async function Page(props: { params: Params }) {
   return (
     <>
       <h1>{dict.title}</h1>
-      <p>carousel</p>
-      <p>{(await props.params).locale}</p>
+      <template>
+        <p>carousel</p>
+        <p>{(await props.params).locale}</p>
+      </template>
     </>
   );
 }

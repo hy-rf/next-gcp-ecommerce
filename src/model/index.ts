@@ -45,14 +45,15 @@ export interface SubCategory {
   categoryId: string;
 }
 
+export interface Cart {
+  userId: string;
+  cartItems?: CartItem[];
+}
+
 export interface CartItem {
   productId: string;
   cartId: string;
   quantity: number;
-}
-
-export interface Cart {
-  userId: string;
 }
 
 export interface Order {
