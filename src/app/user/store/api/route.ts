@@ -19,7 +19,14 @@ export async function GET() {
     .collection("Store")
     .where("ownerUserId", "==", decoded.userId)
     .get();
-  return Response.json(storeSnapshot.docs.map((doc) => doc.data()));
+  return Response.json(
+    storeSnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    }),
+  );
 }
 export async function POST() {
   return Response.error();

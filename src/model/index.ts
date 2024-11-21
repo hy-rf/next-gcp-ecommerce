@@ -110,3 +110,12 @@ export interface Dictionary {
   title: string;
   user_layout_title: string;
 }
+
+export interface StoreListViewModel {
+  id: string;
+  name: string;
+  description: string;
+  createdUserId: string;
+  ownerUserId: string;
+  // coupon?: Coupon[];
+}

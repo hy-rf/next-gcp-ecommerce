@@ -64,25 +64,25 @@ export async function POST(req: NextRequest) {
 
   // check if category is created
   let categoryId: string = "";
-  const categoryref = db
+  const categoryRef = db
     .collection("Category")
     .where("name", "==", body.category);
-  if ((await categoryref.get()).empty) {
+  if ((await categoryRef.get()).empty) {
     const newCategory: Category = {
       name: body.category,
     };
     const newCategoryRef = await db.collection("Category").add(newCategory);
     categoryId = newCategoryRef.id;
   } else {
-    categoryId = (await categoryref.limit(1).get()).docs[0].id;
+    categoryId = (await categoryRef.limit(1).get()).docs[0].id;
   }
 
   // check if subcategory is created
   let subCategoryId: string = "";
-  const subCategoryref = db
+  const subCategoryRef = db
     .collection("SubCategory")
     .where("name", "==", body.subCategory);
-  if ((await subCategoryref.get()).empty) {
+  if ((await subCategoryRef.get()).empty) {
     const newSubCategory: SubCategory = {
       name: body.subCategory,
       categoryId: categoryId,
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
       .add(newSubCategory);
     subCategoryId = newSubCategoryRef.id;
   } else {
-    subCategoryId = (await subCategoryref.limit(1).get()).docs[0].id;
+    subCategoryId = (await subCategoryRef.limit(1).get()).docs[0].id;
   }
 
   // upload images to cloud storage
