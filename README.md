@@ -34,3 +34,35 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## API list
+
+### User login
+- **Endpoint**: `/user/login/api`
+- **Description**: User login and get login result.
+- **Request Body**:
+  ```json
+  {
+    "id": "oauth user id",
+    "oauth_provider": "provider name"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "code": "200/300/400",
+    "message": "string"
+  }
+  ```
+  
+---
+
+### Get stores owned by certain user
+- **Endpoint**: `/user/store/api`
+- **Method**: `GET`
+- **Description**: Get stores owned by authenticated user.
+- **Parameters**: None
+
+---
+
+### Get all store submissions
