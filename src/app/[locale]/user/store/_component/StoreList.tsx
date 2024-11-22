@@ -13,8 +13,9 @@ export default async function StoreList() {
       {stores.map((ele, index) => {
         return (
           <div key={index}>
-            <a href={`/store/${ele.id}`}>to</a>
-            <p>Store Name: {ele.name}</p>
+            <a href={`/store/${ele.id}`}>
+              <h4>{ele.name}</h4>
+            </a>
             <p>Store Description: {ele.description}</p>
             <p>Store Owned by: {ele.ownerUserId}</p>
           </div>
