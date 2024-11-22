@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.7",
-    "@google-cloud/datastore": "^9.2.1",
     "@google-cloud/firestore": "^7.10.0",
     "@google-cloud/storage": "^7.14.0",
     "jsonwebtoken": "^9.0.2",
