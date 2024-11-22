@@ -134,3 +134,8 @@ export interface ProductListViewModel {
   createdShopId: string;
   salePrice: number;
 }
+
+export interface CategoryViewModel {
+  id: string;
+  name: string;
+}
