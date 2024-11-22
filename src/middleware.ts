@@ -60,9 +60,6 @@ export async function middleware(request: NextRequest) {
       },
     });
   }
-
-  // e.g. incoming request is /products
-  // The new URL is now /en-US/products
 }
 
 export const config = {
@@ -73,8 +70,3 @@ export const config = {
     // '/'
   ],
 };
-
-// async function getLocales() {
-//   const files = await readdir(join(__dirname, "./dictionaries"));
-//   console.log(files);
-// }
