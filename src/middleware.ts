@@ -21,45 +21,24 @@ export async function middleware(request: NextRequest) {
   if ("api" === pathDividedBySlash[pathDividedBySlash.length - 1]) {
     return;
   }
-
-  const currentLocal = request.cookies.get("locale")?.value;
-
+  // return if it is favicon.ico
+  if ("/favicon.ico" === request.nextUrl.pathname) {
+    return;
+  }
+  // handle locale
   const { pathname } = request.nextUrl;
-  if (["/favicon.ico"].includes(pathname)) {
-    return;
-  }
-
+  console.log(pathname);
   const locales = ["en-US", "zh-TW", "zh-CN"];
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
-  );
-
-  if (pathnameHasLocale) {
+  if (
+    pathname.startsWith("/en-US") ||
+    pathname.startsWith("/zh-TW") ||
+    pathname.startsWith("/zh-CN")
+  ) {
     return;
   }
-  if (currentLocal) {
-    request.cookies.set("locale", currentLocal);
-    request.nextUrl.pathname = `/${currentLocal}${pathname}`;
-    return NextResponse.redirect(request.nextUrl);
-  }
-
-  // Redirect if there is no locale
-  if (currentLocal !== undefined) {
-    request.nextUrl.pathname = `/${currentLocal}${pathname}`;
-    return NextResponse.redirect(request.nextUrl, {
-      headers: {
-        "Set-Cookie": `locale=${currentLocal}`,
-      },
-    });
-  } else {
-    const locale = getLocale(request, locales);
-    request.nextUrl.pathname = `/${locale}${pathname}`;
-    return NextResponse.redirect(request.nextUrl, {
-      headers: {
-        "Set-Cookie": `locale=${locale}`,
-      },
-    });
-  }
+  const locale = getLocale(request, locales);
+  request.nextUrl.pathname = `/${locale}${pathname}`;
+  return NextResponse.redirect(request.nextUrl);
 }
 
 export const config = {
