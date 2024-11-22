@@ -65,63 +65,104 @@ export default function NewProduct() {
     console.log(res.code);
   }
   return (
-    <div>
-      <h2>Add New Product</h2>
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="price">Price:</label>
-        <input
-          type="number"
-          id="price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-          min="0"
-          step="0.01"
-        />
-      </div>
-      <div>
-        <label htmlFor="category">Category:</label>
-        <input
-          type="text"
-          id="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="sub-category">SubCategory:</label>
-        <input
-          type="text"
-          id="sub-category"
-          value={subCategory}
-          onChange={(e) => setSubCategory(e.target.value)}
-          required
-        />
-      </div>
-      <DragNdrop onFilesSelected={setImage} width="300px" height="400px" />
-      <button type="submit" onClick={handleSubmitNewProduct}>
-        Add Product
-      </button>
+    <div className="mt-1 max-w-xl mx-auto p-6 bg-white rounded-md shadow-md">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Product</h2>
+      <form className="space-y-4">
+        <div>
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Name:
+          </label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Description:
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="price"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Price:
+          </label>
+          <input
+            type="number"
+            id="price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+            min="0"
+            step="0.01"
+            className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="category"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Category:
+          </label>
+          <input
+            type="text"
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="sub-category"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            SubCategory:
+          </label>
+          <input
+            type="text"
+            id="sub-category"
+            value={subCategory}
+            onChange={(e) => setSubCategory(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Upload Image:
+          </label>
+          <DragNdrop onFilesSelected={setImage} width="100%" height="200px" />
+        </div>
+        <button
+          type="button"
+          onClick={handleSubmitNewProduct}
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+        >
+          Add Product
+        </button>
+      </form>
     </div>
   );
 }
