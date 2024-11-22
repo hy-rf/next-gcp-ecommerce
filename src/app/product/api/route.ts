@@ -29,7 +29,6 @@ export async function GET(req: NextRequest) {
       ...doc.data(),
     };
   }) as ProductListViewModel[];
-  console.log(products);
   return Response.json(products);
 }
 
