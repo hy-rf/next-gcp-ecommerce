@@ -1,5 +1,11 @@
 import database from "@/lib/database/database";
-import { Category, Product, SubCategory, tokenPayload } from "@/model";
+import {
+  Category,
+  Product,
+  ProductListViewModel,
+  SubCategory,
+  tokenPayload,
+} from "@/model";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
@@ -17,9 +23,13 @@ export async function GET(req: NextRequest) {
     .collection("Product")
     .where("createdShopId", "==", storeId);
   const productSnapshot = await storeRef.get();
-  const products: Product[] = productSnapshot.docs.map((doc) =>
-    doc.data(),
-  ) as Product[];
+  const products: ProductListViewModel[] = productSnapshot.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data(),
+    };
+  }) as ProductListViewModel[];
+  console.log(products);
   return Response.json(products);
 }
 

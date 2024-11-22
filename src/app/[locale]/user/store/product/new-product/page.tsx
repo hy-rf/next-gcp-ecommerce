@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import DragNdrop from "./_component/DragNDrop";
+import FileUploader from "./_component/FileUploader";
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -153,7 +153,7 @@ export default function NewProduct() {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Upload Image:
           </label>
-          <DragNdrop onFilesSelected={setImage} width="100%" height="200px" />
+          <FileUploader onFilesSelected={setImage} />
         </div>
         <button
           type="button"

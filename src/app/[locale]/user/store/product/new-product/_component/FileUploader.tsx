@@ -3,17 +3,11 @@ import { AiOutlineCheckCircle, AiOutlineCloudUpload } from "react-icons/ai";
 import { MdClear } from "react-icons/md";
 import "./drag-drop.css";
 
-interface DragNdropProps {
+interface FileSelectionHandler {
   onFilesSelected: (files: File[]) => void;
-  width?: string | number;
-  height?: string | number;
 }
 
-const DragNdrop: React.FC<DragNdropProps> = ({
-  onFilesSelected,
-  width,
-  height,
-}) => {
+const FileUploader: React.FC<FileSelectionHandler> = ({ onFilesSelected }) => {
   const [files, setFiles] = useState<File[]>([]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +33,6 @@ const DragNdrop: React.FC<DragNdropProps> = ({
 
   useEffect(() => {
     onFilesSelected(files);
-    console.log(width, height);
   }, [files, onFilesSelected]);
 
   return (
@@ -96,4 +89,4 @@ const DragNdrop: React.FC<DragNdropProps> = ({
   );
 };
 
-export default DragNdrop;
+export default FileUploader;

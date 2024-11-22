@@ -119,3 +119,18 @@ export interface StoreListViewModel {
   ownerUserId: string;
   // coupon?: Coupon[];
 }
+
+export interface ProductListViewModel {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  imageUrl: string[];
+  categoryId: string;
+  subCategoryId: string;
+  createdAt: string;
+  updatedAt: string;
+  createdShopId: string;
+  salePrice: number;
+}
