@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           {products.map((ele, index) => (
             <div
               key={index}
-              className="bg-white p-4 rounded-md shadow-sm hover:shadow-lg transition-shadow"
+              className="bg-white p-4 rounded-md shadow-product-card transition-shadow"
             >
               <Image
                 src={ele.imageUrl[0]}
