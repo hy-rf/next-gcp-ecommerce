@@ -14,7 +14,7 @@ export default async function StoreList() {
         return (
           <div key={index}>
             <a href={`/store/${ele.id}`}>
-              <h4>{ele.name}</h4>
+              <h5>{ele.name}</h5>
             </a>
             <p>Store Description: {ele.description}</p>
             <p>Store Owned by: {ele.ownerUserId}</p>

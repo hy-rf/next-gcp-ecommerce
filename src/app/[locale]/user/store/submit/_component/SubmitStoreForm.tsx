@@ -20,7 +20,7 @@ export default function SubmitStoreForm() {
     setName("");
     setDescription("");
     window.location.replace(
-      `${process.env.URL}/store-submission/${result.message}`
+      `${process.env.URL}/store-submission/${result.message}`,
     );
   }
   function handleChangeName(event: ChangeEvent<HTMLInputElement>): void {
@@ -32,14 +32,27 @@ export default function SubmitStoreForm() {
   }
 
   return (
-    <>
-      <input type="text" onChange={handleChangeName} value={name} />
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md space-y-4">
+      <input
+        type="text"
+        onChange={handleChangeName}
+        value={name}
+        placeholder="Enter store name"
+        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+      />
       <input
         type="text"
         onChange={handleChangeDescription}
         value={description}
+        placeholder="Enter store description"
+        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
       />
-      <button onClick={handleSubmitStore}>Submit</button>
-    </>
+      <button
+        onClick={handleSubmitStore}
+        className="w-full bg-blue-500 text-white font-medium py-3 rounded-lg hover:bg-blue-600 transition duration-200"
+      >
+        Submit
+      </button>
+    </div>
   );
 }

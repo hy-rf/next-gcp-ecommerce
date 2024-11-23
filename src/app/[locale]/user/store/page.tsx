@@ -5,7 +5,7 @@ import StoreList from "./_component/StoreList";
 export default async function Page() {
   return (
     <div className="flex flex-col gap-6 p-6 bg-gray-50 min-h-screen">
-      <h3 className="text-2xl font-bold text-gray-800">Store</h3>
+      <h3 className="font-bold text-gray-800">Store</h3>
       <nav className="flex justify-between items-center gap-4 bg-white p-4 rounded-md shadow-sm">
         <Link
           href="/user/store/submit"
@@ -21,13 +21,13 @@ export default async function Page() {
         </Link>
       </nav>
       <div className="bg-white p-6 rounded-md shadow-sm">
-        <h3 className="text-xl font-semibold text-gray-700 mb-4">My Stores</h3>
+        <h4 className="font-semibold text-gray-700 mb-4">My Stores</h4>
         <StoreList />
       </div>
       <div className="bg-white p-6 rounded-md shadow-sm">
-        <h3 className="text-xl font-semibold text-gray-700 mb-4">
+        <h4 className="font-semibold text-gray-700 mb-4">
           My Store Submissions
-        </h3>
+        </h4>
         <StoreSubmissions />
       </div>
     </div>

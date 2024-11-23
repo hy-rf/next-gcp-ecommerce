@@ -16,7 +16,10 @@ export default async function UserLayout({
         <Link href={"/user"}>
           <h2>{dict.user_layout_title}</h2>
         </Link>
+        <Link href={"/user/basic"}>Basic</Link>
         <Link href={"/user/login-method"}>Authorization</Link>
+        <Link href={"/user/payment"}>Payment</Link>
+        <Link href={"/user/order"}>Order</Link>
         <Link href={"/user/store"}>Store</Link>
       </nav>
       <div

@@ -32,6 +32,9 @@ export async function POST(req: NextRequest) {
   const storeSubmission: StoreSubmission = (
     await db.collection("StoreSubmission").doc(body.id).get()
   ).data() as StoreSubmission;
+  if (storeSubmission.status !== "pending") {
+    return Response.error();
+  }
   const newStore: Store = {
     name: storeSubmission.name,
     description: storeSubmission.description,

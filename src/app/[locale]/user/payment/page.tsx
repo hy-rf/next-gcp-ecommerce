@@ -1,3 +1,7 @@
 export default async function Page() {
-  return <></>;
+  return (
+    <>
+      <p>payments</p>
+    </>
+  );
 }
