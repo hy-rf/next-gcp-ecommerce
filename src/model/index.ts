@@ -139,3 +139,9 @@ export interface CategoryViewModel {
   id: string;
   name: string;
 }
+
+export interface SubCategoryViewModel {
+  id: string;
+  categoryId: string;
+  name: string;
+}
