@@ -62,7 +62,7 @@ export default function NewProduct() {
         createdShopId: "7I9C1WozQl20WtsDkvut",
       }),
     }).then((res) => res.json());
-    console.log(res.code);
+    alert(res.code === 200 ? "Succeed" : "Failed");
   }
   return (
     <div className="mt-1 max-w-xl mx-auto p-6 bg-white rounded-md shadow-md">

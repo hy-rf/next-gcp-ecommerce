@@ -28,8 +28,6 @@ export async function middleware(request: NextRequest) {
     return;
   }
   // handle locale
-
-  console.log(pathname);
   const locales = ["en-US", "zh-TW", "zh-CN"];
   if (
     pathname.startsWith("/en-US") ||

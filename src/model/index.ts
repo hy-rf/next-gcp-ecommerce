@@ -145,3 +145,18 @@ export interface SubCategoryViewModel {
   categoryId: string;
   name: string;
 }
+
+export interface ProductViewModel {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  imageUrl: string[];
+  categoryId: string;
+  subCategoryId: string;
+  createdAt: string;
+  updatedAt: string;
+  createdShopId: string;
+  salePrice: number;
+}
