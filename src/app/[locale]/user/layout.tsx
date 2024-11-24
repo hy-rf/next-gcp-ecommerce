@@ -9,12 +9,12 @@ export default async function UserLayout({
   children: React.ReactNode;
   params: Params;
 }>) {
-  const dict = await getDictionary((await params).locale);
+  const dict = await getDictionary((await params).locale, "user");
   return (
     <div className="user-container">
       <nav className="left-sidebar">
         <Link href={"/user"}>
-          <h2>{dict.user_layout_title}</h2>
+          <h2>{dict.layout_title}</h2>
         </Link>
         <Link href={"/user/basic"}>Basic</Link>
         <Link href={"/user/login-method"}>Authorization</Link>

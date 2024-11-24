@@ -4,7 +4,10 @@ import { Dictionary } from "@/model";
 type Params = Promise<{ locale: string }>;
 
 export default async function Page(props: { params: Params }) {
-  const dict: Dictionary = await getDictionary((await props.params).locale);
+  const dict: Dictionary = await getDictionary(
+    (await props.params).locale,
+    "index"
+  );
   return (
     <>
       <h1>{dict.title}</h1>

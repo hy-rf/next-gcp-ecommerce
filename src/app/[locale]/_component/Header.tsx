@@ -9,7 +9,7 @@ type Params = {
 
 export default async function Header({ params }: { params: Promise<Params> }) {
   const { locale } = await params;
-  const dict = await getDictionary(locale);
+  const dict = await getDictionary(locale, "index");
   const loggedIn = (await cookies()).get("token");
   return (
     <header className="flex bg-[rgba(128,128,128,0.9)]">
