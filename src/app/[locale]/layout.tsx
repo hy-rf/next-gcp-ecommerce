@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import type React from "react";
 import "./layout.css";
-import Link from "next/link";
-import { cookies } from "next/headers";
+import Header from "@/app/[locale]/_component/Header";
 
 type Params = {
   locale: string;
@@ -26,23 +25,10 @@ export default async function RootLayout({
   params: Promise<Params>;
 }) {
   const { locale } = await params;
-  const loggedIn = (await cookies()).get("token");
   return (
     <html lang={locale}>
       <body className="flex flex-col h-screen">
-        <header className="flex bg-[rgba(128,128,128,0.9)]">
-          <Link href={"/"}>
-            <h1>E-Commerce</h1>
-          </Link>
-          <Link href={"/product"}>Product</Link>
-          {loggedIn && (
-            <>
-              <Link href={"/user"}>User</Link>
-              <Link href={"/cart"}>Cart</Link>
-            </>
-          )}
-          {!loggedIn && <Link href={"/user/login"}>Login</Link>}
-        </header>
+        <Header params={params} />
         <main>{children}</main>
         <footer>
           <p>@ 2023 E-Shop. All Rights Reserved.</p>
