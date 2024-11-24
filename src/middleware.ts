@@ -16,7 +16,9 @@ function getLocale(request: NextRequest, locales: Array<string>) {
 }
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
   // return if it is api request after check
+  if (pathname.startsWith("/api")) return;
   const pathDividedBySlash = request.nextUrl.pathname.split("/");
   if ("api" === pathDividedBySlash[pathDividedBySlash.length - 1]) {
     return;
@@ -26,7 +28,7 @@ export async function middleware(request: NextRequest) {
     return;
   }
   // handle locale
-  const { pathname } = request.nextUrl;
+
   console.log(pathname);
   const locales = ["en-US", "zh-TW", "zh-CN"];
   if (
