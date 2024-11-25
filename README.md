@@ -14,11 +14,14 @@ pnpm dev
 bun dev
 ```
 
+To publish:
+
 ## API list
 
 ### User
 
 #### User login
+
 - **Endpoint**: `/user/login/api`
 - **Description**: User login and get login result.
 - **Request Body**:
@@ -35,10 +38,11 @@ bun dev
     "message": "string"
   }
   ```
-  
+
 ### Store
 
 #### Get stores owned by certain user
+
 - **Endpoint**: `/user/store/api`
 - **Method**: `GET`
 - **Description**: Get stores owned by authenticated user.
@@ -54,28 +58,23 @@ bun dev
     }
   ]
   ```
-  
+
 ---
 
 #### Get all store submissions
+
 - **Endpoint**: `/store-submission/api`
 - **Method**: `GET`
 - **Description**: Get stores submissions by all user.
 - **Parameters**:
   ```json
-  [
-    {
-      
-    },
-    {
-      
-    }
-  ]
+  [{}, {}]
   ```
 
 ---
 
 #### Get stores by given id
+
 - **Endpoint**: `/store/api`
 - **Method**: `GET`
 - **Description**: Get stores owned by authenticated user.
@@ -93,6 +92,7 @@ bun dev
 ### Cart
 
 #### Get cart items by cart id
+
 - **Endpoint**: `/cart/cartitem/api`
 - **Method**: `GET`
 - **Description**: Get cart item in certain cart.

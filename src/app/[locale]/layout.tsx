@@ -8,15 +8,29 @@ type Params = {
   locale: string;
 };
 
-export const metadata: Metadata = {
-  title: "E-Commerce | Everything",
-  description: "E-Commerce | Everything",
-  keywords: ["E-Commerce", "Everything", "Business"],
-  openGraph: {
+const metadataByLocale: Record<string, Metadata> = {
+  "en-US": {
     title: "E-Commerce | Everything",
     description: "E-Commerce | Everything",
+    keywords: ["E-Commerce", "Everything", "Business"],
+    openGraph: {
+      title: "E-Commerce | Everything",
+      description: "E-Commerce | Everything",
+    },
+  },
+  "zh-TW": {
+    title: "台灣鐵路時刻表",
+    description: "取得最新台灣鐵路時刻表",
+  },
+  "zh-CN": {
+    title: "台湾铁路时刻表",
+    description: "取得最新台湾铁路时刻表",
   },
 };
+
+export async function generateMetadata({ params }: {params : Promise<Params>}) {
+  return metadataByLocale[(await params).locale];
+}
 
 export default async function RootLayout({
   children,
