@@ -160,3 +160,10 @@ export interface ProductViewModel {
   createdShopId: string;
   salePrice: number;
 }
+
+export interface OrderViewModel {
+  id: string;
+  userId: string;
+  total: number;
+  createdAt: Date;
+}
