@@ -7,7 +7,7 @@ export default function StoreSubmissions() {
   const [storeSubmissions, setStoreSubmissions] = useState<StoreSubmission[]>();
   useEffect(() => {
     (async () => {
-      const res = await fetch("/store-submission/api").then((res) =>
+      const res = await fetch("/api/store-submission").then((res) =>
         res.json()
       );
 

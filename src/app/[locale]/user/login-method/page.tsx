@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 export default async function Page() {
   const loginMethods: string[] = await fetchData<string[]>(
-    `${process.env.URL}/user/login-method/api`,
+    `${process.env.URL}/api/user/login-method`,
     {
       headers: { Cookie: (await cookies()).toString() },
     }

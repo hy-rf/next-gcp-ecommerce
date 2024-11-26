@@ -13,7 +13,7 @@ type Params = {
 export default async function Page({ params }: { params: Promise<Params> }) {
   const { id } = await params;
   const product: ProductViewModel = await fetchData<ProductViewModel>(
-    `${process.env.URL}/product/api?id=${id}`,
+    `${process.env.URL}/api/product?id=${id}`,
   );
   for (let i = 0; i < product.imageUrl.length; i++) {
     product.imageUrl[i] = await fetch(product.imageUrl[i]).then((res) =>

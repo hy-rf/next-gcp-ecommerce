@@ -9,11 +9,11 @@ type Params = {
 export default async function Page({ params }: { params: Promise<Params> }) {
   const { id } = await params;
   const storeItem: Store = await fetchData<Store>(
-    `${process.env.URL}/store/api?id=${id}`,
+    `${process.env.URL}/api/store?id=${id}`,
   );
   const products: ProductListViewModel[] = await fetchData<
     ProductListViewModel[]
-  >(`${process.env.URL}/product/api?storeId=${id}`);
+  >(`${process.env.URL}/api/product?storeId=${id}`);
 
   // Get 1st image of each product
   for (const ele of products) {

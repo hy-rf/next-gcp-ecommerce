@@ -10,7 +10,7 @@ export default function SubmitStoreForm() {
       alert("Invalid value");
       return;
     }
-    const result = await fetch("/store-submission/api", {
+    const result = await fetch("/api/store-submission", {
       method: "post",
       body: JSON.stringify({
         name: name,

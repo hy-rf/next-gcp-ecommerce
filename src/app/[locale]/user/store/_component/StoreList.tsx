@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 export default async function StoreList() {
   const stores: StoreListViewModel[] = await fetch(
-    `${process.env.URL}/user/store/api`,
+    `${process.env.URL}/api/user/store`,
     {
       headers: { Cookie: (await cookies()).toString() },
     },

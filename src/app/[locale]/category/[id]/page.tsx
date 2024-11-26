@@ -10,11 +10,11 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   console.log(id);
 
   const category: Category = await fetchData<Category>(
-    `${process.env.URL}/category/api?id=${id}`
+    `${process.env.URL}/api/category?id=${id}`
   );
   const subCategories: SubCategoryViewModel[] = await fetchData<
     SubCategoryViewModel[]
-  >(`${process.env.URL}/subcategory/api?id=${id}`);
+  >(`${process.env.URL}/api/subcategory?id=${id}`);
   return (
     <>
       <h4>{category.name}</h4>

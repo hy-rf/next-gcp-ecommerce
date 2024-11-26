@@ -4,7 +4,7 @@ import { StoreSubmission } from "@/model";
 
 export default function StoreSubmissionItem({ ele }: { ele: StoreSubmission }) {
   async function ApproveStoreSubmission(id: string) {
-    const res = await fetch("/store/api", {
+    const res = await fetch("/api/store", {
       method: "post",
       body: JSON.stringify({
         id: id,

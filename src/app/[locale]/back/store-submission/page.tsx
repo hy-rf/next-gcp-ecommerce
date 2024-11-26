@@ -6,7 +6,7 @@ import StoreSubmissionItem from "./_component/StoreSubmissionItem";
 export default async function Page() {
   const storeSubmissions: StoreSubmission[] = await fetchData<
     StoreSubmission[]
-  >(`${process.env.URL}/store-submission/api`, {
+  >(`${process.env.URL}/api/store-submission`, {
     headers: { Cookie: (await cookies()).toString() },
   });
   return (

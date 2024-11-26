@@ -49,7 +49,7 @@ export default function NewProduct() {
     }
     const imageBytes: string[] = await filesToBase64(image);
 
-    const res = await fetch("/product/api", {
+    const res = await fetch("/api/product", {
       method: "post",
       body: JSON.stringify({
         name: name,

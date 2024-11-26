@@ -17,7 +17,7 @@ export default function ClientProcessingUserLogin() {
         );
         const userInfo = await response.json();
         const googleUserId = userInfo.id;
-        const loginResult: Promise<R> = await fetch("/user/login/api", {
+        const loginResult: Promise<R> = await fetch("/api/user/login", {
           method: "post",
           body: JSON.stringify({
             id: googleUserId,
