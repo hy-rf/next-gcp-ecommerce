@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { User } from "@/model";
 
 export default async function Page() {
-  const user: User = await fetchData<User>(`${process.env.URL}/user/api`, {
+  const user: User = await fetchData<User>(`${process.env.URL}/api/user`, {
     headers: { Cookie: (await cookies()).toString() },
   });
   return (
