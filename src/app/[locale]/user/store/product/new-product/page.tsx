@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FileUploader from "./_component/FileUploader";
+import FileNameHint from "./_component/FileNameHint";
+import Image from "next/image";
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -35,6 +37,23 @@ export default function NewProduct() {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [image, setImage] = useState<File[] | null>(null);
+  const [showFileNameHint, setShowFileNameHint] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const [hintPositionX, setHintPositionX] = useState(0);
+  const [hintPositionY, setHintPositionY] = useState(0);
+  async function handleMovingHint(
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>
+  ) {
+    setHintPositionX(e.clientX);
+    setHintPositionY(e.clientY);
+  }
+  async function handleShowingImageName(
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    image: File
+  ) {
+    setShowFileNameHint(true);
+    setSelectedFileName(image.name);
+  }
   async function handleSubmitNewProduct() {
     if (
       name == "" ||
@@ -64,6 +83,7 @@ export default function NewProduct() {
     }).then((res) => res.json());
     alert(res.code === 200 ? "Succeed" : "Failed");
   }
+  useEffect(() => {}, [image]);
   return (
     <div className="mt-1 max-w-xl mx-auto p-6 bg-white rounded-md shadow-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Product</h2>
@@ -154,6 +174,22 @@ export default function NewProduct() {
             Upload Image:
           </label>
           <FileUploader onFilesSelected={setImage} />
+          <div className="flex flex-row flex-wrap">
+            {image?.map((item, index) => {
+              return (
+                <Image
+                  key={index}
+                  width={100}
+                  height={100}
+                  src={URL.createObjectURL(item)}
+                  alt={item.name}
+                  onMouseEnter={(e) => handleShowingImageName(e, item)}
+                  onMouseMove={handleMovingHint}
+                  onMouseLeave={() => setShowFileNameHint(false)}
+                />
+              );
+            })}
+          </div>
         </div>
         <button
           type="button"
@@ -163,6 +199,13 @@ export default function NewProduct() {
           Add Product
         </button>
       </form>
+      {showFileNameHint && (
+        <FileNameHint
+          hintPositionX={hintPositionX}
+          hintPositionY={hintPositionY}
+          selectedFileName={selectedFileName}
+        />
+      )}
     </div>
   );
 }

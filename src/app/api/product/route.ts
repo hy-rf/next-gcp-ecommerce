@@ -81,6 +81,9 @@ export async function POST(req: NextRequest) {
   if (body.createdShopId === "") {
     return Response.error();
   }
+  if (body.imageList.length > 5) {
+    return Response.error();
+  }
   const db = database();
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
