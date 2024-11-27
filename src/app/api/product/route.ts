@@ -10,7 +10,6 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import storage from "@/lib/database/storage";
-import { randomUUID } from "crypto";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
