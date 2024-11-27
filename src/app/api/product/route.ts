@@ -58,6 +58,30 @@ export async function POST(req: NextRequest) {
   }
   const token = tokenInRequestCookie.value;
   const body: PostBody = await req.json();
+  if (body.name === "") {
+    return Response.error();
+  }
+  if (body.description === "") {
+    return Response.error();
+  }
+  if (body.price.toString() === "") {
+    return Response.error();
+  }
+  if (body.stock.toString() === "") {
+    return Response.error();
+  }
+  if (body.imageList.length === 0) {
+    return Response.error();
+  }
+  if (body.category === "") {
+    return Response.error();
+  }
+  if (body.subCategory === "") {
+    return Response.error();
+  }
+  if (body.createdShopId === "") {
+    return Response.error();
+  }
   const db = database();
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
@@ -84,6 +108,7 @@ export async function POST(req: NextRequest) {
   const categoryRef = db
     .collection("Category")
     .where("name", "==", body.category);
+  // Add new category if input category is not found else get category id for new product
   if ((await categoryRef.get()).empty) {
     const newCategory: Category = {
       name: body.category,
@@ -99,6 +124,7 @@ export async function POST(req: NextRequest) {
   const subCategoryRef = db
     .collection("SubCategory")
     .where("name", "==", body.subCategory);
+  // Add new sub category if input category is not found else get sub category id for new product
   if ((await subCategoryRef.get()).empty) {
     const newSubCategory: SubCategory = {
       name: body.subCategory,
@@ -114,15 +140,16 @@ export async function POST(req: NextRequest) {
 
   // upload images to cloud storage
   const myBucket = storage().bucket("mybucket3rv");
-  const directory = "photo/";
+  const directory = "product/";
 
   async function uploadBase64ImagesAndGetUrls(
+    newProductId: string,
     images: string[]
   ): Promise<string[]> {
     const urls: string[] = [];
-
+    let index = 0;
     for (const image of images) {
-      const randomFileName = randomUUID();
+      const randomFileName = `${newProductId}-${index}`;
       const destination = `${directory}${randomFileName}`;
 
       try {
@@ -135,20 +162,20 @@ export async function POST(req: NextRequest) {
         // Get public URL
         const publicUrl = `https://storage.googleapis.com/mybucket3rv/${destination}`;
         urls.push(publicUrl);
+        index++;
       } catch (error) {
         console.error(`Error uploading ${randomFileName}:`, error);
       }
     }
     return urls;
   }
-  const urls = await uploadBase64ImagesAndGetUrls(body.imageList);
 
   const newProduct: Product = {
     name: body.name,
     description: body.description,
     price: body.price,
     stock: body.stock,
-    imageUrl: urls,
+    imageUrl: [],
     categoryId: categoryId,
     subCategoryId: subCategoryId,
     createdAt: new Date().toISOString(),
@@ -157,6 +184,14 @@ export async function POST(req: NextRequest) {
     salePrice: body.price,
   };
   const newProductRef = await db.collection("Product").add(newProduct);
+  const newProductId = newProductRef.id;
+
+  const urls = await uploadBase64ImagesAndGetUrls(newProductId, body.imageList);
+
+  newProductRef.update({
+    imageUrl: urls,
+  });
+
   return Response.json({
     code: 200,
     message: (await newProductRef.get()).data(),
