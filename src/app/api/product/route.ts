@@ -9,7 +9,7 @@ import {
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
-import storage from "@/lib/database/storage";
+import uploadBase64Image from "@/lib/uploadBase64Image";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -138,8 +138,7 @@ export async function POST(req: NextRequest) {
   }
 
   // upload images to cloud storage
-  const myBucket = storage().bucket("mybucket3rv");
-  const directory = "product/";
+  const directory = "product";
 
   async function uploadBase64ImagesAndGetUrls(
     newProductId: string,
@@ -148,22 +147,18 @@ export async function POST(req: NextRequest) {
     const urls: string[] = [];
     let index = 0;
     for (const image of images) {
-      const randomFileName = `${newProductId}-${index}`;
-      const destination = `${directory}${randomFileName}`;
+      const destination = `${directory}/${newProductId}-${index}`;
 
       try {
         // Create a reference to the file in the bucket
-        const fileRef = myBucket.file(destination);
-
-        // Upload the buffer directly to the bucket
-        await fileRef.save(image);
+        await uploadBase64Image(image, destination);
 
         // Get public URL
         const publicUrl = `https://storage.googleapis.com/mybucket3rv/${destination}`;
         urls.push(publicUrl);
         index++;
       } catch (error) {
-        console.error(`Error uploading ${randomFileName}:`, error);
+        console.error(`Error uploading`, error);
       }
     }
     return urls;
@@ -187,7 +182,7 @@ export async function POST(req: NextRequest) {
 
   const urls = await uploadBase64ImagesAndGetUrls(newProductId, body.imageList);
 
-  newProductRef.update({
+  await newProductRef.update({
     imageUrl: urls,
   });
 
