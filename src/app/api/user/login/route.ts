@@ -11,8 +11,8 @@ interface PostBody {
 export async function POST(req: NextRequest) {
   const body: PostBody = await req.json();
   const googleUserId = body.id;
-  let token: string = "";
   const db = database();
+  let userId: string;
   const userLoginMethodSnapshot = await db
     .collection("UserLoginMethod")
     .where("method", "==", "google")
@@ -20,8 +20,7 @@ export async function POST(req: NextRequest) {
     .limit(1)
     .get();
   if (!userLoginMethodSnapshot.empty) {
-    const userId = userLoginMethodSnapshot.docs[0].data().userId;
-    token = jwt.sign({ userId }, process.env.JWT_SECRET!);
+    userId = userLoginMethodSnapshot.docs[0].data().userId;
     db.collection("User").doc(userId).update({
       lastLogin: new Date().toISOString(),
     });
@@ -38,10 +37,17 @@ export async function POST(req: NextRequest) {
       providerUserId: googleUserId,
     };
     db.collection("UserLoginMethod").add(newUserLoginMethod);
-    token = jwt.sign({ userId: newUserRef.id }, process.env.JWT_SECRET!);
+    userId = newUserRef.id;
   }
+  const token = jwt.sign({ userId }, process.env.JWT_SECRET!, {
+    expiresIn: "24h",
+  });
+  const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!, {
+    expiresIn: "24h",
+  });
   const cookieStore = await cookies();
   cookieStore.set("token", token);
+  cookieStore.set("refresh", refreshToken);
 
   return Response.json({
     code: 200,

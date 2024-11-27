@@ -15,3 +15,16 @@ export default async function getTokenPayload(): Promise<tokenPayload | null> {
     return null;
   }
 }
+
+export async function getRefreshTokenPayload(): Promise<tokenPayload | null> {
+  const tokenInRequestCookie = (await cookies()).get("refresh");
+  if (!tokenInRequestCookie) {
+    return null;
+  }
+  const token = tokenInRequestCookie.value;
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET!) as tokenPayload;
+  } catch {
+    return null;
+  }
+}
