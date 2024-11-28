@@ -1,6 +1,7 @@
 "use client";
 
 import { CarouselItem } from "@/model";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 export default function Hero() {
@@ -11,23 +12,23 @@ export default function Hero() {
       {
         title: "test",
         description: "testD",
-        imageUrl: "1.jpg",
+        imageUrl: "/1.jpg",
       },
       {
         title: "test2",
         description: "testD2",
-        imageUrl: "2.jpg",
+        imageUrl: "/2.jpg",
       },
       {
         title: "test3",
         description: "testD3",
-        imageUrl: "3.jpg",
+        imageUrl: "/3.jpg",
       },
     ]);
   }, []);
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
-  }, [currentIndex, carouselItems]);
+  }, [carouselItems]);
 
   // const prevSlide = () => {
   //   setCurrentIndex(
@@ -54,10 +55,13 @@ export default function Hero() {
                 key={item.id ? item.id : index}
                 className="flex-[0_0_100%] flex justify-center"
               >
-                <img
-                  className="overflow-hidden"
+                <Image
+                  className="overflow-hidden min-w-full md:max-w-[1024px] md:min-w-[768px]"
                   src={item.imageUrl}
                   alt={item.title}
+                  width={0}
+                  height={0}
+                  sizes="100vw"
                 />
               </div>
             ))}
