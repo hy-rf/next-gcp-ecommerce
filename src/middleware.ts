@@ -17,16 +17,13 @@ function getLocale(request: NextRequest, locales: Array<string>) {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  // return if it is api request after check
+  if (
+    pathname.endsWith("jpg") ||
+    pathname.endsWith("png") ||
+    pathname.endsWith("ico")
+  )
+    return;
   if (pathname.startsWith("/api")) return;
-  const pathDividedBySlash = request.nextUrl.pathname.split("/");
-  if ("api" === pathDividedBySlash[pathDividedBySlash.length - 1]) {
-    return;
-  }
-  // return if it is favicon.ico
-  if ("/favicon.ico" === request.nextUrl.pathname) {
-    return;
-  }
   // handle locale
   const locales = ["en-US", "zh-TW", "zh-CN"];
   if (

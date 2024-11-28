@@ -167,3 +167,10 @@ export interface OrderViewModel {
   total: number;
   createdAt: Date;
 }
+
+export interface CarouselItem {
+  id?: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+}

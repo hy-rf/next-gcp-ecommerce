@@ -11,6 +11,9 @@ export async function GET() {
   if (!refreshToken) {
     return Response.error();
   }
+  if (token.userId !== refreshToken.userId) {
+    return Response.error();
+  }
   const newToken = jwt.sign(token, process.env.JWT_SECRET!, {
     expiresIn: "24h",
   });
