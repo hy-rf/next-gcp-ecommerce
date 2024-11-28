@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FileUploader from "./_component/FileUploader";
 import FileNameHint from "./_component/FileNameHint";
 import Image from "next/image";
@@ -37,6 +37,7 @@ export default function NewProduct() {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [image, setImage] = useState<File[] | null>(null);
+  const [specs, setSpecs] = useState<string[]>([]);
   const [showFileNameHint, setShowFileNameHint] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState("");
   const [hintPositionX, setHintPositionX] = useState(0);
@@ -54,7 +55,26 @@ export default function NewProduct() {
     setShowFileNameHint(true);
     setSelectedFileName(image.name);
   }
+
+  async function handleChangeSpec(
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) {
+    setSpecs((oldSpecs) => {
+      const newSpecs = [...oldSpecs]; // Create a shallow copy of the old array
+      newSpecs[index] = e.target.value; // Update the value at the specific index
+      return newSpecs; // Return the updated array
+    });
+  }
+
+  async function handleDeleteSpec(index: number) {
+    const halfBeforeTheUnwantedElement = specs.slice(0, index);
+    const halfAfterTheUnwantedElement = specs.slice(index + 1);
+    setSpecs(halfBeforeTheUnwantedElement.concat(halfAfterTheUnwantedElement));
+  }
+
   async function handleSubmitNewProduct() {
+    alert(specs);
     if (
       name == "" ||
       description == "" ||
@@ -62,7 +82,8 @@ export default function NewProduct() {
       category == "" ||
       subCategory == "" ||
       image?.length == 0 ||
-      image == null
+      image == null ||
+      specs.some((ele) => ele === "")
     ) {
       return;
     }
@@ -83,11 +104,10 @@ export default function NewProduct() {
     }).then((res) => res.json());
     alert(res.code === 200 ? "Succeed" : "Failed");
   }
-  useEffect(() => {}, [image]);
   return (
     <div className="mt-1 max-w-xl mx-auto p-6 bg-white rounded-md shadow-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Product</h2>
-      <form className="space-y-4">
+      <div className="space-y-4">
         <div>
           <label
             htmlFor="name"
@@ -100,7 +120,6 @@ export default function NewProduct() {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -115,7 +134,6 @@ export default function NewProduct() {
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -131,11 +149,38 @@ export default function NewProduct() {
             id="price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            required
             min="0"
             step="0.01"
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
           />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Specs:
+          </label>
+          <button
+            style={{ alignSelf: "flex-end" }}
+            onClick={() => setSpecs((old) => [...old, ""])}
+          >
+            +
+          </button>
+          <div className="flex flex-col gap-1">
+            {specs.map((ele, index) => (
+              <div key={index} className="flex">
+                <input
+                  type="text"
+                  value={ele}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleChangeSpec(e, index)
+                  }
+                  min="0"
+                  step="0.01"
+                  className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+                <button onClick={() => handleDeleteSpec(index)}>x</button>
+              </div>
+            ))}
+          </div>
         </div>
         <div>
           <label
@@ -149,7 +194,6 @@ export default function NewProduct() {
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            required
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -165,7 +209,6 @@ export default function NewProduct() {
             id="sub-category"
             value={subCategory}
             onChange={(e) => setSubCategory(e.target.value)}
-            required
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -198,7 +241,7 @@ export default function NewProduct() {
         >
           Add Product
         </button>
-      </form>
+      </div>
       {showFileNameHint && (
         <FileNameHint
           hintPositionX={hintPositionX}

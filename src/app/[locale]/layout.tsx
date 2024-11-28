@@ -19,16 +19,21 @@ const metadataByLocale: Record<string, Metadata> = {
     },
   },
   "zh-TW": {
-    title: "台灣鐵路時刻表",
-    description: "取得最新台灣鐵路時刻表",
-  },
-  "zh-CN": {
-    title: "台湾铁路时刻表",
-    description: "取得最新台湾铁路时刻表",
+    title: "便宜拍賣網",
+    description: "世界最便宜拍賣網",
+    keywords: ["便宜", "拍賣", "購物"],
+    openGraph: {
+      title: "便宜拍賣網",
+      description: "世界最便宜拍賣網",
+    },
   },
 };
 
-export async function generateMetadata({ params }: {params : Promise<Params>}) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
   return metadataByLocale[(await params).locale];
 }
 

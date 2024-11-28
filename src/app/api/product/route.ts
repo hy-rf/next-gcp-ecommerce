@@ -48,6 +48,7 @@ interface PostBody {
   category: string;
   subCategory: string;
   createdShopId: string;
+  specs?: string[];
 }
 
 export async function POST(req: NextRequest) {
@@ -179,6 +180,7 @@ export async function POST(req: NextRequest) {
     updatedAt: new Date().toISOString(),
     createdShopId: body.createdShopId,
     salePrice: body.price,
+    specs: body.specs,
   };
   const newProductRef = await db.collection("Product").add(newProduct);
   const newProductId = newProductRef.id;

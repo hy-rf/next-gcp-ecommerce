@@ -23,6 +23,7 @@ export interface Address {
 }
 
 export interface Product {
+  id?: string;
   name: string;
   description: string;
   price: number;
@@ -34,6 +35,7 @@ export interface Product {
   updatedAt: string;
   createdShopId: string;
   salePrice: number;
+  specs?: string[];
 }
 
 export interface Category {
@@ -144,21 +146,6 @@ export interface SubCategoryViewModel {
   id: string;
   categoryId: string;
   name: string;
-}
-
-export interface ProductViewModel {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  imageUrl: string[];
-  categoryId: string;
-  subCategoryId: string;
-  createdAt: string;
-  updatedAt: string;
-  createdShopId: string;
-  salePrice: number;
 }
 
 export interface OrderViewModel {
