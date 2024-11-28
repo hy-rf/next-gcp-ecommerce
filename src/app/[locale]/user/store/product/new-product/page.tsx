@@ -74,7 +74,6 @@ export default function NewProduct() {
   }
 
   async function handleSubmitNewProduct() {
-    alert(specs);
     if (
       name == "" ||
       description == "" ||
@@ -83,7 +82,8 @@ export default function NewProduct() {
       subCategory == "" ||
       image?.length == 0 ||
       image == null ||
-      specs.some((ele) => ele === "")
+      specs.some((ele) => ele === "") ||
+      new Set(specs).size !== specs.length
     ) {
       return;
     }
@@ -100,6 +100,7 @@ export default function NewProduct() {
         category: category,
         subCategory: subCategory,
         createdShopId: "7I9C1WozQl20WtsDkvut",
+        specs: specs,
       }),
     }).then((res) => res.json());
     alert(res.code === 200 ? "Succeed" : "Failed");

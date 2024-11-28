@@ -85,6 +85,13 @@ export async function POST(req: NextRequest) {
   if (body.imageList.length > 5) {
     return Response.error();
   }
+  if (
+    body.specs &&
+    (body.specs.some((ele) => ele === "") ||
+      new Set(body.specs).size !== body.specs.length)
+  ) {
+    return Response.error();
+  }
   const db = database();
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
