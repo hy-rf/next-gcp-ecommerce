@@ -1,5 +1,4 @@
 import Link from "next/link";
-import StoreSubmissions from "./_component/StoreSubmissions";
 import StoreList from "./_component/StoreList";
 
 export default async function Page() {
@@ -23,12 +22,6 @@ export default async function Page() {
       <div className="bg-white p-6 rounded-md shadow-sm">
         <h4 className="font-semibold text-gray-700 mb-4">My Stores</h4>
         <StoreList />
-      </div>
-      <div className="bg-white p-6 rounded-md shadow-sm">
-        <h4 className="font-semibold text-gray-700 mb-4">
-          My Store Submissions
-        </h4>
-        <StoreSubmissions />
       </div>
     </div>
   );

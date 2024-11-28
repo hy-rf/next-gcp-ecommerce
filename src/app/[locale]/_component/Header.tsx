@@ -18,6 +18,7 @@ export default async function Header({ params }: { params: Promise<Params> }) {
         <h1 className="whitespace-nowrap">{dict.title}</h1>
       </Link>
       <NavigationBar loggedIn={loggedIn} />
+      {/* for seo */}
       <div className="hidden">
         <Link href={"/product"}>Product</Link>
         <Link href={"/user"}>User</Link>

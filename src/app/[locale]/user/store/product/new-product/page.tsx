@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import FileUploader from "./_component/FileUploader";
 import FileNameHint from "./_component/FileNameHint";
 import Image from "next/image";
-import Modal from "@/app/[locale]/_component/Modal";
+import Modal from "@/components/Modal";
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
