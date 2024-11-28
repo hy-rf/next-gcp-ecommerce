@@ -67,7 +67,7 @@ export default function Hero() {
           {carouselItems.map((_, index) => (
             <span
               key={index}
-              className={`w-[15px] h-[15px] rounded-full mx-[5px] cursor-pointer z-[100] backdrop-blur-[90px] bg-white/50 ${index === currentIndex && "bg-white/90"}`}
+              className={`w-[15px] h-[15px] rounded-full mx-[5px] cursor-pointer backdrop-blur-[90px] bg-white/50 ${index === currentIndex && "bg-white/90"}`}
               onClick={() => setCurrentIndex(index)}
             ></span>
           ))}

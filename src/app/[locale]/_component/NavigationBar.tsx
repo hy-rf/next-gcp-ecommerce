@@ -18,6 +18,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           isOpen ? "flex" : "hidden"
         } ${isAnimated ? "opacity-100" : "opacity-0"} p-10 z-40 flex-col ml-o mt-[70px] text-center bg-[#808080d0] fixed left-0 color:white w-[100dvw] h-[100dvh] md:flex md:static md:flex md:flex-row md:gap-4 md:ml-auto md:mr-0 md:mt-0 md:w-auto md:h-auto md:z-auto md:p-0 md:bg-transparent transform ease-in-out duration-500 md:opacity-100 z-[999]`}
       >
+        <Link href={"/user/store/product/new-product"}>
+          Dev add product page
+        </Link>
         <Link
           style={{
             transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
