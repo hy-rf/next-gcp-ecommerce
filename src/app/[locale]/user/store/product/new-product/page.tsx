@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FileUploader from "./_component/FileUploader";
 import FileNameHint from "./_component/FileNameHint";
 import Image from "next/image";
+import Modal from "@/app/[locale]/_component/Modal";
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -42,6 +43,8 @@ export default function NewProduct() {
   const [selectedFileName, setSelectedFileName] = useState("");
   const [hintPositionX, setHintPositionX] = useState(0);
   const [hintPositionY, setHintPositionY] = useState(0);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [isFormSubmit, setIsFormSubmit] = useState(false);
   async function handleMovingHint(
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) {
@@ -85,6 +88,8 @@ export default function NewProduct() {
       specs.some((ele) => ele === "") ||
       new Set(specs).size !== specs.length
     ) {
+      setShowConfirmModal(false);
+      alert("Invalid");
       return;
     }
     const imageBytes: string[] = await filesToBase64(image);
@@ -104,7 +109,11 @@ export default function NewProduct() {
       }),
     }).then((res) => res.json());
     alert(res.code === 200 ? "Succeed" : "Failed");
+    setShowConfirmModal(false);
   }
+  useEffect(() => {
+    if (isFormSubmit) handleSubmitNewProduct();
+  }, [isFormSubmit]);
   return (
     <div className="mt-1 max-w-xl mx-auto p-6 bg-white rounded-md shadow-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Product</h2>
@@ -237,12 +246,18 @@ export default function NewProduct() {
         </div>
         <button
           type="button"
-          onClick={handleSubmitNewProduct}
+          onClick={() => setShowConfirmModal(true)}
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
         >
           Add Product
         </button>
       </div>
+      {showConfirmModal && (
+        <Modal
+          action={() => setIsFormSubmit(true)}
+          action2={() => setShowConfirmModal(false)}
+        />
+      )}
       {showFileNameHint && (
         <FileNameHint
           hintPositionX={hintPositionX}
