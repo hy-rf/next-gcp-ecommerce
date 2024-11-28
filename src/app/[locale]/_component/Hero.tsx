@@ -46,7 +46,7 @@ export default function Hero() {
       <div className="relative overflow-hidden">
         {carouselItems.length > 0 && (
           <div
-            className="carousel-wrapper flex transition ease-in-out duration-500"
+            className="flex transition ease-in-out duration-500"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
             {carouselItems.map((item, index) => (
