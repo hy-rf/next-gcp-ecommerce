@@ -8,6 +8,8 @@ export default async function getDictionary(
   switch (locale) {
     case "en-US":
       return (await import(`./en/${part}.ts`)).default;
+    case "zh-TW":
+      return (await import(`./zh-TW/${part}.ts`)).default;
     default:
       return (await import(`./en/${part}.ts`)).default;
   }

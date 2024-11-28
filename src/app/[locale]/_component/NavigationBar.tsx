@@ -21,6 +21,24 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         <Link href={"/user/store/product/new-product"}>
           Dev add product page
         </Link>
+        <button
+          onClick={() =>
+            fetch("/api/user/locale?newLocale=en-US", { method: "put" }).then(
+              () => window.location.reload()
+            )
+          }
+        >
+          EN
+        </button>
+        <button
+          onClick={() =>
+            fetch("/api/user/locale?newLocale=zh-TW", { method: "put" }).then(
+              () => window.location.reload()
+            )
+          }
+        >
+          ZH
+        </button>
         <Link
           style={{
             transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
