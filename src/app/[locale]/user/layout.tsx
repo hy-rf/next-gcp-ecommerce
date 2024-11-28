@@ -1,7 +1,8 @@
-import Link from "next/link";
-import "./layout.css";
 import getDictionary from "@/dictionary/dictionary";
+import Sidebar from "./_component/Sidebar";
+
 type Params = Promise<{ locale: string }>;
+
 export default async function UserLayout({
   children,
   params,
@@ -10,25 +11,14 @@ export default async function UserLayout({
   params: Params;
 }>) {
   const dict = await getDictionary((await params).locale, "user");
+
   return (
-    <div className="user-container">
-      <nav className="left-sidebar">
-        <Link href={"/user"}>
-          <h2>{dict.layout_title}</h2>
-        </Link>
-        <Link href={"/user/basic"}>Basic</Link>
-        <Link href={"/user/login-method"}>Authorization</Link>
-        <Link href={"/user/payment"}>Payment</Link>
-        <Link href={"/user/order"}>Order</Link>
-        <Link href={"/user/store"}>Store</Link>
-      </nav>
-      <div
-        style={{
-          flexGrow: 1,
-        }}
-      >
-        {children}
-      </div>
+    <div className="flex min-h-screen bg-gray-50">
+      {/* Sidebar */}
+      <Sidebar dict={dict} />
+
+      {/* Main Content */}
+      <div className="flex-grow p-6">{children}</div>
     </div>
   );
 }
