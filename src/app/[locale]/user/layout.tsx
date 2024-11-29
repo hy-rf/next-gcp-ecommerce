@@ -1,5 +1,6 @@
 import getDictionary from "@/dictionary/dictionary";
 import Sidebar from "./_component/Sidebar";
+import React from "react";
 
 type Params = Promise<{ locale: string }>;
 

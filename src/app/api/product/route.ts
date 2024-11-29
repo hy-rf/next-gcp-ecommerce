@@ -4,10 +4,12 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import uploadBase64Image from "@/lib/uploadBase64Image";
+import { Query } from "@google-cloud/firestore";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const storeId = searchParams.get("storeId");
+  const categoryId = searchParams.get("categoryId");
   const productId = searchParams.get("id");
   const db = database();
   if (productId) {
@@ -16,6 +18,19 @@ export async function GET(req: NextRequest) {
       id: productSnapshot.id,
       ...productSnapshot.data(),
     });
+  }
+  if (categoryId) {
+    const productsByCategory: Query = db
+      .collection("Product")
+      .where("categoryId", "==", categoryId);
+    return Response.json(
+      (await productsByCategory.get()).docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      }),
+    );
   }
   if (!storeId) {
     return Response.error();
@@ -90,7 +105,7 @@ export async function POST(req: NextRequest) {
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
       token,
-      process.env.JWT_SECRET!
+      process.env.JWT_SECRET!,
     ) as tokenPayload;
     return payload.userId;
   })();
@@ -147,7 +162,7 @@ export async function POST(req: NextRequest) {
 
   async function uploadBase64ImagesAndGetUrls(
     newProductId: string,
-    images: string[]
+    images: string[],
   ): Promise<string[]> {
     const urls: string[] = [];
     let index = 0;
