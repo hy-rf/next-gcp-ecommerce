@@ -1,5 +1,5 @@
 import fetchData from "@/lib/fetchData";
-import { Category, SubCategoryViewModel } from "@/model";
+import { Category, SubCategory } from "@/model";
 
 type Params = {
   id: string;
@@ -12,9 +12,9 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const category: Category = await fetchData<Category>(
     `${process.env.URL}/api/category?id=${id}`
   );
-  const subCategories: SubCategoryViewModel[] = await fetchData<
-    SubCategoryViewModel[]
-  >(`${process.env.URL}/api/subcategory?id=${id}`);
+  const subCategories: SubCategory[] = await fetchData<SubCategory[]>(
+    `${process.env.URL}/api/subcategory?id=${id}`
+  );
   return (
     <>
       <h4>{category.name}</h4>

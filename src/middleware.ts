@@ -21,7 +21,8 @@ export async function middleware(request: NextRequest) {
   if (
     pathname.endsWith("jpg") ||
     pathname.endsWith("png") ||
-    pathname.endsWith("ico")
+    pathname.endsWith("ico") ||
+    pathname.endsWith("svg")
   )
     return;
   if (pathname.startsWith("/api")) return;

@@ -39,10 +39,12 @@ export interface Product {
 }
 
 export interface Category {
+  id?: string;
   name: string;
 }
 
 export interface SubCategory {
+  id?: string;
   name: string;
   categoryId: string;
 }
@@ -81,6 +83,7 @@ export interface StoreSubmission {
 }
 
 export interface Store {
+  id?: string;
   name: string;
   description: string;
   createdUserId: string;
@@ -111,48 +114,6 @@ export interface tokenPayload {
 export interface Dictionary {
   title: string;
   layout_title: string;
-}
-
-export interface StoreListViewModel {
-  id: string;
-  name: string;
-  description: string;
-  createdUserId: string;
-  ownerUserId: string;
-  // coupon?: Coupon[];
-}
-
-export interface ProductListViewModel {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  imageUrl: string[];
-  categoryId: string;
-  subCategoryId: string;
-  createdAt: string;
-  updatedAt: string;
-  createdShopId: string;
-  salePrice: number;
-}
-
-export interface CategoryViewModel {
-  id: string;
-  name: string;
-}
-
-export interface SubCategoryViewModel {
-  id: string;
-  categoryId: string;
-  name: string;
-}
-
-export interface OrderViewModel {
-  id: string;
-  userId: string;
-  total: number;
-  createdAt: Date;
 }
 
 export interface CarouselItem {

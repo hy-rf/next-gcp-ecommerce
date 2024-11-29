@@ -1,5 +1,5 @@
 import fetchData from "@/lib/fetchData";
-import { ProductListViewModel, Store } from "@/model";
+import { Product, Store } from "@/model";
 import Image from "next/image";
 
 type Params = {
@@ -11,9 +11,9 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const storeItem: Store = await fetchData<Store>(
     `${process.env.URL}/api/store?id=${id}`
   );
-  const products: ProductListViewModel[] = await fetchData<
-    ProductListViewModel[]
-  >(`${process.env.URL}/api/product?storeId=${id}`);
+  const products: Product[] = await fetchData<Product[]>(
+    `${process.env.URL}/api/product?storeId=${id}`
+  );
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-6">

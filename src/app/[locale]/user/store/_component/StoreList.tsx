@@ -1,13 +1,10 @@
-import { StoreListViewModel } from "@/model";
+import { Store } from "@/model";
 import { cookies } from "next/headers";
 
 export default async function StoreList() {
-  const stores: StoreListViewModel[] = await fetch(
-    `${process.env.URL}/api/user/store`,
-    {
-      headers: { Cookie: (await cookies()).toString() },
-    }
-  ).then((res) => res.json());
+  const stores: Store[] = await fetch(`${process.env.URL}/api/user/store`, {
+    headers: { Cookie: (await cookies()).toString() },
+  }).then((res) => res.json());
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {stores.map((ele, index) => (
