@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* *,
-*::after,
-*::before {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
-
 h1 {
   font-size: 2.5rem;
   font-weight: 1000;
@@ -46,13 +38,6 @@ header {
   padding: 0 1rem;
   align-content: center;
   z-index: 99;
-
-  a {
-    text-decoration: none;
-    color: white;
-    vertical-align: central;
-    line-height: 70px;
-  }
 
   & > a:nth-child(1) {
     margin-right: auto;

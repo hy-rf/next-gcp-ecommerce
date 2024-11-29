@@ -5,7 +5,7 @@
 
   div {
     position: relative;
-    top: calc(50% - 2px);
+    /* top: calc(50% - 2px); */
     left: 0;
     height: 2px;
     width: 50%;

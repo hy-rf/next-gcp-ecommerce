@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
 
@@ -9,11 +9,6 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimated, setIsAnimated] = useState(false);
   const [showLocaleOptions, setShowLocaleOptions] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsAnimated(isOpen);
-    }, 100);
-  }, [isOpen]);
   // in ms
   const animationDelayUnit = 45;
   return (
@@ -21,7 +16,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       <nav
         className={`${
           isOpen ? "flex" : "hidden"
-        } ${isAnimated ? "opacity-100" : "opacity-0"} p-10 z-40 flex-col ml-o mt-[70px] text-center bg-[#808080d0] fixed left-0 color:white w-[100dvw] h-[100dvh] md:flex md:static md:flex md:flex-row md:gap-4 md:ml-auto md:mr-0 md:mt-0 md:w-auto md:h-auto md:z-auto md:p-0 md:bg-transparent transform ease-in-out duration-500 md:opacity-100 z-[999]`}
+        } ${isAnimated ? "opacity-100" : "opacity-0"} p-10 gap-3 z-40 flex-col ml-o mt-[70px] text-center bg-[#808080d0] fixed left-0 color:white w-[100dvw] h-[100dvh] no-underline text-white align-middle leading-4 md:static md:flex md:flex-row md:gap-4 md:ml-auto md:mr-0 md:mt-0 md:w-auto md:h-auto md:z-auto md:p-0 md:bg-transparent transform ease-in-out duration-500 md:opacity-100`}
       >
         <Link
           style={{
@@ -95,7 +90,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           </Link>
         )}
         <div
-          className="hidden md:flex md:block"
+          className="hidden md:flex"
           onMouseEnter={() => setShowLocaleOptions(true)}
           onMouseLeave={() => setShowLocaleOptions(false)}
         >
@@ -125,7 +120,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             </div>
           )}
         </div>
-        <div className="md:hidden flex flex-col gap-2 white">
+        <div className="md:hidden flex flex-col gap-3 text-white">
           <button
             style={{
               transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
@@ -160,21 +155,25 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           </button>
         </div>
       </nav>
-      <div
+      <button
         onClick={() => {
-          if (isOpen) {
+          if (isAnimated) {
             setIsAnimated(false);
             setTimeout(() => {
-              setIsOpen(!isOpen);
+              setIsOpen(false);
             }, 900);
           } else {
-            setIsOpen(!isOpen);
+            setIsOpen(true);
+            setTimeout(() => {
+              setIsAnimated(true);
+            }, 0);
           }
         }}
         className="mobile-menu-button md:hidden"
+        disabled={isAnimated !== isOpen}
       >
         <div className={`${isAnimated && "menu-open"}`}></div>
-      </div>
+      </button>
     </>
   );
 }
