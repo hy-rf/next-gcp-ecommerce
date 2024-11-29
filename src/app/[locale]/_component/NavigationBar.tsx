@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import "./NavigationBar.css";
 
 export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,8 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       setIsAnimated(isOpen);
     }, 100);
   }, [isOpen]);
+  // in ms
+  const animationDelayUnit = 45;
   return (
     <>
       <nav
@@ -24,7 +27,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           style={{
             transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
             transition: "0.5s",
-            transitionDelay: !isOpen ? "0.4s" : "0s",
+            transitionDelay: isOpen
+              ? `${0 * animationDelayUnit}ms`
+              : `${6 * animationDelayUnit}ms`,
           }}
           onClick={() => setIsOpen(false)}
           href={"/product"}
@@ -37,7 +42,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               style={{
                 transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
                 transition: "0.5s",
-                transitionDelay: !isOpen ? "0.3s" : "0.1s",
+                transitionDelay: isOpen
+                  ? `${1 * animationDelayUnit}ms`
+                  : `${5 * animationDelayUnit}ms`,
               }}
               onClick={() => setIsOpen(false)}
               href={"/user"}
@@ -48,7 +55,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               style={{
                 transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
                 transition: "0.5s",
-                transitionDelay: !isOpen ? "0.2s" : "0.2s",
+                transitionDelay: isOpen
+                  ? `${2 * animationDelayUnit}ms`
+                  : `${4 * animationDelayUnit}ms`,
               }}
               onClick={() => setIsOpen(false)}
               href={"/cart"}
@@ -59,7 +68,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               style={{
                 transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
                 transition: "0.5s",
-                transitionDelay: !isOpen ? "0.1s" : "0.3s",
+                transitionDelay: isOpen
+                  ? `${3 * animationDelayUnit}ms`
+                  : `${3 * animationDelayUnit}ms`,
               }}
               onClick={() => setIsOpen(false)}
               href={"/user/logout"}
@@ -73,7 +84,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             style={{
               transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
               transition: "0.5s",
-              transitionDelay: !isOpen ? "0s" : "0.4s",
+              transitionDelay: isOpen
+                ? `${4 * animationDelayUnit}ms`
+                : `${2 * animationDelayUnit}ms`,
             }}
             onClick={() => setIsOpen(false)}
             href={"/user/login"}
@@ -112,8 +125,42 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             </div>
           )}
         </div>
+        <div className="md:hidden flex flex-col gap-2 white">
+          <button
+            style={{
+              transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+              transition: "0.5s",
+              transitionDelay: isOpen
+                ? `${5 * animationDelayUnit}ms`
+                : `${1 * animationDelayUnit}ms`,
+            }}
+            onClick={() =>
+              fetch("/api/user/locale?newLocale=en-US", {
+                method: "put",
+              }).then(() => window.location.reload())
+            }
+          >
+            EN
+          </button>
+          <button
+            style={{
+              transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+              transition: "0.5s",
+              transitionDelay: isOpen
+                ? `${6 * animationDelayUnit}ms`
+                : `${0 * animationDelayUnit}ms`,
+            }}
+            onClick={() =>
+              fetch("/api/user/locale?newLocale=zh-TW", {
+                method: "put",
+              }).then(() => window.location.reload())
+            }
+          >
+            中文
+          </button>
+        </div>
       </nav>
-      <button
+      <div
         onClick={() => {
           if (isOpen) {
             setIsAnimated(false);
@@ -124,10 +171,10 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             setIsOpen(!isOpen);
           }
         }}
-        className="md:hidden"
+        className="mobile-menu-button md:hidden"
       >
-        =
-      </button>
+        <div className={`${isAnimated && "menu-open"}`}></div>
+      </div>
     </>
   );
 }
