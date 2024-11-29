@@ -6,20 +6,25 @@ import { useState } from "react";
 export default function AddToCartButton({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
   const [selectedSpec, setSelectedSpec] = useState(
-    product.specs ? product.specs[0] : null
+    product.specs ? product.specs[0] : null,
   );
-  const handleAddToCart = () => {
-    alert(
-      `Added ${quantity} of ${product.name} to cart with spec: ${selectedSpec}`
-    );
-    // Logic to add to cart here
+  const handleAddToCart = async () => {
+    const response = await fetch(`/api/cart/cartitem?isDefaultCart=true`, {
+      method: "POST",
+      body: JSON.stringify({
+        productId: product.id,
+        cartId: "defaultCart",
+        quantity: quantity,
+      }),
+    }).then((res) => res.json());
+    alert(response);
   };
   return (
     <>
       {/* Right side: Controls (Specs, Quantity, Add to Cart) */}
       <div className="flex flex-col items-end space-y-4 w-full sm:w-auto">
         {/* Specification Dropdown */}
-        {product.specs && (
+        {product.specs && product.specs.length > 0 && (
           <div className="w-full">
             <label
               htmlFor="spec"

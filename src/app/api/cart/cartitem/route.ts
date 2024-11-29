@@ -11,11 +11,26 @@ export async function GET(req: NextRequest) {
   }
   const { searchParams } = new URL(req.url);
   const cartId = searchParams.get("cartId");
+  const isDefaultCart = searchParams.get("isDefaultCart");
+  const db = database();
+  if (isDefaultCart) {
+    const cartCollection = db
+      .collection("User")
+      .doc(decoded.userId)
+      .collection("Cart");
+    return Response.json(
+      (await cartCollection.get()).docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      }),
+    );
+  }
   if (!cartId) {
     // return if cart id was not provided
     return Response.error();
   }
-  const db = database();
   const cartDocument = db.collection("Cart").doc(cartId);
   if (!(await cartDocument.get()).exists) {
     // return if cart is not existed
@@ -33,9 +48,22 @@ export async function POST(req: NextRequest) {
   if (!decoded) {
     return Response.error();
   }
-  const cartId = (await req.json()).cartId;
-  const cartItem: CartItem = (await req.json()).cartItem;
   const db = database();
+  const { searchParams } = new URL(req.url);
+  const cartItem: CartItem = await req.json();
+  const cartId = searchParams.get("cartId");
+  const isDefaultCart = searchParams.get("isDefaultCart");
+  if (isDefaultCart) {
+    const id = (
+      await db
+        .collection("User")
+        .doc(decoded.userId)
+        .collection("Cart")
+        .add(cartItem)
+    ).id;
+    return Response.json({ id });
+  }
+  if (!cartId) return Response.error();
   const cartDocument = db.collection("Cart").doc(cartId);
   if (!(await cartDocument.get()).exists) {
     return Response.error();

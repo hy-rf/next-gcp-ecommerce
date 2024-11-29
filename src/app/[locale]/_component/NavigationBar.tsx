@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
+import CartItemList from "@/app/[locale]/_component/CartItemList";
 
 export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -95,13 +96,13 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           </Link>
         )}
         <div
-          className="hidden md:flex"
+          className="md:items-center hidden md:flex"
           onMouseEnter={() => setShowLocaleOptions(true)}
           onMouseLeave={() => setShowLocaleOptions(false)}
         >
           <Image src="/locale.svg" width={26} height={26} alt="locales"></Image>
           {showLocaleOptions && (
-            <div className="md:absolute md:top-header-height md:right-[-1rem] md:flex md:flex-col md:bg-[#808080e6] md:p-1 md:min-w-[5rem] md:black">
+            <div className=" md:absolute md:top-header-height md:right-[-1rem] md:flex md:flex-col md:bg-[#808080e6] md:p-0 md:min-w-[5rem] md:black">
               <button
                 className="hover:underline"
                 onClick={() =>
@@ -125,7 +126,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             </div>
           )}
         </div>
-        <div className="md:hidden flex flex-col gap-3 text-white">
+        <div className="md:hidden flex flex-col  gap-3 text-white">
           <button
             style={{
               transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
@@ -179,6 +180,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       >
         <div className={`${isAnimated && "menu-open"}`}></div>
       </button>
+      <CartItemList />
     </>
   );
 }

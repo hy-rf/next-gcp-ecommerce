@@ -1,6 +1,7 @@
 import fetchData from "@/lib/fetchData";
 import { Product, Store } from "@/model";
 import Image from "next/image";
+import AddToCartButton from "@/app/[locale]/product/_component/AddToCartButton";
 
 type Params = {
   id: string;
@@ -9,10 +10,10 @@ type Params = {
 export default async function Page({ params }: { params: Promise<Params> }) {
   const { id } = await params;
   const storeItem: Store = await fetchData<Store>(
-    `${process.env.URL}/api/store?id=${id}`
+    `${process.env.URL}/api/store?id=${id}`,
   );
   const products: Product[] = await fetchData<Product[]>(
-    `${process.env.URL}/api/product?storeId=${id}`
+    `${process.env.URL}/api/product?storeId=${id}`,
   );
 
   return (
@@ -56,6 +57,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
                 <p>Category: {ele.categoryId}</p>
                 <p>Subcategory: {ele.subCategoryId}</p>
               </div>
+              <AddToCartButton product={ele} />
             </div>
           ))}
         </div>
