@@ -6,11 +6,15 @@ import { cookies } from "next/headers";
 
 interface PostBody {
   id: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  info: any;
 }
 
 export async function POST(req: NextRequest) {
   const body: PostBody = await req.json();
   const googleUserId = body.id;
+  console.log(body.info);
+
   const db = database();
   let userId: string;
   const userLoginMethodSnapshot = await db
@@ -27,7 +31,7 @@ export async function POST(req: NextRequest) {
   } else {
     const newUser: User = {
       email: "",
-      name: "",
+      name: body.info.name,
       lastLogin: new Date().toISOString(),
     };
     const newUserRef = await db.collection("User").add(newUser);

@@ -21,6 +21,7 @@ export default function ClientProcessingUserLogin() {
           method: "post",
           body: JSON.stringify({
             id: googleUserId,
+            info: userInfo,
           }),
         }).then((res) => res.json());
         if ((await loginResult).code == 200) {
