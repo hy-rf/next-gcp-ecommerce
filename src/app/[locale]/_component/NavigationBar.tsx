@@ -7,6 +7,7 @@ import "./NavigationBar.css";
 import CartItemList from "@/app/[locale]/_component/CartItemList";
 import MobileCartItemList from "@/app/[locale]/_component/MobileCartItemList";
 import { Dictionary } from "@/model";
+import { useRef } from "react";
 
 export default function NavigationBar({
   dict,
@@ -15,9 +16,29 @@ export default function NavigationBar({
   dict: Dictionary;
   loggedIn: boolean;
 }) {
+  // for mobile
   const [isOpen, setIsOpen] = useState(false);
+  const [hide, setHide] = useState(true)
+  // for desktop
   const [showLocaleOptions, setShowLocaleOptions] = useState(false);
   // in ms
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  async function handleAnimation() {
+    // Clear any existing timeout to avoid conflicts
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+
+    if (!isOpen) {
+      setHide(false); // Show the menu
+      timeoutRef.current = setTimeout(() => setIsOpen(true), 10); // Open the menu after a small delay
+    } else {
+      setIsOpen(false); // Close the menu
+      timeoutRef.current = setTimeout(() => setHide(true), 500); // Hide the menu after 500ms
+    }
+  }
+
   const animationDelayUnit = 35;
   return (
     <>
@@ -25,9 +46,9 @@ export default function NavigationBar({
       <Link onClick={() => setIsOpen(false)} href={"/"}>
         <h1 className="whitespace-nowrap">{dict.title}</h1>
       </Link>
-      <nav
-        className={`${!isOpen && "nav-out"} ${isOpen ? "z-50" : "-z-[999]"} ${isOpen ? "opacity-100" : "opacity-0"
-          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 transform ease-in-out duration-500 md:hidden `}
+      {!hide && <nav
+        className={`${isOpen ? "opacity-100" : "opacity-0"
+          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4  ease-in-out duration-500 md:hidden`}
       >
         <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
           <li
@@ -139,11 +160,9 @@ export default function NavigationBar({
         <div className="flex grow flex-col items-end p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
           <MobileCartItemList />
         </div>
-      </nav>
+      </nav>}
       <button
-        onClick={() => {
-          setIsOpen(!isOpen);
-        }}
+        onClick={() => handleAnimation()}
         className="mobile-menu-button md:hidden"
       >
         <div className={`${isOpen && "menu-open"}`}></div>
