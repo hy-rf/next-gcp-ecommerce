@@ -48,9 +48,7 @@ export function CartItemProvider({
       await fetch("/api/cart/cartitem", {
         method: "put",
         body: JSON.stringify(cartItems),
-      })
-        .then(async (res) => res.text())
-        .then((res) => console.log(res));
+      }).then(async (res) => res.text());
     })();
   }, [cartItems]);
   return (

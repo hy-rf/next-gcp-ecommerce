@@ -21,10 +21,6 @@ export default async function Header({ params }: { params: Promise<Params> }) {
       {/* for seo */}
       <div className="hidden">
         <Link href={"/product"}>Product</Link>
-        <Link href={"/user"}>User</Link>
-        <Link href={"/cart"}>Cart</Link>
-        <Link href={"/user/logout"}>Logout</Link>
-        <Link href={"/user/login"}>Login</Link>
       </div>
     </header>
   );

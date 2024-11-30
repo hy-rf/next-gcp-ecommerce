@@ -70,9 +70,11 @@ export default function CartItemList() {
                 className="flex justify-between items-center mb-4 p-3 rounded-md bg-gray-100 hover:bg-gray-200 shadow-sm"
               >
                 <div>
-                  <p className="text-sm text-gray-800 font-semibold">
-                    {item.productId}
-                  </p>
+                  <a href={`/product/${item.productId}`}>
+                    <p className="text-sm text-gray-800 font-semibold">
+                      {item.name}
+                    </p>
+                  </a>
                   <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
                 </div>
                 <div className="flex items-center space-x-2">

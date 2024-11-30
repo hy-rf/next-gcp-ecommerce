@@ -100,6 +100,7 @@ export async function PUT(req: NextRequest) {
   });
   console.log(body);
   // Step 2: Add the new documents
+
   body.forEach((item) => {
     const newDocRef = cartCollection.doc(); // Create a new document reference
     batch.set(newDocRef, item); // Add each item to the new document
@@ -108,7 +109,10 @@ export async function PUT(req: NextRequest) {
   // Commit the batch operation
   try {
     await batch.commit();
-    return new Response("Cart updated successfully", { status: 200 });
+    console.log((await cartCollection.get()).docs.map((doc) => doc.data));
+    return Response.json(
+      (await cartCollection.get()).docs.map((doc) => doc.data),
+    );
   } catch (error) {
     console.error("Error updating cart:", error);
     return new Response("Internal Server Error", { status: 500 });
