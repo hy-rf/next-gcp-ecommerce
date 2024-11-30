@@ -22,11 +22,11 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
     <>
       {/*Mobile*/}
       <nav
-        className={`${
-          isOpen ? "flex" : "hidden"
-        } ${isAnimated ? "opacity-100" : "opacity-0"} p-10 gap-1 z-40 flex-row ml-o mt-[70px] text-center bg-[#808080d0] fixed left-0 color:white w-[100dvw] no-underline text-white align-middle leading-4  transform ease-in-out duration-500 md:hidden`}
+        className={`${isOpen ? "flex" : "hidden"
+          } ${isAnimated ? "opacity-100" : "opacity-0"
+          } p-5 gap-4 z-40 flex-row justify-between mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 transform ease-in-out duration-500 md:hidden p-4`}
       >
-        <ul className="flex flex-col">
+        <ul className="flex flex-col items-start gap-2 w-[60%] p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
           <li
             style={{
               transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
@@ -36,7 +36,11 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 : `${5 * animationDelayUnit}ms`,
             }}
           >
-            <Link onClick={() => setIsOpen(false)} href={"/product"}>
+            <Link
+              onClick={() => setIsOpen(false)}
+              href={"/product"}
+              className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+            >
               Product
             </Link>
           </li>
@@ -44,9 +48,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             <>
               <li
                 style={{
-                  transform: isAnimated
-                    ? "translateX(0px)"
-                    : "translateX(-10px)",
+                  transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
                   transition: "0.5s",
                   transitionDelay: isOpen
                     ? `${1 * animationDelayUnit}ms`
@@ -54,18 +56,16 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 }}
               >
                 <Link
-                  className="p-1"
                   onClick={() => setIsOpen(false)}
                   href={"/user"}
+                  className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                 >
                   User
                 </Link>
               </li>
               <li
                 style={{
-                  transform: isAnimated
-                    ? "translateX(0px)"
-                    : "translateX(-10px)",
+                  transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
                   transition: "0.5s",
                   transitionDelay: isOpen
                     ? `${2 * animationDelayUnit}ms`
@@ -73,9 +73,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 }}
               >
                 <Link
-                  className="p-1"
                   onClick={() => setIsOpen(false)}
                   href={"/user/logout"}
+                  className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                 >
                   Logout
                 </Link>
@@ -93,16 +93,16 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               }}
             >
               <Link
-                className="p-1"
                 onClick={() => setIsOpen(false)}
                 href={"/user/login"}
+                className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
               >
                 Login
               </Link>
             </li>
           )}
           <div
-            className="flex flex-col  gap-3 text-white"
+            className="flex gap-3 text-white mt-4"
             style={{
               transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
               transition: "0.5s",
@@ -110,6 +110,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             }}
           >
             <button
+              className="px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
               onClick={() =>
                 fetch("/api/user/locale?newLocale=en-US", {
                   method: "put",
@@ -119,6 +120,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               EN
             </button>
             <button
+              className="px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
               onClick={() =>
                 fetch("/api/user/locale?newLocale=zh-TW", {
                   method: "put",
@@ -129,7 +131,11 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             </button>
           </div>
         </ul>
-        <MobileCartItemList />
+
+        {/* Cart Section */}
+        <div className="flex flex-col items-end w-[40%] p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
+          <MobileCartItemList />
+        </div>
       </nav>
       <button
         onClick={() => {
@@ -150,6 +156,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       >
         <div className={`${isAnimated && "menu-open"}`}></div>
       </button>
+
 
       {/* Desktop */}
       <nav

@@ -37,6 +37,7 @@ export default function NewProduct() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
+  const [stock, setStock] = useState(1);
   const [image, setImage] = useState<File[] | null>(null);
   const [specs, setSpecs] = useState<string[]>([]);
   const [showFileNameHint, setShowFileNameHint] = useState(false);
@@ -100,7 +101,7 @@ export default function NewProduct() {
         name: name,
         description: description,
         price: price,
-        stock: 1,
+        stock: stock,
         imageList: imageBytes,
         category: category,
         subCategory: subCategory,
@@ -159,6 +160,23 @@ export default function NewProduct() {
             id="price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            min="0"
+            step="0.01"
+            className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="price"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Price:
+          </label>
+          <input
+            type="number"
+            id="stock"
+            value={stock}
+            onChange={(e) => setStock(parseInt(e.target.value))}
             min="0"
             step="0.01"
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"

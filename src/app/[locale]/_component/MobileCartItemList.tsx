@@ -8,8 +8,8 @@ export default function MobileCartItemList() {
   const increaseQuantity = (index: number) => {
     setCartItems((prev) =>
       prev!.map((item, i) =>
-        i === index ? { ...item, quantity: item.quantity + 1 } : item,
-      ),
+        i === index ? { ...item, quantity: item.quantity + 1 } : item
+      )
     );
   };
 
@@ -20,50 +20,53 @@ export default function MobileCartItemList() {
           .map((item, i) =>
             i === index && item.quantity > 1
               ? { ...item, quantity: item.quantity - 1 }
-              : { ...item, quantity: item.quantity - 1 },
+              : { ...item, quantity: item.quantity - 1 }
           )
-          .filter((item) => item.quantity > 0), // Remove items with 0 quantity
+          .filter((item) => item.quantity > 0) // Remove items with 0 quantity
     );
   };
 
   const removeItem = (index: number) => {
     setCartItems((prev) => prev!.filter((_, i) => i !== index));
   };
-  // Calculate total price
 
   useEffect(() => {
     const totalPrice = cartItems
       ? cartItems
         .reduce(
           (total, item) => total + item.price * item.quantity, // Assuming each item has a 'price' property
-          0,
+          0
         )
         .toFixed(0)
         .toString()
       : "0";
     setTotal(parseInt(totalPrice));
-  }, []);
+  }, [cartItems]);
 
   return (
-    <div className="bg-white shadow-lg rounded-lg border right-0 mt-2 w-80 p-4 z-50">
+    <div className="bg-gray-200 dark:bg-gray-800 shadow-lg rounded-lg border dark:border-gray-700 mt-2 w-80 p-4 z-50">
       {/* Cart Header */}
-      <h3 className="text-lg font-bold text-gray-700 mb-4">Your Cart</h3>
+      <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">
+        Your Cart
+      </h3>
 
       {/* Cart Items */}
       {cartItems && cartItems.length > 0 ? (
         cartItems.map((item, index) => (
           <div
             key={index}
-            className="flex justify-between items-center mb-4 p-3 rounded-md bg-gray-100 hover:bg-gray-200 shadow-sm"
+            className="flex justify-between items-center mb-4 p-3 rounded-md bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 shadow-sm"
           >
             <div>
-              <a href={`/product/${item.productId}`}>
-                <p className="text-sm text-gray-800 font-semibold">
+              <a href={`/product/${item.productId}`} className="no-underline">
+                <p className="text-sm text-gray-800 dark:text-gray-200 font-semibold">
                   {item.name}
                 </p>
               </a>
 
-              <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                Qty: {item.quantity}
+              </p>
             </div>
             <div className="flex items-center space-x-2">
               <button
@@ -88,14 +91,20 @@ export default function MobileCartItemList() {
           </div>
         ))
       ) : (
-        <p className="text-gray-500 text-center">Your cart is empty!</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center">
+          Your cart is empty!
+        </p>
       )}
 
       {/* Total Price */}
       {cartItems && cartItems.length > 0 && (
-        <div className="flex justify-between items-center mt-4 border-t pt-4">
-          <p className="text-sm font-semibold text-gray-700">Total:</p>
-          <p className="text-lg font-bold text-gray-900">${total}</p>
+        <div className="flex justify-between items-center mt-4 border-t pt-4 border-gray-300 dark:border-gray-700">
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+            Total:
+          </p>
+          <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+            ${total}
+          </p>
         </div>
       )}
     </div>

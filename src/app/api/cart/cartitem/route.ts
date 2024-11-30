@@ -1,5 +1,5 @@
 import getTokenPayload from "@/lib/getTokenPayload";
-import { CartItem, tokenPayload } from "@/model";
+import { CartItem, Product, tokenPayload } from "@/model";
 import { NextRequest } from "next/server";
 import database from "@/lib/database/database";
 
@@ -43,6 +43,7 @@ export async function GET(req: NextRequest) {
   return Response.json(cartItems);
 }
 
+// post is not in use
 export async function POST(req: NextRequest) {
   const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
   if (!decoded) {
@@ -74,6 +75,7 @@ export async function POST(req: NextRequest) {
   return Response.json(newCartItemRef.id);
 }
 
+// unused
 export async function DELETE() {
   return Response.json({
     message: "success",
@@ -98,6 +100,17 @@ export async function PUT(req: NextRequest) {
   snapshot.docs.forEach((doc) => {
     batch.delete(doc.ref); // Delete each document
   });
+  body.forEach(async ele => {
+    const product = await db.collection("Product").doc(ele.productId).get()
+    const old = (await cartCollection.where("productId", "==", ele.productId).get()).docs
+    if (!product.exists) {
+      return Response.error()
+    }
+    if ((product.data() as Product).stock - ele.quantity + (old.length > 0 ? old[0].data().quantity : 0) < 0) {
+      return Response.json({ message: "no stock" })
+    }
+  })
+
   // Step 2: Add the new documents
 
   body.forEach((item) => {
@@ -109,7 +122,7 @@ export async function PUT(req: NextRequest) {
   try {
     await batch.commit();
     return Response.json(
-      (await cartCollection.get()).docs.map((doc) => doc.data),
+      (await cartCollection.get()).docs.map((doc) => doc.data()),
     );
   } catch (error) {
     console.error("Error updating cart:", error);
