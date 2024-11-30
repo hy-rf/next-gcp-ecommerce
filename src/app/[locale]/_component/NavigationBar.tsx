@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
 import CartItemList from "@/app/[locale]/_component/CartItemList";
@@ -9,27 +9,21 @@ import MobileCartItemList from "@/app/[locale]/_component/MobileCartItemList";
 
 export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAnimated, setIsAnimated] = useState(false);
   const [showLocaleOptions, setShowLocaleOptions] = useState(false);
-  useEffect(() => {
-    if (!isOpen) {
-      setIsAnimated(false);
-    }
-  }, [isOpen]);
   // in ms
   const animationDelayUnit = 35;
   return (
     <>
       {/*Mobile*/}
       <nav
-        className={`${isOpen ? "flex" : "hidden"
-          } ${isAnimated ? "opacity-100" : "opacity-0"
-          } p-5 gap-4 z-40 flex-row justify-between mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 transform ease-in-out duration-500 md:hidden p-4`}
+        className={`${isOpen ? "z-[100]" : "z-[-100]"} ${
+          isOpen ? "opacity-100" : "opacity-0"
+        } flex p-5 gap-4 z-40 flex-row justify-between mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 transform ease-in-out duration-500 md:hidden `}
       >
         <ul className="flex flex-col items-start gap-2 w-[60%] p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
           <li
             style={{
-              transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+              transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
               transition: "0.5s",
               transitionDelay: isOpen
                 ? `${0 * animationDelayUnit}ms`
@@ -48,7 +42,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             <>
               <li
                 style={{
-                  transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+                  transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
                   transition: "0.5s",
                   transitionDelay: isOpen
                     ? `${1 * animationDelayUnit}ms`
@@ -65,7 +59,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               </li>
               <li
                 style={{
-                  transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+                  transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
                   transition: "0.5s",
                   transitionDelay: isOpen
                     ? `${2 * animationDelayUnit}ms`
@@ -85,7 +79,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           {!loggedIn && (
             <li
               style={{
-                transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+                transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
                 transition: "0.5s",
                 transitionDelay: isOpen
                   ? `${0 * animationDelayUnit}ms`
@@ -104,7 +98,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           <div
             className="flex gap-3 text-white mt-4"
             style={{
-              transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+              transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
               transition: "0.5s",
               transitionDelay: "0.1s",
             }}
@@ -139,24 +133,12 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       </nav>
       <button
         onClick={() => {
-          if (isAnimated) {
-            setIsAnimated(false);
-            setTimeout(() => {
-              setIsOpen(false);
-            }, 900);
-          } else {
-            setIsOpen(true);
-            setTimeout(() => {
-              setIsAnimated(true);
-            }, 0);
-          }
+          setIsOpen(!isOpen);
         }}
         className="mobile-menu-button md:hidden"
-        disabled={isAnimated !== isOpen}
       >
-        <div className={`${isAnimated && "menu-open"}`}></div>
+        <div className={`${isOpen && "menu-open"}`}></div>
       </button>
-
 
       {/* Desktop */}
       <nav
@@ -164,7 +146,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       >
         <Link
           style={{
-            transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+            transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
             transition: "0.5s",
             transitionDelay: isOpen
               ? `${0 * animationDelayUnit}ms`
@@ -179,7 +161,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           <>
             <Link
               style={{
-                transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+                transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
                 transition: "0.5s",
                 transitionDelay: isOpen
                   ? `${1 * animationDelayUnit}ms`
@@ -192,7 +174,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             </Link>
             <Link
               style={{
-                transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+                transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
                 transition: "0.5s",
                 transitionDelay: isOpen
                   ? `${3 * animationDelayUnit}ms`
@@ -208,7 +190,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         {!loggedIn && (
           <Link
             style={{
-              transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
+              transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
               transition: "0.5s",
               transitionDelay: isOpen
                 ? `${4 * animationDelayUnit}ms`
