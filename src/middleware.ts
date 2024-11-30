@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
     pathname.endsWith("jpg") ||
     pathname.endsWith("png") ||
     pathname.endsWith("ico") ||
-    pathname.endsWith("svg")
+    pathname.endsWith("svg") || pathname.endsWith("webp")
   )
     return;
   if (pathname.startsWith("/api")) return;

@@ -67,11 +67,11 @@ export default function Hero() {
             ))}
           </div>
         )}
-        <div className="flex justify-center absolute w-full bottom-1">
+        <div className="flex justify-center w-full">
           {carouselItems.map((_, index) => (
             <span
               key={index}
-              className={`w-[15px] h-[15px] rounded-full mx-[5px] cursor-pointer backdrop-blur-[90px] bg-white/50 ${index === currentIndex && "bg-white/90"}`}
+              className={`w-[13px] h-[13px] rounded-full mt-4 mx-[5px] cursor-pointer backdrop-blur-[90px]  ${index === currentIndex ? "bg-black" : "bg-slate-400"}`}
               onClick={() => setCurrentIndex(index)}
             ></span>
           ))}
