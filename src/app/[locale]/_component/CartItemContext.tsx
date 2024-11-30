@@ -35,25 +35,31 @@ export function CartItemProvider({
   token: string | null;
 }) {
   const [cartItems, setCartItems] = useState<CartItem[] | null>(null);
-  const [firstFetched, setFirstFetched] = useState(false)
+  const [firstFetched, setFirstFetched] = useState(false);
   useEffect(() => {
     if (token) {
       fetchCartItems(token)
         .then((res) => setCartItems(res))
         .catch(() => setCartItems([]));
     }
-    setFirstFetched(true)
+    setFirstFetched(true);
   }, [token]);
   useEffect(() => {
     if (firstFetched) {
       (async () => {
-        await fetch("/api/cart/cartitem", {
+        const res = await fetch("/api/cart/cartitem", {
           method: "put",
           body: JSON.stringify(cartItems),
-        }).then(async (res) => res.text());
+        }).then(async (res) => res.json());
+        if (res.message == "no stock") {
+          if (token) {
+            fetchCartItems(token)
+              .then((res) => setCartItems(res))
+              .catch(() => setCartItems([]));
+          }
+        }
       })();
     }
-
   }, [cartItems]);
   return (
     <CartItemContext.Provider value={{ cartItems, setCartItems, token }}>

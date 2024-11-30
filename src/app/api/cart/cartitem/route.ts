@@ -100,16 +100,36 @@ export async function PUT(req: NextRequest) {
   snapshot.docs.forEach((doc) => {
     batch.delete(doc.ref); // Delete each document
   });
-  body.forEach(async ele => {
-    const product = await db.collection("Product").doc(ele.productId).get()
-    const old = (await cartCollection.where("productId", "==", ele.productId).get()).docs
+  for (const ele of body) {
+    const product = await db.collection("Product").doc(ele.productId).get();
+    const old = (
+      await cartCollection.where("productId", "==", ele.productId).get()
+    ).docs;
+    const stock = (product.data() as Product).stock;
+    const oldCartItemQuantity =
+      old.length > 0 ? (old[0].data() as CartItem).quantity : 0;
+    console.log(stock, oldCartItemQuantity, ele.quantity);
     if (!product.exists) {
-      return Response.error()
+      return Response.error();
     }
-    if ((product.data() as Product).stock - ele.quantity + (old.length > 0 ? old[0].data().quantity : 0) < 0) {
-      return Response.json({ message: "no stock" })
+    if (old.length == 0) {
+      await db
+        .collection("Product")
+        .doc(ele.productId)
+        .update({
+          stock: stock - ele.quantity,
+        });
     }
-  })
+    if (stock + oldCartItemQuantity - ele.quantity < 0) {
+      return Response.json({ message: "no stock" });
+    }
+    await db
+      .collection("Product")
+      .doc(ele.productId)
+      .update({
+        stock: stock - ele.quantity + oldCartItemQuantity,
+      });
+  }
 
   // Step 2: Add the new documents
 
