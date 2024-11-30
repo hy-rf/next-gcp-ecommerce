@@ -38,12 +38,20 @@ export default function NavigationBar({
       timeoutRef.current = setTimeout(() => setHide(true), 500); // Hide the menu after 500ms
     }
   }
-
+  async function handleAnimation2() {
+    // Clear any existing timeout to avoid conflicts
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIsOpen(false); // Close the menu
+    timeoutRef.current = setTimeout(() => setHide(true), 500); // Hide the menu after 500ms
+  }
   const animationDelayUnit = 35;
   return (
     <>
       {/*Mobile*/}
-      <Link onClick={() => setIsOpen(false)} href={"/"}>
+      <Link onClick={() => handleAnimation2()} href={"/"}>
         <h1 className="whitespace-nowrap">{dict.title}</h1>
       </Link>
       {!hide && <nav
@@ -61,7 +69,7 @@ export default function NavigationBar({
             }}
           >
             <Link
-              onClick={() => setIsOpen(false)}
+              onClick={() => handleAnimation()}
               href={"/product"}
               className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
             >
@@ -80,7 +88,7 @@ export default function NavigationBar({
                 }}
               >
                 <Link
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => handleAnimation()}
                   href={"/user"}
                   className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                 >
@@ -97,7 +105,7 @@ export default function NavigationBar({
                 }}
               >
                 <Link
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => handleAnimation()}
                   href={"/user/logout"}
                   className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                 >
@@ -117,7 +125,7 @@ export default function NavigationBar({
               }}
             >
               <Link
-                onClick={() => setIsOpen(false)}
+                onClick={() => handleAnimation()}
                 href={"/login"}
                 className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
               >
@@ -180,7 +188,7 @@ export default function NavigationBar({
               ? `${0 * animationDelayUnit}ms`
               : `${6 * animationDelayUnit}ms`,
           }}
-          onClick={() => setIsOpen(false)}
+          onClick={() => handleAnimation()}
           href={"/product"}
         >
           Product
@@ -195,7 +203,7 @@ export default function NavigationBar({
                   ? `${1 * animationDelayUnit}ms`
                   : `${5 * animationDelayUnit}ms`,
               }}
-              onClick={() => setIsOpen(false)}
+              onClick={() => handleAnimation()}
               href={"/user"}
             >
               User
@@ -208,7 +216,7 @@ export default function NavigationBar({
                   ? `${3 * animationDelayUnit}ms`
                   : `${3 * animationDelayUnit}ms`,
               }}
-              onClick={() => setIsOpen(false)}
+              onClick={() => handleAnimation()}
               href={"/user/logout"}
             >
               Logout
@@ -224,7 +232,7 @@ export default function NavigationBar({
                 ? `${4 * animationDelayUnit}ms`
                 : `${2 * animationDelayUnit}ms`,
             }}
-            onClick={() => setIsOpen(false)}
+            onClick={() => handleAnimation()}
             href={"/login"}
           >
             Login
