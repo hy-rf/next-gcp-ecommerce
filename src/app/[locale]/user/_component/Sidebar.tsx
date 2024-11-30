@@ -11,65 +11,34 @@ export default function Sidebar({ dict }: { dict: Dictionary }) {
   const isActive = (route: string) => pathname.endsWith(route);
 
   return (
-    <nav className="w-64 bg-white shadow-md p-6">
-      <Link href="/user">
-        <h2 className="text-xl font-bold text-blue-600 hover:underline mb-4">
-          {dict.layout_title}
-        </h2>
-      </Link>
-      <ul className="space-y-4">
-        <li>
-          <Link
-            href="/user/basic"
-            className={`block text-gray-700 hover:text-blue-600 hover:underline ${
-              isActive("/user/basic") ? "text-blue-600 font-semibold" : ""
-            }`}
-          >
-            Basic
+    <nav className="w-33 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-800">
+      <ul>
+        <li className={`${pathname.endsWith("user") && "bg-gray-700 text-white shadow-md dark:bg-gray-600"} space-y-4 rounded-md text-gray-700 px-1 py-2`}>
+          <Link href="/user" aria-label="User Dashboard">
+            <h2 className={`text-2xl font-bold ml-3 mb-1`}>
+              {dict.layout_title}
+            </h2>
           </Link>
         </li>
-        <li>
-          <Link
-            href="/user/login-method"
-            className={`block text-gray-700 hover:text-blue-600 hover:underline ${
-              isActive("/user/login-method")
-                ? "text-blue-600 font-semibold"
-                : ""
-            }`}
-          >
-            Authorization
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/user/payment"
-            className={`block text-gray-700 hover:text-blue-600 hover:underline ${
-              isActive("/user/payment") ? "text-blue-600 font-semibold" : ""
-            }`}
-          >
-            Payment
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/user/order"
-            className={`block text-gray-700 hover:text-blue-600 hover:underline ${
-              isActive("/user/order") ? "text-blue-600 font-semibold" : ""
-            }`}
-          >
-            Order
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/user/store"
-            className={`block text-gray-700 hover:text-blue-600 hover:underline ${
-              isActive("/user/store") ? "text-blue-600 font-semibold" : ""
-            }`}
-          >
-            Store
-          </Link>
-        </li>
+        {[
+          { path: "/user/basic", label: "Basic" },
+          { path: "/user/login-method", label: "Authorization" },
+          { path: "/user/payment", label: "Payment" },
+          { path: "/user/order", label: "Order" },
+          { path: "/user/store", label: "Store" },
+        ].map(({ path, label }) => (
+          <li key={path}>
+            <Link
+              href={path}
+              className={`block px-4 py-2 rounded-md transition ${isActive(path)
+                ? "bg-gray-700 text-white shadow-md dark:bg-gray-600"
+                : "text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+                }`}
+            >
+              {label}
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );
