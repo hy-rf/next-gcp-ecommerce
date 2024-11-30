@@ -3,8 +3,33 @@ import { useCart } from "@/app/[locale]/_component/CartItemContext";
 import { useState } from "react";
 
 export default function CartItemList() {
-  const { cartItems } = useCart();
+  const { cartItems, setCartItems } = useCart();
   const [showCart, setShowCart] = useState(false);
+
+  const increaseQuantity = (index: number) => {
+    setCartItems((prev) =>
+      prev!.map((item, i) =>
+        i === index ? { ...item, quantity: item.quantity + 1 } : item,
+      ),
+    );
+  };
+
+  const decreaseQuantity = (index: number) => {
+    setCartItems(
+      (prev) =>
+        prev!
+          .map((item, i) =>
+            i === index && item.quantity > 1
+              ? { ...item, quantity: item.quantity - 1 }
+              : { ...item, quantity: item.quantity - 1 },
+          )
+          .filter((item) => item.quantity > 0), // Remove items with 0 quantity
+    );
+  };
+
+  const removeItem = (index: number) => {
+    setCartItems((prev) => prev!.filter((_, i) => i !== index));
+  };
 
   return (
     <div className="relative">
@@ -42,10 +67,34 @@ export default function CartItemList() {
             cartItems.map((item, index) => (
               <div
                 key={index}
-                className="flex justify-between items-center mb-4 p-2 rounded-md bg-gray-100 hover:bg-gray-200"
+                className="flex justify-between items-center mb-4 p-3 rounded-md bg-gray-100 hover:bg-gray-200 shadow-sm"
               >
-                <p className="text-sm text-gray-800">{item.productId}</p>
-                <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                <div>
+                  <p className="text-sm text-gray-800 font-semibold">
+                    {item.productId}
+                  </p>
+                  <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => decreaseQuantity(index)}
+                    className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                  >
+                    -
+                  </button>
+                  <button
+                    onClick={() => increaseQuantity(index)}
+                    className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => removeItem(index)}
+                    className="px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
+                  >
+                    X
+                  </button>
+                </div>
               </div>
             ))
           ) : (

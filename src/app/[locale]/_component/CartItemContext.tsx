@@ -43,6 +43,16 @@ export function CartItemProvider({
         .catch(() => setCartItems(null));
     }
   }, [token]);
+  useEffect(() => {
+    (async () => {
+      await fetch("/api/cart/cartitem", {
+        method: "put",
+        body: JSON.stringify(cartItems),
+      })
+        .then(async (res) => res.text())
+        .then((res) => console.log(res));
+    })();
+  }, [cartItems]);
   return (
     <CartItemContext.Provider value={{ cartItems, setCartItems, token }}>
       {children}

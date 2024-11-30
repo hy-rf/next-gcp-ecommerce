@@ -79,3 +79,38 @@ export async function DELETE() {
     message: "success",
   });
 }
+
+export async function PUT(req: NextRequest) {
+  const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
+  if (!decoded) {
+    return Response.error();
+  }
+  const body = (await req.json()) as CartItem[];
+  const db = database();
+  const cartCollection = db
+    .collection("User")
+    .doc(decoded.userId)
+    .collection("Cart");
+
+  // Step 1: Delete all documents in the collection
+  const snapshot = await cartCollection.get();
+  const batch = db.batch();
+  snapshot.docs.forEach((doc) => {
+    batch.delete(doc.ref); // Delete each document
+  });
+  console.log(body);
+  // Step 2: Add the new documents
+  body.forEach((item) => {
+    const newDocRef = cartCollection.doc(); // Create a new document reference
+    batch.set(newDocRef, item); // Add each item to the new document
+  });
+
+  // Commit the batch operation
+  try {
+    await batch.commit();
+    return new Response("Cart updated successfully", { status: 200 });
+  } catch (error) {
+    console.error("Error updating cart:", error);
+    return new Response("Internal Server Error", { status: 500 });
+  }
+}
