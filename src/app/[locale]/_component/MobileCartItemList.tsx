@@ -44,7 +44,7 @@ export default function MobileCartItemList() {
   }, [cartItems]);
 
   return (
-    <div className="bg-gray-200 dark:bg-gray-800 shadow-lg rounded-lg border dark:border-gray-700 mt-2 w-80 p-4 z-50">
+    <div className="bg-gray-200 dark:bg-gray-800 shadow-lg rounded-lg border dark:border-gray-700 mt-2 p-4 z-50">
       {/* Cart Header */}
       <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">
         Your Cart
