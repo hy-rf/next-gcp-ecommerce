@@ -1,13 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
 import CartItemList from "@/app/[locale]/_component/CartItemList";
 import MobileCartItemList from "@/app/[locale]/_component/MobileCartItemList";
+import { Dictionary } from "@/model";
 
-export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
+export default function NavigationBar({
+  dict,
+  loggedIn,
+}: {
+  dict: Dictionary;
+  loggedIn: boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [showLocaleOptions, setShowLocaleOptions] = useState(false);
   // in ms
@@ -15,12 +22,14 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   return (
     <>
       {/*Mobile*/}
+      <Link onClick={() => setIsOpen(false)} href={"/"}>
+        <h1 className="whitespace-nowrap">{dict.title}</h1>
+      </Link>
       <nav
-        className={`${isOpen ? "z-[100]" : "z-[-100]"} ${
-          isOpen ? "opacity-100" : "opacity-0"
-        } flex p-5 gap-4 z-40 flex-row justify-between mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 transform ease-in-out duration-500 md:hidden `}
+        className={`${!isOpen && "nav-out"} ${isOpen ? "z-50" : "-z-[999]"} ${isOpen ? "opacity-100" : "opacity-0"
+          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 transform ease-in-out duration-500 md:hidden `}
       >
-        <ul className="flex flex-col items-start gap-2 w-[60%] p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
+        <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
           <li
             style={{
               transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
@@ -127,7 +136,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         </ul>
 
         {/* Cart Section */}
-        <div className="flex flex-col items-end p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
+        <div className="flex grow flex-col items-end p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
           <MobileCartItemList />
         </div>
       </nav>

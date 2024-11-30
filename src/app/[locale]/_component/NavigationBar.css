@@ -54,3 +54,7 @@
     transform: rotate(45deg);
   }
 }
+
+nav.nav-out {
+  transform: translateY(-100%) !important;
+}

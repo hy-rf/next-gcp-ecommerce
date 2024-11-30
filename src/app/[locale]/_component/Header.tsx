@@ -14,10 +14,7 @@ export default async function Header({ params }: { params: Promise<Params> }) {
   const loggedIn = (await cookies()).get("token") ? true : false;
   return (
     <header className="flex bg-[rgba(128,128,128,0.9)]">
-      <Link href={"/"}>
-        <h1 className="whitespace-nowrap">{dict.title}</h1>
-      </Link>
-      <NavigationBar loggedIn={loggedIn} />
+      <NavigationBar dict={dict} loggedIn={loggedIn} />
       {/* for seo */}
       <div className="hidden">
         <Link href={"/product"}>Product</Link>

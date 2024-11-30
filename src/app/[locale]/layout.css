@@ -6,28 +6,36 @@ h1 {
   font-size: 2.5rem;
   font-weight: 1000;
 }
+
 h2 {
   font-size: 2.25rem;
   font-weight: 800;
 }
+
 h3 {
   font-size: 2rem;
   font-weight: 600;
 }
+
 h4 {
   font-size: 1.75rem;
   font-weight: 400;
 }
+
 h5 {
   font-size: 1.5rem;
 }
+
 h6 {
   font-size: 1.25rem;
 }
 
+
+
 body {
   font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
     "Arial", sans-serif;
+  z-index: 0;
 }
 
 header {
@@ -39,11 +47,11 @@ header {
   align-content: center;
   z-index: 99;
 
-  & > a:nth-child(1) {
+  &>a:nth-child(1) {
     margin-right: auto;
   }
 
-  & > a:not(:first-child) {
+  &>a:not(:first-child) {
     margin-left: 1rem;
   }
 }
@@ -54,6 +62,7 @@ main {
   width: 100%;
   min-height: auto;
 }
+
 footer {
   position: relative;
   margin-top: auto;
@@ -61,6 +70,7 @@ footer {
   bottom: 0;
   background-color: rgba(128, 128, 128, 0.3);
   padding: 8px;
+
   p {
     text-align: center;
     color: rgba(32, 16, 64, 0.9);
