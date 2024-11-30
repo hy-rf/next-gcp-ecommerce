@@ -29,18 +29,17 @@ export default function MobileCartItemList() {
   const removeItem = (index: number) => {
     setCartItems((prev) => prev!.filter((_, i) => i !== index));
   };
-  console.log(cartItems);
   // Calculate total price
 
   useEffect(() => {
     const totalPrice = cartItems
       ? cartItems
-          .reduce(
-            (total, item) => total + item.price * item.quantity, // Assuming each item has a 'price' property
-            0,
-          )
-          .toFixed(0)
-          .toString()
+        .reduce(
+          (total, item) => total + item.price * item.quantity, // Assuming each item has a 'price' property
+          0,
+        )
+        .toFixed(0)
+        .toString()
       : "0";
     setTotal(parseInt(totalPrice));
   }, []);

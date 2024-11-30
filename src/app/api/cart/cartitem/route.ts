@@ -98,7 +98,6 @@ export async function PUT(req: NextRequest) {
   snapshot.docs.forEach((doc) => {
     batch.delete(doc.ref); // Delete each document
   });
-  console.log(body);
   // Step 2: Add the new documents
 
   body.forEach((item) => {
@@ -109,7 +108,6 @@ export async function PUT(req: NextRequest) {
   // Commit the batch operation
   try {
     await batch.commit();
-    console.log((await cartCollection.get()).docs.map((doc) => doc.data));
     return Response.json(
       (await cartCollection.get()).docs.map((doc) => doc.data),
     );

@@ -9,7 +9,6 @@ export async function GET() {
     return Response.error();
   }
   const token = tokenInRequestCookie.value;
-  console.log(token);
   const decoded: tokenPayload = verify(
     token,
     process.env.JWT_SECRET!

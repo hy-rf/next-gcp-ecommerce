@@ -35,21 +35,25 @@ export function CartItemProvider({
   token: string | null;
 }) {
   const [cartItems, setCartItems] = useState<CartItem[] | null>(null);
-
+  const [firstFetched, setFirstFetched] = useState(false)
   useEffect(() => {
     if (token) {
       fetchCartItems(token)
         .then((res) => setCartItems(res))
-        .catch(() => setCartItems(null));
+        .catch(() => setCartItems([]));
     }
+    setFirstFetched(true)
   }, [token]);
   useEffect(() => {
-    (async () => {
-      await fetch("/api/cart/cartitem", {
-        method: "put",
-        body: JSON.stringify(cartItems),
-      }).then(async (res) => res.text());
-    })();
+    if (firstFetched) {
+      (async () => {
+        await fetch("/api/cart/cartitem", {
+          method: "put",
+          body: JSON.stringify(cartItems),
+        }).then(async (res) => res.text());
+      })();
+    }
+
   }, [cartItems]);
   return (
     <CartItemContext.Provider value={{ cartItems, setCartItems, token }}>

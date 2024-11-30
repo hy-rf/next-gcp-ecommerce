@@ -5,7 +5,6 @@ export async function PUT(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const newLocale = searchParams.get("newLocale");
   if (!newLocale) return Response.error();
-  console.log(newLocale);
 
   (await cookies()).set("locale", newLocale);
   return Response.json({ code: 200 });
