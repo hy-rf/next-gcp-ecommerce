@@ -10,11 +10,14 @@ export default async function Page() {
     state: "pass-through value",
   };
   return (
-    <>
-      <p>Login</p>
-      <a href={`${oauth2Endpoint}?${new URLSearchParams(params).toString()}`}>
-        Google login
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 text-gray-800">
+      <h1 className="text-2xl font-bold mb-4">Login</h1>
+      <a
+        href={`${oauth2Endpoint}?${new URLSearchParams(params).toString()}`}
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition duration-200"
+      >
+        Google Login
       </a>
-    </>
+    </div>
   );
 }

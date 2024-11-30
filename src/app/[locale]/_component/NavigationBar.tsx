@@ -94,7 +94,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             >
               <Link
                 onClick={() => setIsOpen(false)}
-                href={"/user/login"}
+                href={"/login"}
                 className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
               >
                 Login
@@ -133,7 +133,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         </ul>
 
         {/* Cart Section */}
-        <div className="flex flex-col items-end w-[40%] p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
+        <div className="flex flex-col items-end p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
           <MobileCartItemList />
         </div>
       </nav>
@@ -215,7 +215,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 : `${2 * animationDelayUnit}ms`,
             }}
             onClick={() => setIsOpen(false)}
-            href={"/user/login"}
+            href={"/login"}
           >
             Login
           </Link>
