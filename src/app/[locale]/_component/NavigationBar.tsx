@@ -57,19 +57,6 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
                 transition: "0.5s",
                 transitionDelay: isOpen
-                  ? `${2 * animationDelayUnit}ms`
-                  : `${4 * animationDelayUnit}ms`,
-              }}
-              onClick={() => setIsOpen(false)}
-              href={"/cart"}
-            >
-              Cart
-            </Link>
-            <Link
-              style={{
-                transform: isAnimated ? "translateX(0px)" : "translateX(-10px)",
-                transition: "0.5s",
-                transitionDelay: isOpen
                   ? `${3 * animationDelayUnit}ms`
                   : `${3 * animationDelayUnit}ms`,
               }}
@@ -95,6 +82,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             Login
           </Link>
         )}
+        <CartItemList />
         <div
           className="md:items-center hidden md:flex"
           onMouseEnter={() => setShowLocaleOptions(true)}
@@ -102,9 +90,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         >
           <Image src="/locale.svg" width={26} height={26} alt="locales"></Image>
           {showLocaleOptions && (
-            <div className=" md:absolute md:top-header-height md:right-[-1rem] md:flex md:flex-col md:bg-[#808080e6] md:p-0 md:min-w-[5rem] md:black">
+            <div className="absolute top-[70px] right-0 flex flex-col bg-gray-800 text-white rounded-md shadow-md min-w-[6rem] overflow-hidden">
               <button
-                className="hover:underline"
+                className="px-4 py-2 hover:bg-gray-700 transition-colors"
                 onClick={() =>
                   fetch("/api/user/locale?newLocale=en-US", {
                     method: "put",
@@ -114,7 +102,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 EN
               </button>
               <button
-                className="hover:underline"
+                className="px-4 py-2 hover:bg-gray-700 transition-colors"
                 onClick={() =>
                   fetch("/api/user/locale?newLocale=zh-TW", {
                     method: "put",
@@ -126,6 +114,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             </div>
           )}
         </div>
+
         <div className="md:hidden flex flex-col  gap-3 text-white">
           <button
             style={{
@@ -180,7 +169,6 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       >
         <div className={`${isAnimated && "menu-open"}`}></div>
       </button>
-      <CartItemList />
     </>
   );
 }

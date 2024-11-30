@@ -3,6 +3,8 @@ import type React from "react";
 import "./layout.css";
 import Header from "@/app/[locale]/_component/Header";
 import LocaleProvider from "@/app/[locale]/_component/LocaleProvider";
+import { cookies } from "next/headers";
+import { CartItemProvider } from "@/app/[locale]/_component/CartItemContext";
 
 type Params = {
   locale: string;
@@ -45,17 +47,20 @@ export default async function RootLayout({
   params: Promise<Params>;
 }) {
   const { locale } = await params;
+  const token = (await cookies()).get("token");
   return (
     <LocaleProvider>
-      <html lang={locale}>
-        <body className="flex flex-col h-screen">
-          <Header params={params} />
-          <main>{children}</main>
-          <footer>
-            <p>@ 2023 E-Shop. All Rights Reserved.</p>
-          </footer>
-        </body>
-      </html>
+      <CartItemProvider token={token ? token.value : null}>
+        <html lang={locale}>
+          <body className="flex flex-col h-screen">
+            <Header params={params} />
+            <main>{children}</main>
+            <footer>
+              <p>@ 2023 E-Shop. All Rights Reserved.</p>
+            </footer>
+          </body>
+        </html>
+      </CartItemProvider>
     </LocaleProvider>
   );
 }
