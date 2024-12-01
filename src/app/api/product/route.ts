@@ -10,8 +10,11 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const storeId = searchParams.get("storeId");
   const categoryId = searchParams.get("categoryId");
+  const productsPerPage = 20;
+  const page = searchParams.get("page");
   const productId = searchParams.get("id");
   const db = database();
+  // get one if product id had
   if (productId) {
     const productSnapshot = await db.collection("Product").doc(productId).get();
     return Response.json({
@@ -20,6 +23,12 @@ export async function GET(req: NextRequest) {
     });
   }
   if (categoryId) {
+    if (page) {
+      console.log({
+        productsPerPage,
+        page,
+      });
+    }
     const productsByCategory: Query = db
       .collection("Product")
       .where("categoryId", "==", categoryId);
@@ -29,7 +38,7 @@ export async function GET(req: NextRequest) {
           id: doc.id,
           ...doc.data(),
         };
-      }),
+      })
     );
   }
   if (!storeId) {
@@ -105,7 +114,7 @@ export async function POST(req: NextRequest) {
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
       token,
-      process.env.JWT_SECRET!,
+      process.env.JWT_SECRET!
     ) as tokenPayload;
     return payload.userId;
   })();
@@ -162,7 +171,7 @@ export async function POST(req: NextRequest) {
 
   async function uploadBase64ImagesAndGetUrls(
     newProductId: string,
-    images: string[],
+    images: string[]
   ): Promise<string[]> {
     const urls: string[] = [];
     let index = 0;

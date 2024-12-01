@@ -26,7 +26,7 @@ export default async function Page({
     `${process.env.URL}/api/store?id=${id}`
   );
   const products: Product[] = await fetchData<Product[]>(
-    `${process.env.URL}/api/product?storeId=${id}`
+    `${process.env.URL}/api/product?storeId=${id}&page=${page}`
   );
 
   return (

@@ -13,7 +13,7 @@ export default async function CategoryList() {
             key={ele.id}
             className="flex flex-col items-center justify-center p-1 min-w-40 bg-white border-black shadow-category-card rounded-lg "
           >
-            <a href={`/category/${ele.id}`}>
+            <a href={`/product?categoryId=${ele.id}&page=1`}>
               <p className="text-lg font-medium text-gray-800">{ele.name}</p>
             </a>
           </div>
