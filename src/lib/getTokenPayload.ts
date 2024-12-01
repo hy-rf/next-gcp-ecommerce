@@ -12,6 +12,8 @@ export default async function getTokenPayload(): Promise<tokenPayload | null> {
   try {
     return jwt.verify(token, process.env.JWT_SECRET!) as tokenPayload;
   } catch {
+    console.log("token verification failed, need refresh");
+
     return null;
   }
 }

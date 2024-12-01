@@ -3,19 +3,21 @@ import { Product } from "@/model";
 import Image from "next/image";
 import AddToCartButton from "../_component/AddToCartButton";
 
-type Params = {
-  id: string;
-};
-
 /**
  * This component is a Next.js page component.
  * It displays product details. The product id is passed as a parameter in the URL.
  */
 
-export default async function Page({ params }: { params: Promise<Params> }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{
+    id: string;
+  }>;
+}) {
   const { id } = await params;
   const product: Product = await fetchData<Product>(
-    `${process.env.URL}/api/product?id=${id}`
+    `${process.env.URL}/api/product/${id}`
   );
 
   return (

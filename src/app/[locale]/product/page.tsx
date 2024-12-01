@@ -6,6 +6,8 @@ type SearchParams = {
   page?: string;
   filter?: string;
   categoryId?: string;
+  subCategoryId?: string;
+  minPrice: number;
 };
 
 export default async function Page({
@@ -13,7 +15,8 @@ export default async function Page({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const { page, filter, categoryId } = await searchParams;
+  const { page, filter, categoryId, subCategoryId, minPrice } =
+    await searchParams;
 
   const products: Product[] = await fetchData<Product[]>(
     `${process.env.URL}/api/product?categoryId=${categoryId}&page=${page}`
@@ -36,9 +39,9 @@ export default async function Page({
         filterOptions={{
           page: 1,
           storeId: "",
-          categoryId: "",
-          subCategoryId: "",
-          minPrice: 0,
+          categoryId: categoryId || "",
+          subCategoryId: subCategoryId || "",
+          minPrice: minPrice,
           maxPrice: Infinity,
         }}
         products={products}

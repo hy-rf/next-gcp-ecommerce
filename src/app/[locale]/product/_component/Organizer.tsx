@@ -4,25 +4,18 @@ import Image from "next/image";
 import ProductFilter from "./ProductFilter";
 import ProductSort from "./ProductSort";
 import { Dispatch, SetStateAction, useState } from "react";
-type FilterOptions = {
-  page: number;
-  storeId: string;
-  categoryId: string;
-  subCategoryId: string;
-  minPrice: number;
-  maxPrice: number;
-};
+import { FilterOptions } from "@/model";
+
 // general buttons for generating of sort and filter popup
 export default function Organizer({
   filterOption,
-  changeFilterOption,
+  setFilterOption,
 }: {
   filterOption: FilterOptions;
-  changeFilterOption: Dispatch<SetStateAction<FilterOptions>>;
+  setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
 }) {
   const [showFilter, setShowFilter] = useState(false);
   const [showSort, setShowSort] = useState(false);
-  console.log(filterOption, changeFilterOption);
 
   return (
     <>
@@ -49,7 +42,12 @@ export default function Organizer({
           </div>
         </div>
       </div>
-      {showFilter && <ProductFilter categories={[]} subcategories={[]} />}
+      {showFilter && (
+        <ProductFilter
+          filterOption={filterOption}
+          setFilterOption={setFilterOption}
+        />
+      )}
       {showSort && <ProductSort />}
     </>
   );

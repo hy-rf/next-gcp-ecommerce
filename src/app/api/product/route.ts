@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
   if (body.description === "") {
     return Response.error();
   }
-  if (body.price.toString() === "") {
+  if (Number.isNaN(body.price)) {
     return Response.error();
   }
   if (body.stock.toString() === "") {

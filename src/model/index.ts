@@ -124,3 +124,12 @@ export interface CarouselItem {
   description: string;
   imageUrl: string;
 }
+
+export interface FilterOptions {
+  page: number;
+  storeId: string;
+  categoryId: string;
+  subCategoryId: string;
+  minPrice: number;
+  maxPrice: number;
+}

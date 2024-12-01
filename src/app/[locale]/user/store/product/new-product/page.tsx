@@ -34,7 +34,7 @@ async function filesToBase64(files: File[]): Promise<string[]> {
 export default function NewProduct() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState<number>(NaN);
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [stock, setStock] = useState(1);
@@ -81,7 +81,7 @@ export default function NewProduct() {
     if (
       name == "" ||
       description == "" ||
-      price == "" ||
+      Number.isNaN(price) ||
       category == "" ||
       subCategory == "" ||
       image?.length == 0 ||
@@ -159,7 +159,7 @@ export default function NewProduct() {
             type="number"
             id="price"
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => setPrice(parseFloat(e.target.value))}
             min="0"
             step="0.01"
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
