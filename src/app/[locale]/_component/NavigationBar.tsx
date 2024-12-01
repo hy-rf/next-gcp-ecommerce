@@ -44,14 +44,22 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   return (
     <>
       {/*Mobile*/}
-      <Link onClick={() => handleAnimation2()} href={"/"}>
-        <Image
-          src="/logo-lg.png"
-          width={92}
-          height={70}
-          alt="e-commerce"
-        ></Image>
-      </Link>
+      <div
+        style={{
+          borderRadius: "100px / 75px",
+          overflow: "hidden",
+        }}
+      >
+        <Link onClick={() => handleAnimation2()} href={"/"}>
+          <Image
+            src="/logo-lg.png"
+            width={92}
+            height={70}
+            alt="e-commerce"
+          ></Image>
+        </Link>
+      </div>
+
       {!hide && (
         <nav
           className={`${
