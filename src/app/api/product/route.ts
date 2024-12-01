@@ -10,12 +10,13 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const storeId = searchParams.get("storeId");
   const categoryId = searchParams.get("categoryId");
-  const productsPerPage = 20;
+  const subCategoryId = searchParams.get("subCategoryId");
+  const minPrice = searchParams.get("minPrice");
+  const maxPrice = searchParams.get("maxPrice");
   const page = searchParams.get("page");
-  const priceRange = searchParams.get("priceRange");
   const productId = searchParams.get("id");
+  const productsPerPage = 1;
   const db = database();
-  if (priceRange) console.log(priceRange);
 
   // get one if product id had
   if (productId) {
@@ -25,38 +26,37 @@ export async function GET(req: NextRequest) {
       ...productSnapshot.data(),
     });
   }
-  if (categoryId) {
-    if (page) {
-      console.log({
-        productsPerPage,
-        page,
-      });
-    }
-    const productsByCategory: Query = db
-      .collection("Product")
-      .where("categoryId", "==", categoryId);
-    return Response.json(
-      (await productsByCategory.get()).docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data(),
-        };
-      })
-    );
-  }
-  if (!storeId) {
+  if (!page) {
     return Response.error();
   }
-  const storeRef = db
-    .collection("Product")
-    .where("createdShopId", "==", storeId);
-  const productSnapshot = await storeRef.get();
-  const products: Product[] = productSnapshot.docs.map((doc) => {
+  let productQuery: Query = db.collection("Product");
+  if (storeId) {
+    productQuery = productQuery.where("createdShopId", "==", storeId);
+  }
+  if (categoryId) {
+    productQuery = productQuery.where("categoryId", "==", categoryId);
+  }
+  if (subCategoryId) {
+    productQuery = productQuery.where("subCategoryId", "==", subCategoryId);
+  }
+  let products: Product[] = (await productQuery.get()).docs.map((doc) => {
     return {
       id: doc.id,
       ...doc.data(),
     };
   }) as Product[];
+  if (minPrice) {
+    products = products.filter((ele) => ele.price >= parseInt(minPrice));
+  }
+  if (maxPrice) {
+    products = products.filter((ele) => ele.price <= parseInt(maxPrice));
+  }
+
+  products = products.slice(
+    productsPerPage * (parseInt(page) - 1),
+    productsPerPage * parseInt(page)
+  );
+  console.log(products);
   return Response.json(products);
 }
 
