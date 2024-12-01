@@ -1,6 +1,7 @@
 "use client";
 
 import AddToCartButton from "@/app/[locale]/product/_component/AddToCartButton";
+import Organizer from "@/app/mobile-components/Organizer";
 import { Product } from "@/model";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ export default function FilteredProducts({
   const [page, setPage] = useState(1);
   useEffect(() => {
     setPage(1);
+    console.log(page);
   }, []);
   return (
     <>
@@ -43,7 +45,7 @@ export default function FilteredProducts({
           </div>
         ))}
       </div>
-      <p>{page}</p>
+      <Organizer />
     </>
   );
 }

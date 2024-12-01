@@ -12,8 +12,11 @@ export async function GET(req: NextRequest) {
   const categoryId = searchParams.get("categoryId");
   const productsPerPage = 20;
   const page = searchParams.get("page");
+  const priceRange = searchParams.get("priceRange");
   const productId = searchParams.get("id");
   const db = database();
+  if (priceRange) console.log(priceRange);
+
   // get one if product id had
   if (productId) {
     const productSnapshot = await db.collection("Product").doc(productId).get();

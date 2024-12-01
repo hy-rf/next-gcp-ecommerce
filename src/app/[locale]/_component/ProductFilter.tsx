@@ -7,12 +7,6 @@ interface ProductFilterProps {
   categories: string[];
   subcategories: string[];
   keyword?: string;
-  onApplyFilters: (filters: {
-    price: [number, number];
-    category: string;
-    subcategories: string[];
-    keyword: string;
-  }) => void;
 }
 
 export default function ProductFilter({
@@ -20,7 +14,6 @@ export default function ProductFilter({
   categories,
   subcategories,
   keyword = "",
-  onApplyFilters,
 }: ProductFilterProps) {
   const [price, setPrice] = useState<[number, number]>(priceRange);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -38,16 +31,17 @@ export default function ProductFilter({
   };
 
   const handleApplyFilters = () => {
-    onApplyFilters({
-      price,
-      category: selectedCategory,
-      subcategories: selectedSubcategories,
-      keyword: searchKeyword,
-    });
+    if (true) {
+      // change state of organizer
+      return;
+    } else {
+      document.location.replace("new link with filter params");
+      return;
+    }
   };
 
   return (
-    <div className="bg-gray-900 text-white p-4 rounded-lg shadow-md">
+    <div className="fixed bottom-[6rem] bg-gray-900 w-full text-white p-4 rounded-lg shadow-md">
       {/* Price Range Filter */}
       <div className="mb-6">
         <h3 className="text-lg font-bold">Price range</h3>
@@ -126,7 +120,7 @@ export default function ProductFilter({
       {/* Apply Filters Button */}
       <button
         onClick={handleApplyFilters}
-        className="w-full py-3 mt-4 bg-purple-700 hover:bg-purple-600 rounded"
+        className="w-full py-3 mt-4 bg-gray-700 hover:bg-gray-600 rounded"
       >
         Apply Filters
       </button>
