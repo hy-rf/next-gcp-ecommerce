@@ -2,8 +2,6 @@ import fetchData from "@/lib/fetchData";
 import { Product, Store } from "@/model";
 import Image from "next/image";
 import AddToCartButton from "@/app/[locale]/product/_component/AddToCartButton";
-import FilteredProducts from "../../_component/FilteredProducts";
-import Organizer from "@/app/mobile-components/Organizer";
 
 type Params = {
   id: string;
@@ -82,8 +80,6 @@ export default async function Page({
           <a href="">next</a>
         </div>
       )}
-      {filter && <FilteredProducts products={products} />}
-      <Organizer />
     </div>
   );
 }

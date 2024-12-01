@@ -1,6 +1,6 @@
 import fetchData from "@/lib/fetchData";
 import { Product } from "@/model";
-import FilteredProducts from "../_component/FilteredProducts";
+import FilteredProducts from "./_component/FilteredProducts";
 
 type SearchParams = {
   page?: string;

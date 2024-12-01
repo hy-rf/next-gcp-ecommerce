@@ -1,11 +1,11 @@
 "use client";
 
 import AddToCartButton from "@/app/[locale]/product/_component/AddToCartButton";
-import Organizer from "@/app/mobile-components/Organizer";
+import Organizer from "@/app/[locale]/product/_component/Organizer";
 import fetchData from "@/lib/fetchData";
 import { Product } from "@/model";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 type FilterOptions = {
   page: number;
   storeId: string;

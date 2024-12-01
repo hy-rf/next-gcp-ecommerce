@@ -1,8 +1,5 @@
 import database from "@/lib/database/database";
 
-type Params = {
-  id: string;
-};
 export async function GET(
   req: Request,
   {

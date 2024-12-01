@@ -1,7 +1,8 @@
 "use client";
+// TODO: will include filter and sort here
 import Image from "next/image";
-import ProductFilter from "../[locale]/_component/ProductFilter";
-import ProductSort from "../[locale]/_component/ProductSort";
+import ProductFilter from "./ProductFilter";
+import ProductSort from "./ProductSort";
 import { Dispatch, SetStateAction, useState } from "react";
 type FilterOptions = {
   page: number;
@@ -21,6 +22,8 @@ export default function Organizer({
 }) {
   const [showFilter, setShowFilter] = useState(false);
   const [showSort, setShowSort] = useState(false);
+  console.log(filterOption, changeFilterOption);
+
   return (
     <>
       <div className="fixed bottom-8 w-full left-0 md:hidden">
