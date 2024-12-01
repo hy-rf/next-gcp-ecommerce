@@ -6,7 +6,7 @@ export default async function CategoryList() {
     `${process.env.URL}/api/category`
   );
   return (
-    <div className="pt-4">
+    <div className="p-4">
       <div className="flex flex-row flex-wrap gap-1">
         {categories.map((ele) => (
           <div
