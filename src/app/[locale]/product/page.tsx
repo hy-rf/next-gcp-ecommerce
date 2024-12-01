@@ -4,7 +4,7 @@ import Image from "next/image";
 import AddToCartButton from "@/app/[locale]/product/_component/AddToCartButton";
 
 import Organizer from "@/app/mobile-components/Organizer";
-import FilteredProducts from "../store/[id]/_components/FilteredProducts";
+import FilteredProducts from "../_component/FilteredProducts";
 
 type SearchParams = {
   page?: string;

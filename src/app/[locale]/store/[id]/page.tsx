@@ -2,7 +2,7 @@ import fetchData from "@/lib/fetchData";
 import { Product, Store } from "@/model";
 import Image from "next/image";
 import AddToCartButton from "@/app/[locale]/product/_component/AddToCartButton";
-import FilteredProducts from "./_components/FilteredProducts";
+import FilteredProducts from "../../_component/FilteredProducts";
 import Organizer from "@/app/mobile-components/Organizer";
 
 type Params = {
