@@ -11,7 +11,7 @@
     width: 50%;
     background-color: white;
     transform: translateX(50%);
-    transition: 0.6s;
+    transition: 0.3s;
 
     &::before,
     &::after {
@@ -21,7 +21,7 @@
       height: 2px;
       content: "";
       background-color: white;
-      transition: 0.6s;
+      transition: 0.3s;
     }
 
     &::before {
@@ -36,12 +36,12 @@
 
 .menu-open {
   background: transparent !important;
-  transition: 0.6s;
+  transition: 0.3s;
 
   &::before,
   &::after {
     background-color: white !important;
-    transition: 0.6s;
+    transition: 0.3s;
   }
 
   &::before {

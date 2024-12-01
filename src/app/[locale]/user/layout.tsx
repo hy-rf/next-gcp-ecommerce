@@ -14,7 +14,7 @@ export default async function UserLayout({
   const dict = await getDictionary((await params).locale, "user");
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex flex-col bg-gray-50 md:flex-row">
       {/* Sidebar */}
       <Sidebar dict={dict} />
 

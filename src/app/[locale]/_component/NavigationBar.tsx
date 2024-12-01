@@ -6,19 +6,12 @@ import Image from "next/image";
 import "./NavigationBar.css";
 import CartItemList from "@/app/[locale]/_component/CartItemList";
 import MobileCartItemList from "@/app/[locale]/_component/MobileCartItemList";
-import { Dictionary } from "@/model";
 import { useRef } from "react";
 
-export default function NavigationBar({
-  dict,
-  loggedIn,
-}: {
-  dict: Dictionary;
-  loggedIn: boolean;
-}) {
+export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   // for mobile
   const [isOpen, setIsOpen] = useState(false);
-  const [hide, setHide] = useState(true)
+  const [hide, setHide] = useState(true);
   // for desktop
   const [showLocaleOptions, setShowLocaleOptions] = useState(false);
   // in ms
@@ -52,123 +45,131 @@ export default function NavigationBar({
     <>
       {/*Mobile*/}
       <Link onClick={() => handleAnimation2()} href={"/"}>
-        <h1 className="whitespace-nowrap">{dict.title}</h1>
+        <Image
+          src="/logo-lg.png"
+          width={92}
+          height={70}
+          alt="e-commerce"
+        ></Image>
       </Link>
-      {!hide && <nav
-        className={`${isOpen ? "opacity-100" : "opacity-0"
-          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4  ease-in-out duration-500 md:hidden`}
-      >
-        <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
-          <li
-            style={{
-              transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-              transition: "0.5s",
-              transitionDelay: isOpen
-                ? `${0 * animationDelayUnit}ms`
-                : `${5 * animationDelayUnit}ms`,
-            }}
-          >
-            <Link
-              onClick={() => handleAnimation()}
-              href={"/product"}
-              className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
-            >
-              Product
-            </Link>
-          </li>
-          {loggedIn && (
-            <>
-              <li
-                style={{
-                  transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                  transition: "0.5s",
-                  transitionDelay: isOpen
-                    ? `${1 * animationDelayUnit}ms`
-                    : `${4 * animationDelayUnit}ms`,
-                }}
-              >
-                <Link
-                  onClick={() => handleAnimation()}
-                  href={"/user"}
-                  className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
-                >
-                  User
-                </Link>
-              </li>
-              <li
-                style={{
-                  transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                  transition: "0.5s",
-                  transitionDelay: isOpen
-                    ? `${2 * animationDelayUnit}ms`
-                    : `${3 * animationDelayUnit}ms`,
-                }}
-              >
-                <Link
-                  onClick={() => handleAnimation()}
-                  href={"/user/logout"}
-                  className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
-                >
-                  Logout
-                </Link>
-              </li>
-            </>
-          )}
-          {!loggedIn && (
+      {!hide && (
+        <nav
+          className={`${
+            isOpen ? "opacity-100" : "opacity-0"
+          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 ease-in-out duration-300 md:hidden`}
+        >
+          <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
             <li
               style={{
                 transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
                 transition: "0.5s",
                 transitionDelay: isOpen
                   ? `${0 * animationDelayUnit}ms`
-                  : `${1 * animationDelayUnit}ms`,
+                  : `${5 * animationDelayUnit}ms`,
               }}
             >
               <Link
                 onClick={() => handleAnimation()}
-                href={"/login"}
+                href={"/product"}
                 className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
               >
-                Login
+                Product
               </Link>
             </li>
-          )}
-          <div
-            className="flex gap-3 text-white mt-4"
-            style={{
-              transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-              transition: "0.5s",
-              transitionDelay: "0.1s",
-            }}
-          >
-            <button
-              className="px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
-              onClick={() =>
-                fetch("/api/user/locale?newLocale=en-US", {
-                  method: "put",
-                }).then(() => window.location.reload())
-              }
+            {loggedIn && (
+              <>
+                <li
+                  style={{
+                    transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
+                    transition: "0.5s",
+                    transitionDelay: isOpen
+                      ? `${1 * animationDelayUnit}ms`
+                      : `${4 * animationDelayUnit}ms`,
+                  }}
+                >
+                  <Link
+                    onClick={() => handleAnimation()}
+                    href={"/user"}
+                    className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                  >
+                    User
+                  </Link>
+                </li>
+                <li
+                  style={{
+                    transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
+                    transition: "0.5s",
+                    transitionDelay: isOpen
+                      ? `${2 * animationDelayUnit}ms`
+                      : `${3 * animationDelayUnit}ms`,
+                  }}
+                >
+                  <Link
+                    onClick={() => handleAnimation()}
+                    href={"/user/logout"}
+                    className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </>
+            )}
+            {!loggedIn && (
+              <li
+                style={{
+                  transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
+                  transition: "0.5s",
+                  transitionDelay: isOpen
+                    ? `${0 * animationDelayUnit}ms`
+                    : `${1 * animationDelayUnit}ms`,
+                }}
+              >
+                <Link
+                  onClick={() => handleAnimation()}
+                  href={"/login"}
+                  className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                >
+                  Login
+                </Link>
+              </li>
+            )}
+            <div
+              className="flex gap-3 text-white mt-4"
+              style={{
+                transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
+                transition: "0.5s",
+                transitionDelay: "0.1s",
+              }}
             >
-              EN
-            </button>
-            <button
-              className="px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
-              onClick={() =>
-                fetch("/api/user/locale?newLocale=zh-TW", {
-                  method: "put",
-                }).then(() => window.location.reload())
-              }
-            >
-              中文
-            </button>
-          </div>
-        </ul>
+              <button
+                className="px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
+                onClick={() =>
+                  fetch("/api/user/locale?newLocale=en-US", {
+                    method: "put",
+                  }).then(() => window.location.reload())
+                }
+              >
+                EN
+              </button>
+              <button
+                className="px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
+                onClick={() =>
+                  fetch("/api/user/locale?newLocale=zh-TW", {
+                    method: "put",
+                  }).then(() => window.location.reload())
+                }
+              >
+                中文
+              </button>
+            </div>
+          </ul>
 
-        {/* Cart Section */}
-        <div className="flex grow flex-col items-end p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
-          <MobileCartItemList />
-        </div>
-      </nav>}
+          {/* Cart Section */}
+          <div className="flex grow flex-col items-end p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
+            <MobileCartItemList />
+          </div>
+        </nav>
+      )}
       <button
         onClick={() => handleAnimation()}
         className="mobile-menu-button md:hidden"

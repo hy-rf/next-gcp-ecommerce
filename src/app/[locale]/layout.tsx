@@ -53,7 +53,7 @@ export default async function RootLayout({
       <CartItemProvider token={token ? token.value : null}>
         <html lang={locale}>
           <body className="flex flex-col h-screen">
-            <Header params={params} />
+            <Header />
             <main>{children}</main>
             <footer>
               <p>@ 2023 E-Shop. All Rights Reserved.</p>

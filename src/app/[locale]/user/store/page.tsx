@@ -21,7 +21,7 @@ export default async function Page() {
           href="/user/store/product/new-product"
           className="px-4 py-2 text-blue-500 hover:text-blue-600 border border-blue-500 hover:border-blue-600 rounded-lg transition"
         >
-          New Product for My Store
+          New Product
         </Link>
       </nav>
 
