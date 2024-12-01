@@ -17,6 +17,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   // in ms
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   async function handleAnimation() {
+    if (window.innerWidth >= 768) return;
     // Clear any existing timeout to avoid conflicts
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
