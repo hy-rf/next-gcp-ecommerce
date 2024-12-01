@@ -2,6 +2,7 @@ import fetchData from "@/lib/fetchData";
 import { Category, Product } from "@/model";
 import Image from "next/image";
 import FilteredProducts from "../../store/[id]/_components/FilteredProducts";
+import Organizer from "@/app/mobile-components/Organizer";
 
 type Params = {
   id: string;
@@ -49,6 +50,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         </div>
       )}
       {filter && <FilteredProducts products={products} />}
+      <Organizer />
     </div>
   );
 }

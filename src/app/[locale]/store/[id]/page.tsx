@@ -3,6 +3,7 @@ import { Product, Store } from "@/model";
 import Image from "next/image";
 import AddToCartButton from "@/app/[locale]/product/_component/AddToCartButton";
 import FilteredProducts from "./_components/FilteredProducts";
+import Organizer from "@/app/mobile-components/Organizer";
 
 type Params = {
   id: string;
@@ -37,6 +38,7 @@ export default async function Page({
             <code>{id}</code>
           </span>
         </p>
+        <a href={`/store/${id}?filter=true`}>filter</a>
         <h1 className="text-3xl font-bold text-gray-900">{storeItem.name}</h1>
         <p className="text-gray-700">{storeItem.description}</p>
         <div className="text-sm text-gray-500 space-y-1">
@@ -81,6 +83,7 @@ export default async function Page({
         </div>
       )}
       {filter && <FilteredProducts products={products} />}
+      <Organizer />
     </div>
   );
 }
