@@ -32,7 +32,17 @@ export default async function Page({
           <a href="page-">page-</a>
         </div>
       )}
-      <FilteredProducts products={products} />
+      <FilteredProducts
+        filterOptions={{
+          page: 1,
+          storeId: "",
+          categoryId: "",
+          subCategoryId: "",
+          minPrice: 0,
+          maxPrice: Infinity,
+        }}
+        products={products}
+      />
     </div>
   );
 }

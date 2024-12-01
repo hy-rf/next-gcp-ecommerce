@@ -2,9 +2,23 @@
 import Image from "next/image";
 import ProductFilter from "../[locale]/_component/ProductFilter";
 import ProductSort from "../[locale]/_component/ProductSort";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+type FilterOptions = {
+  page: number;
+  storeId: string;
+  categoryId: string;
+  subCategoryId: string;
+  minPrice: number;
+  maxPrice: number;
+};
 // general buttons for generating of sort and filter popup
-export default function Organizer() {
+export default function Organizer({
+  filterOption,
+  changeFilterOption,
+}: {
+  filterOption: FilterOptions;
+  changeFilterOption: Dispatch<SetStateAction<FilterOptions>>;
+}) {
   const [showFilter, setShowFilter] = useState(false);
   const [showSort, setShowSort] = useState(false);
   return (

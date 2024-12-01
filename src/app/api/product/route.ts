@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
     productsPerPage * (parseInt(page) - 1),
     productsPerPage * parseInt(page)
   );
-  console.log(products);
+
   return Response.json(products);
 }
 
