@@ -2,12 +2,13 @@ import { Product } from "@/model";
 import FilteredProducts from "./_component/FilteredProducts";
 
 type SearchParams = {
-  page?: string;
+  page?: number;
   filter?: string;
   categoryId?: string;
   subCategoryId?: string;
   minPrice: number;
   maxPrice: number;
+  storeId: string;
 };
 
 export default async function Page({
@@ -15,11 +16,25 @@ export default async function Page({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const { page, filter, categoryId, subCategoryId, minPrice, maxPrice } =
-    await searchParams;
+  const {
+    page,
+    filter,
+    categoryId,
+    subCategoryId,
+    minPrice,
+    maxPrice,
+    storeId,
+  } = await searchParams;
+  console.log((await searchParams).page);
 
+  let searchParam = `page=${page}`;
+  if (storeId) searchParam += `&storeId=${storeId}`;
+  if (categoryId) searchParam += `&categoryId=${categoryId}`;
+  if (subCategoryId) searchParam += `&subCategoryId=${subCategoryId}`;
+  if (minPrice) searchParam += `&minPrice=${minPrice}`;
+  if (maxPrice) searchParam += `&maxPrice=${maxPrice}`;
   const response = await fetch(
-    `${process.env.URL}/api/product?categoryId=${categoryId}&page=${page}`
+    `${process.env.URL}/api/product?${searchParam}`
   ).then((res) => res.json());
   const products = response.products as Product[];
   const maxPages = response.pages as number;
@@ -39,7 +54,7 @@ export default async function Page({
       )}
       <FilteredProducts
         filterOptions={{
-          page: 1,
+          page: page || 1,
           storeId: "",
           categoryId: categoryId || "",
           subCategoryId: subCategoryId || "",
