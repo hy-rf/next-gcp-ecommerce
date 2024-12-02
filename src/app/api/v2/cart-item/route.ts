@@ -1,6 +1,7 @@
 import database from "@/lib/database/database";
 import getTokenPayload from "@/lib/getTokenPayload";
-import { CartItem, tokenPayload } from "@/model";
+import { CartItem, Product, tokenPayload } from "@/model";
+import { UpdateCartItemBody } from "@/model/dto";
 import { NextRequest } from "next/server";
 
 export async function GET() {
@@ -56,6 +57,29 @@ export async function PUT(req: NextRequest) {
   if (!decoded) {
     return Response.error();
   }
-  const body: CartItem = await req.json();
+  const body: UpdateCartItemBody = await req.json();
+  const db = database();
+  const productRef = db.collection("Product").doc(body.productId);
+  async function getIsStockEnough() {
+    const data: Product = (await productRef.get()).data() as Product;
+    if (body.mode == "plus" && data.stock < body.number) return false;
+    return true;
+  }
+  if (!(await getIsStockEnough()))
+    return Response.json({
+      code: 400,
+      message: "No stock",
+    });
+  const product: Product = (await productRef.get()).data() as Product;
+  productRef.update({
+    stock:
+      product.stock + (body.mode == "minus" ? body.number : -1 * body.number),
+  });
+  const oldCartItem = db.collection("CartItem").doc(body.id);
+  oldCartItem.update({
+    quantity:
+      ((await oldCartItem.get()).data() as CartItem).quantity +
+      (body.mode == "plus" ? body.number : -1 * body.number),
+  });
   return Response.json(body);
 }

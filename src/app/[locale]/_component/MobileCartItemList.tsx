@@ -1,6 +1,7 @@
 "use client";
 import fetchData from "@/lib/fetchData";
 import { CartItem } from "@/model";
+import { UpdateCartItemBody } from "@/model/dto";
 import { useEffect, useState } from "react";
 
 export default function MobileCartItemList() {
@@ -11,6 +12,35 @@ export default function MobileCartItemList() {
       setCartItems(cartItems);
     })();
   }, []);
+  async function handlePlusCartItem(cartItem: CartItem) {
+    const body: UpdateCartItemBody = {
+      id: cartItem.id!,
+      productId: cartItem.productId,
+      number: 1,
+      mode: "plus",
+    };
+    const response = await fetch("/api/v2/cart-item", {
+      method: "put",
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
+    alert(response.message);
+  }
+  async function handleMinusCartItem(cartItem: CartItem) {
+    const body: UpdateCartItemBody = {
+      id: cartItem.id!,
+      productId: cartItem.productId,
+      number: 1,
+      mode: "minus",
+    };
+    const response = await fetch("/api/v2/cart-item", {
+      method: "put",
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
+    alert(response);
+  }
+  async function handleDeleteCartItem(cartItem: CartItem) {
+    return cartItem;
+  }
 
   return (
     <div className="bg-gray-200 w-full dark:bg-gray-800 shadow-lg rounded-lg border dark:border-gray-700 mt-2 p-4 z-50">
@@ -38,13 +68,22 @@ export default function MobileCartItemList() {
               </p>
             </div>
             <div className="flex items-center space-x-2">
-              <button className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">
+              <button
+                onClick={() => handleMinusCartItem(item)}
+                className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+              >
                 -
               </button>
-              <button className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+              <button
+                onClick={() => handlePlusCartItem(item)}
+                className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+              >
                 +
               </button>
-              <button className="px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
+              <button
+                onClick={() => handleDeleteCartItem(item)}
+                className="px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
+              >
                 X
               </button>
             </div>
