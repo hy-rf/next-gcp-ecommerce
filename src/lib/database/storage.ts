@@ -2,7 +2,7 @@ import { Storage } from "@google-cloud/storage";
 // import { getVercelOidcToken } from "@vercel/functions/oidc";
 // import { ExternalAccountClient } from "google-auth-library";
 
-export default async function storage() {
+export default function storage() {
   if (process.env.NODE_ENV === "production") {
     return new Storage();
   }
