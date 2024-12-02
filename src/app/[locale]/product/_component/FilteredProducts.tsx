@@ -58,14 +58,15 @@ export default function FilteredProducts({
       {options.page > 1 && (
         <button
           className="z-[100]"
-          onClick={() =>
+          onClick={() => {
+            const currentPage: number = options.page;
             setOptions((old) => {
               return {
                 ...old,
-                page: options.page - 1,
+                page: currentPage - 1,
               };
-            })
-          }
+            });
+          }}
         >
           Previous page
         </button>
@@ -73,14 +74,18 @@ export default function FilteredProducts({
       {options.page < maxPages && (
         <button
           className="z-[100]"
-          onClick={() =>
+          onClick={() => {
+            const currentPage: number = options.page;
+
+            console.log(currentPage);
+
             setOptions((old) => {
               return {
                 ...old,
-                page: options.page + 1,
+                page: currentPage + 1,
               };
-            })
-          }
+            });
+          }}
         >
           Next page
         </button>

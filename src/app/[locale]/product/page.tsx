@@ -2,7 +2,7 @@ import { Product } from "@/model";
 import FilteredProducts from "./_component/FilteredProducts";
 
 type SearchParams = {
-  page?: number;
+  page?: string;
   filter?: string;
   categoryId?: string;
   subCategoryId?: string;
@@ -16,16 +16,9 @@ export default async function Page({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const {
-    page,
-    filter,
-    categoryId,
-    subCategoryId,
-    minPrice,
-    maxPrice,
-    storeId,
-  } = await searchParams;
-  console.log((await searchParams).page);
+  const { filter, categoryId, subCategoryId, minPrice, maxPrice, storeId } =
+    await searchParams;
+  const page = parseInt((await searchParams).page || "1");
 
   let searchParam = `page=${page}`;
   if (storeId) searchParam += `&storeId=${storeId}`;
