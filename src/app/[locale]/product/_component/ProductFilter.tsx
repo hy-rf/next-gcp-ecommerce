@@ -90,7 +90,12 @@ export default function ProductFilter({
           <option value="ooxykUV2QxMoQ39PYwiD">Language</option>
         </select>
       </div>
-      <button onClick={() => setFilterOption(localOption)}>Apply filter</button>
+      <button
+        className="rounded-md"
+        onClick={() => setFilterOption(localOption)}
+      >
+        Apply filter
+      </button>
     </div>
   );
 }

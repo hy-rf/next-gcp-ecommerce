@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
   const minPrice = searchParams.get("minPrice");
   const maxPrice = searchParams.get("maxPrice");
   let page = searchParams.get("page");
+  const sort = searchParams.get("sort");
   const productId = searchParams.get("id");
   const productsPerPage = 5;
   const db = database();
@@ -31,13 +32,21 @@ export async function GET(req: NextRequest) {
   }
   let productQuery: Query = db.collection("Product");
   if (storeId) {
-    productQuery = productQuery.where("createdShopId", "==", storeId);
+    productQuery = productQuery.where("storeId", "in", storeId.split(","));
   }
   if (categoryId) {
-    productQuery = productQuery.where("categoryId", "==", categoryId);
+    productQuery = productQuery.where(
+      "categoryId",
+      "in",
+      categoryId.split(",")
+    );
   }
   if (subCategoryId) {
-    productQuery = productQuery.where("subCategoryId", "==", subCategoryId);
+    productQuery = productQuery.where(
+      "subCategoryId",
+      "in",
+      subCategoryId.split(",")
+    );
   }
   let products: Product[] = (await productQuery.get()).docs.map((doc) => {
     return {
@@ -51,6 +60,10 @@ export async function GET(req: NextRequest) {
   if (maxPrice) {
     products = products.filter((ele) => ele.price <= parseInt(maxPrice));
   }
+  if (sort && sort === "sold-dec") {
+    console.log("sort by sold dec");
+  }
+
   const pages =
     products.length % productsPerPage != 0
       ? Math.floor(products.length / productsPerPage) + 1

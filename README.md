@@ -1,5 +1,15 @@
 # E-Commerce powered by Next.js
 
+## Features
+
+### Product Sorting and Filtering
+
+Real-time product filter.
+
+### OAuth2.0
+
+Google and Facebook login.
+
 ## Getting Started
 
 First, run the development server:
@@ -14,17 +24,7 @@ pnpm dev
 bun dev
 ```
 
-## Features
-
-### Product Sorting and Filtering
-
-Sorting and filtering are available in category and store page if certain query params was specified before server side rendering.
-Product list shows as client component only while sorting and filtering otherwise server component because of better SEO of products.
-Required params is filter for now, page is also available as server side product list.
-
-###
-
-## API list
+<!-- ## API list
 
 ### User
 
@@ -115,4 +115,4 @@ Required params is filter for now, page is also available as server side product
   }
   ```
 
----
+--- -->

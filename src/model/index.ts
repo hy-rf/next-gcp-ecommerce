@@ -28,6 +28,8 @@ export interface Product {
   description: string;
   price: number;
   stock: number;
+
+  sold?: number;
   imageUrl: string[];
   categoryId: string;
   subCategoryId: string;
@@ -36,6 +38,14 @@ export interface Product {
   createdShopId: string;
   salePrice: number;
   specs?: string[];
+}
+
+export interface Review {
+  id?: string;
+  stars: number;
+  productId: string;
+  userId: string;
+  numberOfUsersLike: string;
 }
 
 export interface Category {
@@ -47,11 +57,6 @@ export interface SubCategory {
   id?: string;
   name: string;
   categoryId: string;
-}
-
-export interface Cart {
-  userId: string;
-  cartItems?: CartItem[];
 }
 
 export interface CartItem {
