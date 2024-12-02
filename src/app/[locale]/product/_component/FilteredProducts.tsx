@@ -41,13 +41,6 @@ export default function FilteredProducts({
         setFilteredProducts(data.products);
         setMaxPages(data.pages);
       });
-    if (window !== undefined) {
-      window.history.pushState(
-        "filtered products",
-        "title",
-        `${document.location.href.split("?")[0]}?${searchParam}`
-      );
-    }
   }, [options]);
   useEffect(() => {
     let searchParam = `page=${options.page}`;
