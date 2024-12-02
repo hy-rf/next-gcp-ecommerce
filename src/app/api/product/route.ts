@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const subCategoryId = searchParams.get("subCategoryId");
   const minPrice = searchParams.get("minPrice");
   const maxPrice = searchParams.get("maxPrice");
-  const page = searchParams.get("page");
+  let page = searchParams.get("page");
   const productId = searchParams.get("id");
   const productsPerPage = 5;
   const db = database();
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
     });
   }
   if (!page) {
-    return Response.error();
+    page = "1";
   }
   let productQuery: Query = db.collection("Product");
   if (storeId) {
