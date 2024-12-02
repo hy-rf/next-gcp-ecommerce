@@ -38,17 +38,34 @@ export default function FilteredProducts({
     fetch(`/api/product?${searchParam}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-
         setFilteredProducts(data.products);
         setMaxPages(data.pages);
       });
-    window.history.pushState(
-      "filtered products",
-      "title",
-      `${document.location.href.split("?")[0]}?${searchParam}`
-    );
+    if (window !== undefined) {
+      window.history.pushState(
+        "filtered products",
+        "title",
+        `${document.location.href.split("?")[0]}?${searchParam}`
+      );
+    }
   }, [options]);
+  useEffect(() => {
+    let searchParam = `page=${options.page}`;
+    if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
+    if (options.categoryId !== "")
+      searchParam += `&categoryId=${options.categoryId}`;
+    if (options.subCategoryId !== "")
+      searchParam += `&subCategoryId=${options.subCategoryId}`;
+    if (options.minPrice > 0) searchParam += `&minPrice=${options.minPrice}`;
+    if (options.maxPrice < Infinity)
+      searchParam += `&maxPrice=${options.maxPrice}`;
+
+    fetch(`/api/product?${searchParam}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setFilteredProducts(data.products);
+      });
+  }, []);
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
