@@ -78,7 +78,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             >
               <Link
                 onClick={() => handleAnimation()}
-                href={"/product"}
+                href={"/product?page=1"}
                 className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
               >
                 Product
@@ -198,7 +198,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               : `${6 * animationDelayUnit}ms`,
           }}
           onClick={() => handleAnimation()}
-          href={"/product"}
+          href={"/product?page=1"}
         >
           Product
         </Link>
