@@ -51,13 +51,16 @@ export async function GET(req: NextRequest) {
   if (maxPrice) {
     products = products.filter((ele) => ele.price <= parseInt(maxPrice));
   }
-
+  const pages =
+    products.length % productsPerPage != 0
+      ? Math.floor(products.length / productsPerPage) + 1
+      : products.length / productsPerPage;
   products = products.slice(
     productsPerPage * (parseInt(page) - 1),
     productsPerPage * parseInt(page)
   );
 
-  return Response.json(products);
+  return Response.json({ pages: pages, products: products });
 }
 
 interface PostBody {

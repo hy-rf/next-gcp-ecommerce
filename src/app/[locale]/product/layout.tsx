@@ -4,7 +4,7 @@ export default async function ProductLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col gap-6 p-0 min-h-screen">
+    <div className="flex flex-col gap-6 p-0">
       <h2>For you</h2>
       <div
         style={{

@@ -1,7 +1,6 @@
 "use client";
 
 import Organizer from "@/app/[locale]/product/_component/Organizer";
-import fetchData from "@/lib/fetchData";
 import { Product } from "@/model";
 import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
@@ -16,12 +15,15 @@ type FilterOptions = {
 export default function FilteredProducts({
   products,
   filterOptions,
+  maxP,
 }: {
   products: Product[];
   filterOptions: FilterOptions;
+  maxP: number;
 }) {
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
   const [filteredProducts, setFilteredProducts] = useState(products);
+  const [maxPages, setMaxPages] = useState(maxP);
   useEffect(() => {
     let searchParam = `page=${options.page}`;
     if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
@@ -33,8 +35,16 @@ export default function FilteredProducts({
     if (options.maxPrice < Infinity)
       searchParam += `&maxPrice=${options.maxPrice}`;
 
-    fetchData<Product[]>(`/api/product?${searchParam}`).then((res) =>
-      setFilteredProducts(res)
+    fetch(`/api/product?${searchParam}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setFilteredProducts(data.products);
+        setMaxPages(data.pages);
+      });
+    window.history.pushState(
+      "filtered products",
+      "title",
+      `${document.location.href.split("?")[0]}?${searchParam}`
     );
   }, [options]);
   return (
@@ -44,19 +54,37 @@ export default function FilteredProducts({
           <ProductItem ele={ele} key={ele.id} />
         ))}
       </div>
-      <button
-        onClick={() =>
-          setOptions((old) => {
-            return {
-              ...old,
-              minPrice: 888,
-            };
-          })
-        }
-      >
-        setminprice
-      </button>
       <Organizer filterOption={options} setFilterOption={setOptions} />
+      {options.page > 1 && (
+        <button
+          className="z-[100]"
+          onClick={() =>
+            setOptions((old) => {
+              return {
+                ...old,
+                page: options.page - 1,
+              };
+            })
+          }
+        >
+          Previous page
+        </button>
+      )}
+      {options.page < maxPages && (
+        <button
+          className="z-[100]"
+          onClick={() =>
+            setOptions((old) => {
+              return {
+                ...old,
+                page: options.page + 1,
+              };
+            })
+          }
+        >
+          Next page
+        </button>
+      )}
     </>
   );
 }

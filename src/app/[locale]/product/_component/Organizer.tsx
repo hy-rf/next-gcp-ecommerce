@@ -19,7 +19,7 @@ export default function Organizer({
 
   return (
     <>
-      <div className="fixed bottom-8 w-full left-0 md:hidden">
+      <div className="fixed bottom-10 w-auto right-6">
         <div className="justify-center bg-gray-500 flex w-[8rem] m-auto p-3 rounded-[32px]">
           <div onClick={() => setShowSort(!showSort)}>
             <Image src={"/sort.svg"} width={40} height={40} alt="sort"></Image>
