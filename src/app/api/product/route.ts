@@ -48,6 +48,30 @@ export async function GET(req: NextRequest) {
       subCategoryId.split(",")
     );
   }
+  if (sort) {
+    switch (sort) {
+      case "sold-desc":
+        productQuery = productQuery.orderBy("sold", "desc");
+        break;
+      case "sold-asc":
+        productQuery = productQuery.orderBy("sold", "asc");
+        break;
+      case "price-desc":
+        productQuery = productQuery.orderBy("price", "desc");
+        break;
+      case "price-asc":
+        productQuery = productQuery.orderBy("price", "asc");
+        break;
+      case "created-desc":
+        productQuery = productQuery.orderBy("createdAt", "desc");
+        break;
+      case "created-asc":
+        productQuery = productQuery.orderBy("createdAt", "asc");
+        break;
+      default:
+        break;
+    }
+  }
   let products: Product[] = (await productQuery.get()).docs.map((doc) => {
     return {
       id: doc.id,
@@ -60,10 +84,6 @@ export async function GET(req: NextRequest) {
   if (maxPrice) {
     products = products.filter((ele) => ele.price <= parseInt(maxPrice));
   }
-  if (sort && sort === "sold-dec") {
-    console.log("sort by sold dec");
-  }
-
   const pages =
     products.length % productsPerPage != 0
       ? Math.floor(products.length / productsPerPage) + 1
