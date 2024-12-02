@@ -2,51 +2,62 @@
 
 import { Product } from "@/model";
 import { useState } from "react";
-import { useCart } from "@/app/[locale]/_component/CartItemContext";
 
 export default function AddToCartButton({ product }: { product: Product }) {
-  const { cartItems, setCartItems } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedSpec, setSelectedSpec] = useState(
-    product.specs ? product.specs[0] : null,
+    product.specs ? product.specs[0] : null
   );
-  const handleAddToCart = async () => {
-    // handle different conditions of add product
-    // 1.empty, 2.have same product, 3.have other product(s)
-    if (!cartItems || cartItems.length === 0) {
-      setCartItems([
-        {
-          cartId: "",
-          name: product.name,
-          productId: product.id!,
-          price: product.price,
-          quantity: quantity,
-        },
-      ]);
-      return;
-    }
-    const newCartItems = [...cartItems];
-    if (newCartItems.length > 0) {
-      for (let i = 0; i < newCartItems?.length; i++) {
-        if (newCartItems[i].productId == product.id) {
-          newCartItems[i].quantity += quantity;
-          setCartItems(newCartItems);
-          return;
-        }
-      }
-      if (!newCartItems.some((item) => item.productId == product.id)) {
-        newCartItems.push({
-          cartId: "",
-          name: product.name,
-          productId: product.id!,
-          price: product.price,
-          quantity: quantity,
-        });
-      }
-    }
-    setCartItems(newCartItems);
-    return;
-  };
+  // const handleAddToCart = async () => {
+  //   // handle different conditions of add product
+  //   // 1.empty, 2.have same product, 3.have other product(s)
+  //   if (!cartItems || cartItems.length === 0) {
+  //     setCartItems([
+  //       {
+  //         userId: "",
+  //         name: product.name,
+  //         productId: product.id!,
+  //         price: product.price,
+  //         quantity: quantity,
+  //       },
+  //     ]);
+  //     return;
+  //   }
+  //   const newCartItems = [...cartItems];
+  //   if (newCartItems.length > 0) {
+  //     for (let i = 0; i < newCartItems?.length; i++) {
+  //       if (newCartItems[i].productId == product.id) {
+  //         newCartItems[i].quantity += quantity;
+  //         setCartItems(newCartItems);
+  //         return;
+  //       }
+  //     }
+  //     if (!newCartItems.some((item) => item.productId == product.id)) {
+  //       newCartItems.push({
+  //         userId: "",
+  //         name: product.name,
+  //         productId: product.id!,
+  //         price: product.price,
+  //         quantity: quantity,
+  //       });
+  //     }
+  //   }
+  //   setCartItems(newCartItems);
+  //   return;
+  // };
+  async function handleAddToCart() {
+    const newCart = {
+      productId: product.id,
+      name: product.name,
+      quantity: quantity,
+      price: product.price,
+    };
+    const response = await fetch("/api/v2/cart-item", {
+      method: "post",
+      body: JSON.stringify(newCart),
+    }).then((res) => res.json());
+    if (response.code == 400) alert(response.message);
+  }
   return (
     <>
       {/* Right side: Controls (Specs, Quantity, Add to Cart) */}

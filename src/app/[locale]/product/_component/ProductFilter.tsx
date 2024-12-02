@@ -3,7 +3,7 @@
     add local state for this component
  */
 import { FilterOptions } from "@/model";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export default function ProductFilter({
   filterOption,
@@ -12,15 +12,16 @@ export default function ProductFilter({
   filterOption: FilterOptions;
   setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
 }) {
+  const [localOption, setLocalOption] = useState<FilterOptions>(filterOption);
   return (
-    <div className="fixed bottom-[6rem] bg-gray-900 w-full text-white p-4 rounded-lg shadow-md">
+    <div className="fixed bottom-[7rem] min-w-40 max-w-80 right-4 bg-white p-4 rounded-lg shadow-md">
       {/* Filter options */}
       <div className="flex items-center gap-2 mt-2">
         <label htmlFor="price-range">Price range</label>
         <input
           id="price-range"
           onChange={(e) =>
-            setFilterOption((old) => {
+            setLocalOption((old) => {
               return {
                 ...old,
                 minPrice: parseInt(e.target.value),
@@ -28,13 +29,13 @@ export default function ProductFilter({
             })
           }
           type="number"
-          value={filterOption.minPrice}
+          value={localOption.minPrice}
           className="w-16 p-2 text-black rounded"
         />
         <span>-</span>
         <input
           onChange={(e) =>
-            setFilterOption((old) => {
+            setLocalOption((old) => {
               return {
                 ...old,
                 maxPrice: parseInt(e.target.value),
@@ -42,7 +43,9 @@ export default function ProductFilter({
             })
           }
           type="number"
-          value={filterOption.maxPrice}
+          value={
+            localOption.maxPrice == Infinity ? "Infinity" : localOption.maxPrice
+          }
           className="w-16 p-2 text-black rounded"
         />
       </div>
@@ -51,9 +54,9 @@ export default function ProductFilter({
         <select
           name=""
           id="category"
-          value={filterOption.categoryId}
+          value={localOption.categoryId}
           onChange={(e) =>
-            setFilterOption((old) => {
+            setLocalOption((old) => {
               return {
                 ...old,
                 categoryId: e.target.value,
@@ -71,9 +74,9 @@ export default function ProductFilter({
         <select
           name=""
           id="sub-category"
-          value={filterOption.subCategoryId}
+          value={localOption.subCategoryId}
           onChange={(e) =>
-            setFilterOption((old) => {
+            setLocalOption((old) => {
               return {
                 ...old,
                 subCategoryId: e.target.value,
@@ -87,6 +90,7 @@ export default function ProductFilter({
           <option value="ooxykUV2QxMoQ39PYwiD">Language</option>
         </select>
       </div>
+      <button onClick={() => setFilterOption(localOption)}>Apply filter</button>
     </div>
   );
 }

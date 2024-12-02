@@ -12,7 +12,7 @@ export default async function StoreList() {
           key={index}
           className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow"
         >
-          <a href={`/store/${ele.id}`} className="block">
+          <a href={`/product?page=1&storeId=${ele.id}`} className="block">
             <h5 className="text-lg font-bold text-blue-600 hover:underline">
               {ele.name}
             </h5>

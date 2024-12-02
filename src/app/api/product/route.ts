@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   const maxPrice = searchParams.get("maxPrice");
   const page = searchParams.get("page");
   const productId = searchParams.get("id");
-  const productsPerPage = 1;
+  const productsPerPage = 5;
   const db = database();
 
   // get one if product id had

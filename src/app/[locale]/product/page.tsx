@@ -34,25 +34,23 @@ export default async function Page({
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-semibold text-gray-800">{filter}</h2>
-      {!filter && (
-        <div className="hidden">
-          {products.map((ele, index) => (
-            <a key={index} href={`/product/${ele.id}`}>
-              <h3>{ele.name}</h3>
-            </a>
-          ))}
-          <a href="page+">page+</a>
-          <a href="page-">page-</a>
-        </div>
-      )}
+      <div className="hidden">
+        {products.map((ele, index) => (
+          <a key={index} href={`/product/${ele.id}`}>
+            <h3>{ele.name}</h3>
+          </a>
+        ))}
+        {page > 1 && <a href={`/product?page=${page - 1}`}>page-</a>}
+        {page < maxPages && <a href={`/product?page=${page + 1}`}>page+</a>}
+      </div>
       <FilteredProducts
         filterOptions={{
           page: page || 1,
-          storeId: "",
+          storeId: storeId || "",
           categoryId: categoryId || "",
           subCategoryId: subCategoryId || "",
-          minPrice: minPrice,
-          maxPrice: maxPrice,
+          minPrice: minPrice || 0,
+          maxPrice: maxPrice || Infinity,
         }}
         products={products}
         maxP={maxPages}

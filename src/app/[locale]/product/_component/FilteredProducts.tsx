@@ -38,6 +38,8 @@ export default function FilteredProducts({
     fetch(`/api/product?${searchParam}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+
         setFilteredProducts(data.products);
         setMaxPages(data.pages);
       });

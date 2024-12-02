@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
-import CartItemList from "@/app/[locale]/_component/CartItemList";
 import MobileCartItemList from "@/app/[locale]/_component/MobileCartItemList";
 import { useRef } from "react";
 
@@ -248,7 +247,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             Login
           </Link>
         )}
-        <CartItemList />
+        <div className="hidden md:hidden">
+          <MobileCartItemList />
+        </div>
         <div
           className="md:items-center hidden md:flex"
           onMouseEnter={() => setShowLocaleOptions(true)}

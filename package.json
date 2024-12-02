@@ -12,8 +12,6 @@
     "@formatjs/intl-localematcher": "^0.5.7",
     "@google-cloud/firestore": "^7.10.0",
     "@google-cloud/storage": "^7.14.0",
-    "@vercel/functions": "^1.5.1",
-    "google-auth-library": "^9.15.0",
     "jsonwebtoken": "^9.0.2",
     "negotiator": "^1.0.0",
     "next": "15.0.3",
