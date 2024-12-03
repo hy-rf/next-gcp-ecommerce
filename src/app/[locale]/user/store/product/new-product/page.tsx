@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import FileUploader from "./_component/FileUploader";
 import FileNameHint from "./_component/FileNameHint";
 import Image from "next/image";
@@ -77,7 +77,7 @@ export default function NewProduct() {
     setSpecs(halfBeforeTheUnwantedElement.concat(halfAfterTheUnwantedElement));
   }
 
-  async function handleSubmitNewProduct() {
+  const handleSubmitNewProduct = useCallback(async () => {
     if (
       name == "" ||
       description == "" ||
@@ -111,10 +111,10 @@ export default function NewProduct() {
     }).then((res) => res.json());
     alert(res.code === 200 ? "Succeed" : "Failed");
     setShowConfirmModal(false);
-  }
+  }, [category, description, image, name, price, specs, stock, subCategory]);
   useEffect(() => {
     if (isFormSubmit) handleSubmitNewProduct();
-  }, [isFormSubmit]);
+  }, [isFormSubmit, handleSubmitNewProduct]);
   return (
     <div className="mt-1 max-w-xl mx-auto p-6 bg-white rounded-md shadow-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Product</h2>
