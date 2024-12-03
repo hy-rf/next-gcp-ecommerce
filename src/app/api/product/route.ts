@@ -138,7 +138,10 @@ export async function POST(req: NextRequest) {
     (body.specs.some((ele) => ele === "") ||
       new Set(body.specs).size !== body.specs.length)
   ) {
-    return Response.error();
+    return Response.json({
+      code: 400,
+      message: "Duplicated specs",
+    });
   }
   const db = database();
   const userId: string = (() => {

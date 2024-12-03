@@ -90,7 +90,6 @@ export default function NewProduct() {
       new Set(specs).size !== specs.length
     ) {
       setShowConfirmModal(false);
-      alert("Invalid");
       return;
     }
     const imageBytes: string[] = await filesToBase64(image);
@@ -109,7 +108,10 @@ export default function NewProduct() {
         specs: specs,
       }),
     }).then((res) => res.json());
-    alert(res.code === 200 ? "Succeed" : "Failed");
+    if (res.code == 400) {
+      alert(res.message);
+    }
+    setIsFormSubmit(false);
     setShowConfirmModal(false);
   }, [category, description, image, name, price, specs, stock, subCategory]);
   useEffect(() => {
