@@ -2,13 +2,19 @@
 
 ## Features
 
-### Product Sorting and Filtering
+### Product Filtering
 
-Real-time product filter.
+Interactive product filter.
+
+## Features in Dev/Test
 
 ### OAuth2.0
 
 Google and Facebook login.
+
+### Product sorting
+
+Sort by sales, price, time created ascending and descending.
 
 ## Getting Started
 
