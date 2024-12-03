@@ -42,7 +42,14 @@ export async function POST(req: NextRequest) {
   ) {
     return Response.json({
       code: 400,
-      message: "product is already in cart",
+      message: "already in cart",
+      cartItemId: (
+        await db
+          .collection("CartItem")
+          .where("userId", "==", decoded.userId)
+          .where("productId", "==", body.productId)
+          .get()
+      ).docs[0].id,
     });
   }
   const newCartItemId = await db.collection("CartItem").add({

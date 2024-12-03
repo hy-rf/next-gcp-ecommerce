@@ -1,6 +1,7 @@
 "use client";
 
 import { Product } from "@/model";
+import { UpdateCartItemBody } from "@/model/dto";
 import { useState } from "react";
 
 export default function AddToCartButton({ product }: { product: Product }) {
@@ -56,7 +57,19 @@ export default function AddToCartButton({ product }: { product: Product }) {
       method: "post",
       body: JSON.stringify(newCart),
     }).then((res) => res.json());
-    if (response.code == 400) alert(response.message);
+    if (response.message == "already in cart") {
+      const body: UpdateCartItemBody = {
+        id: response.cartItemId,
+        productId: product.id!,
+        number: 1,
+        mode: "plus",
+      };
+      const response2 = await fetch("/api/v2/cart-item", {
+        method: "put",
+        body: JSON.stringify(body),
+      }).then((res) => res.json());
+      alert(response2.message);
+    }
   }
   return (
     <>
