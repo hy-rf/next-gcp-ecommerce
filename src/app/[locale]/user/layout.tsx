@@ -11,7 +11,7 @@ export default async function UserLayout({
   children: React.ReactNode;
   params: Params;
 }>) {
-  const dict = await getDictionary((await params).locale, "user");
+  const dict = await getDictionary((await params).locale, "index");
 
   return (
     <div className="flex flex-col bg-gray-50 md:flex-row user-sidebar">
