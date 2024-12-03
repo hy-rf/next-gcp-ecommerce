@@ -2,19 +2,25 @@
 
 ## Features
 
-### Product Filtering
+### Product filter/sort
 
-Interactive product filter.
+Interactive product filter and sort with bookmarkable result.
+
+### Cart
+
+Add product to cart and change quantity of cart items while user is logged in.
 
 ## Features in Dev/Test
 
-### OAuth2.0
+### Password login
 
-Google and Facebook login.
+Login method which is available for public before app publish without verification of app through google oauth consent screen.
 
-### Product sorting
+### OAuth2.0 Link providers
 
-Sort by sales, price, time created ascending and descending.
+Link other oauth login provider
+
+### Product search
 
 ## Getting Started
 

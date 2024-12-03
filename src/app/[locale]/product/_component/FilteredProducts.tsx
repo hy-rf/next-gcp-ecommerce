@@ -15,9 +15,9 @@ export default function FilteredProducts({
   maxP: number;
 }) {
   useEffect(() => {
-    document
-      .getElementById("product-page-link")
-      ?.addEventListener("click", () => {
+    document?.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement; // Typecasting e.target as HTMLElement
+      if (target.id === "product-page-link") {
         setOptions({
           page: 1,
           storeId: "",
@@ -25,8 +25,10 @@ export default function FilteredProducts({
           subCategoryId: "",
           minPrice: 0,
           maxPrice: Infinity,
+          sortOption: "sold-desc",
         });
-      });
+      }
+    });
   }, []);
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
   const [filteredProducts, setFilteredProducts] = useState(products);
