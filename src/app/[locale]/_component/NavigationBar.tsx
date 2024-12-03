@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
 import CartItemList from "@/app/[locale]/_component/CartItemList";
 import { useRef } from "react";
+import LocaleContext from "./LocaleContext";
 
 export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
+  const dict = useContext(LocaleContext);
   // for mobile
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(true);
@@ -139,7 +141,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                   href={"/login"}
                   className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                 >
-                  Login
+                  {dict.user_login}
                 </Link>
               </li>
             )}

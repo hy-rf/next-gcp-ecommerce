@@ -137,6 +137,7 @@ export interface tokenPayload {
 export interface Dictionary {
   title: string;
   layout_title: string;
+  user_login: string;
 }
 
 export interface CarouselItem {

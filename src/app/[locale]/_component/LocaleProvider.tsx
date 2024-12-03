@@ -1,16 +1,19 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { ReactNode } from "react";
 import LocaleContext from "./LocaleContext"; // Import the context
+import { Dictionary } from "@/model";
 
 type LocaleProviderProps = {
+  dict: Dictionary;
   children: ReactNode;
 };
 
-export default function LocaleProvider({ children }: LocaleProviderProps) {
-  const [locale] = useState<string>("en-US"); // Default locale
-
+export default function LocaleProvider({
+  children,
+  dict,
+}: LocaleProviderProps) {
   return (
-    <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>
+    <LocaleContext.Provider value={dict}>{children}</LocaleContext.Provider>
   );
 }

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import type React from "react";
 import "./layout.css";
 import Header from "@/app/[locale]/_component/Header";
-import LocaleProvider from "@/app/[locale]/_component/LocaleProvider";
+import getDictionary from "@/dictionary/dictionary";
+import LocaleProvider from "./_component/LocaleProvider";
 
 type Params = {
   locale: string;
@@ -45,8 +46,9 @@ export default async function RootLayout({
   params: Promise<Params>;
 }) {
   const { locale } = await params;
+  const dict = await getDictionary(locale, "index");
   return (
-    <LocaleProvider>
+    <LocaleProvider dict={dict}>
       <html lang={locale}>
         <body className="flex flex-col h-screen">
           <Header />
