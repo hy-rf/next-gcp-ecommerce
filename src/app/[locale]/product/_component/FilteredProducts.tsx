@@ -21,6 +21,13 @@ export default function FilteredProducts({
   filterOptions: FilterOptions;
   maxP: number;
 }) {
+  useEffect(() => {
+    document
+      .getElementById("product-page-link")
+      ?.addEventListener("click", () => {
+        setOptions(filterOptions);
+      });
+  }, []);
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [maxPages, setMaxPages] = useState(maxP);
@@ -41,7 +48,7 @@ export default function FilteredProducts({
         setFilteredProducts(data.products);
         setMaxPages(data.pages);
         try {
-          window.history.pushState(null, "", searchParam);
+          window.history.pushState(null, "", `product?${searchParam}`);
         } catch {
           console.log("fail to update url");
         }

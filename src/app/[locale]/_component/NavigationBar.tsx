@@ -80,6 +80,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 onClick={() => handleAnimation()}
                 href={"/product?page=1"}
                 className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                id="product-page-link"
               >
                 Product
               </Link>
@@ -199,6 +200,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           }}
           onClick={() => handleAnimation()}
           href={"/product?page=1"}
+          id="product-page-link"
         >
           Product
         </Link>
