@@ -56,6 +56,11 @@ export async function POST(req: NextRequest) {
     ...body,
     userId: decoded.userId,
   });
+  const productRef = db.collection("Product").doc(body.productId);
+  const product: Product = (await productRef.get()).data() as Product;
+  productRef.update({
+    stock: product.stock - body.quantity,
+  });
   return Response.json(newCartItemId.id);
 }
 
@@ -83,10 +88,17 @@ export async function PUT(req: NextRequest) {
       product.stock + (body.mode == "minus" ? body.number : -1 * body.number),
   });
   const oldCartItem = db.collection("CartItem").doc(body.id);
-  oldCartItem.update({
-    quantity:
-      ((await oldCartItem.get()).data() as CartItem).quantity +
-      (body.mode == "plus" ? body.number : -1 * body.number),
-  });
+  if (
+    body.mode == "minus" &&
+    ((await oldCartItem.get()).data() as CartItem).quantity == 1
+  ) {
+    oldCartItem.delete();
+  } else {
+    oldCartItem.update({
+      quantity:
+        ((await oldCartItem.get()).data() as CartItem).quantity +
+        (body.mode == "plus" ? body.number : -1 * body.number),
+    });
+  }
   return Response.json(body);
 }

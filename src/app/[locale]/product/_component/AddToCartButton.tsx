@@ -61,7 +61,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
       const body: UpdateCartItemBody = {
         id: response.cartItemId,
         productId: product.id!,
-        number: 1,
+        number: quantity,
         mode: "plus",
       };
       const response2 = await fetch("/api/v2/cart-item", {

@@ -15,7 +15,7 @@ export default function ProductItem({ ele }: { ele: Product }) {
           className="w-full h-full object-cover rounded-md"
         />
       </div>
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between ml-auto w-[60%]">
         <a href={`/product/${ele.id}`}>
           <h3 className="text-lg font-semibold text-gray-800">{ele.name}</h3>
         </a>

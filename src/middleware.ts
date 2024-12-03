@@ -22,7 +22,8 @@ export async function middleware(request: NextRequest) {
     pathname.endsWith("jpg") ||
     pathname.endsWith("png") ||
     pathname.endsWith("ico") ||
-    pathname.endsWith("svg") || pathname.endsWith("webp")
+    pathname.endsWith("svg") ||
+    pathname.endsWith("webp")
   )
     return;
   if (pathname.startsWith("/api")) return;
@@ -51,7 +52,7 @@ export async function middleware(request: NextRequest) {
   }
   // final result is setting locale cookie and redirect
   (await cookies()).set("locale", currentLocale);
-  return NextResponse.redirect(request.nextUrl);
+  return NextResponse.rewrite(request.nextUrl);
 }
 
 export const config = {
