@@ -1,4 +1,11 @@
+"use client";
+
+import { useState } from "react";
+
 export default function Page() {
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
   const params = {
     client_id:
@@ -9,42 +16,91 @@ export default function Page() {
     include_granted_scopes: "true",
     state: "pass-through value",
   };
+  async function handleLoginOrRegister() {
+    const response = await fetch("/api/user", {
+      method: "post",
+      body: JSON.stringify({
+        name: name,
+        password: password,
+      }),
+    }).then((res) => res.json());
+    if (response.message === "Register succeed") {
+      setIsRegistering(true);
+      setPassword("");
+    }
+    if (response.code == 200) {
+      location.replace("/");
+    }
+  }
   return (
     <div className="flex flex-col items-center justify-center text-gray-600">
-      <h1 className="text-2xl font-bold">Login/Register</h1>
-      <div
-        id="login-register-form"
-        className="w-60 mt-4 mb-4 flex flex-col items-end gap-6"
-      >
-        <input
-          type="text"
-          placeholder="username/email"
-          className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
-        />
-        <input
-          type="password"
-          placeholder="password"
-          className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300"
-        >
-          Login/Register
-        </button>
-      </div>
-      <div id="third-party-login-links" className="flex gap-4">
-        <div className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300">
-          <a
-            href={`${oauth2Endpoint}?${new URLSearchParams(params).toString()}`}
+      {isRegistering && (
+        <>
+          <h1 className="text-2xl font-bold">Register</h1>
+          <div
+            id="login-register-form"
+            className="w-60 mt-4 mb-4 flex flex-col items-end gap-6"
           >
-            Google
-          </a>
-        </div>
-        <div className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300">
-          <a href="">Facebook</a>
-        </div>
-      </div>
+            <input
+              type="password"
+              placeholder="confirm password"
+              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300"
+              onClick={handleLoginOrRegister}
+            >
+              Register
+            </button>
+          </div>
+        </>
+      )}
+      {!isRegistering && (
+        <>
+          <h1 className="text-2xl font-bold">Login/Register</h1>
+          <div
+            id="login-register-form"
+            className="w-60 mt-4 mb-4 flex flex-col items-end gap-6"
+          >
+            <input
+              type="text"
+              placeholder="username/email"
+              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="password"
+              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300"
+              onClick={handleLoginOrRegister}
+            >
+              Login/Register
+            </button>
+          </div>
+          <div id="third-party-login-links" className="flex gap-4">
+            <div className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300">
+              <a
+                href={`${oauth2Endpoint}?${new URLSearchParams(params).toString()}`}
+              >
+                Google
+              </a>
+            </div>
+            <div className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300">
+              <a href="">Facebook</a>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

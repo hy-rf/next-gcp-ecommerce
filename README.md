@@ -10,6 +10,10 @@ Interactive product filter and sort with bookmarkable result.
 
 Add product to cart and change quantity of cart items.
 
+### Password login
+
+Login method which is available for public before app publish.
+
 ### Google login
 
 ## Features in Dev/Test
@@ -17,10 +21,6 @@ Add product to cart and change quantity of cart items.
 ### Order
 
 Place order.
-
-### Password login
-
-Login method which is available for public before app publish.
 
 ### OAuth2.0 Link providers
 
