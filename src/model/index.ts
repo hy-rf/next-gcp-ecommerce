@@ -22,6 +22,12 @@ export interface Address {
   description: string;
 }
 
+export interface WishListItem {
+  id?: string;
+  productId: string;
+  userId: string;
+}
+
 export interface Product {
   id?: string;
   name: string;
@@ -111,6 +117,13 @@ export interface Coupon {
 export interface DeliveryProcess {
   orderId: string;
   deliveryDetail: string;
+  status: DeliveryProcessStatus;
+}
+
+enum DeliveryProcessStatus {
+  pending = 0,
+  delivering = 1,
+  arrived = 2,
 }
 
 export interface tokenPayload {

@@ -31,6 +31,7 @@ export default function ClientProcessingUserLogin() {
         console.error("Error fetching user info:", error);
       }
     };
+    document.querySelector(".user-sidebar")?.remove();
     fetchUserInfo();
   }, []);
   return <></>;

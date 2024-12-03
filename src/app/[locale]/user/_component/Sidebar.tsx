@@ -36,7 +36,6 @@ export default function Sidebar({ dict }: { dict: Dictionary }) {
         {[
           { path: "/user/login-method", label: "Authorization" },
           { path: "/user/payment", label: "Payment" },
-          { path: "/user/order", label: "Order" },
           { path: "/user/store", label: "Store" },
         ].map(({ path, label }) => (
           <li key={path} onClick={() => setShowLinks(false)}>
