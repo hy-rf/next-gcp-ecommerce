@@ -14,7 +14,7 @@ export default function ProductFilter({
 }) {
   const [localOption, setLocalOption] = useState<FilterOptions>(filterOption);
   return (
-    <div className="fixed bottom-[7rem] min-w-40 max-w-80 right-4 bg-white p-4 rounded-lg shadow-md">
+    <div className="fixed bottom-[7rem] min-w-40 max-w-80 right-4 p-4 rounded-lg shadow-md bg-header-gray">
       {/* Filter options */}
       <div className="flex items-center gap-2 mt-2">
         <label htmlFor="price-range">Price range</label>

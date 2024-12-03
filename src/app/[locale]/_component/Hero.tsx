@@ -12,7 +12,7 @@ export default function Hero() {
       {
         title: "test",
         description: "testD",
-        imageUrl: "/1.jpg",
+        imageUrl: "/activity1.webp",
       },
       {
         title: "test2",

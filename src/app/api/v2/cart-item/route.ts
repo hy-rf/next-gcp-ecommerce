@@ -7,7 +7,7 @@ import { NextRequest } from "next/server";
 export async function GET() {
   const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
   if (!decoded) {
-    return Response.error();
+    return Response.json({ code: 400 });
   }
   return Response.json(
     (

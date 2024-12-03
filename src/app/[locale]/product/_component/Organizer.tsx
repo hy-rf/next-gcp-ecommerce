@@ -21,15 +21,15 @@ export default function Organizer({
     <>
       <div className="fixed bottom-10 w-auto right-6">
         <div
-          className={`justify-center bg-gray-500 flex m-auto p-0 rounded-[32px] shadow-category-card`}
+          className={`justify-center flex m-auto p-0 rounded-[32px] shadow-category-card`}
         >
           <div
-            className={`${showSort && "bg-gray-100"} rounded-tl-[32px] rounded-bl-[32px] p-2 transform duration-300`}
+            className={`${showSort ? "toggle-organizer-gray" : " bg-header-gray"} rounded-tl-[32px] rounded-bl-[32px] p-2 transform duration-300 select-none`}
             onClick={() => setShowSort(!showSort)}
           >
             <Image src={"/sort.svg"} width={40} height={40} alt="sort"></Image>
           </div>
-          <div className="py-2">
+          <div className="py-2 px-2 bg-header-gray select-none">
             <Image
               src={"/align.svg"}
               width={40}
@@ -38,7 +38,7 @@ export default function Organizer({
             ></Image>
           </div>
           <div
-            className={`${showFilter && "bg-gray-100"} rounded-tr-[32px] rounded-br-[32px] p-2  transform duration-300`}
+            className={`${showFilter ? "toggle-organizer-gray" : " bg-header-gray"} rounded-tr-[32px] rounded-br-[32px] p-2  transform duration-300 select-none`}
             onClick={() => setShowFilter(!showFilter)}
           >
             <Image

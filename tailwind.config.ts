@@ -2,6 +2,10 @@
 export const content = ["./src/**/*.{js,ts,jsx,tsx,mdx}"];
 export const theme = {
   extend: {
+    colors: {
+      "header-gray": "rgba(128, 128, 128, 0.9)",
+      "toggle-organizer-gray": "rgba(128, 128, 128, 0.1)",
+    },
     spacing: {
       "header-height": "70px",
     },

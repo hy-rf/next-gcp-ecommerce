@@ -8,10 +8,13 @@ export default function MobileCartItemList() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   useEffect(() => {
     (async () => {
-      const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
-      setCartItems(cartItems);
-      console.log("No cart item or not log in");
-      setCartItems([]);
+      try {
+        const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
+        setCartItems(cartItems);
+      } catch {
+        console.log("No cart item or not log in");
+        setCartItems([]);
+      }
     })();
   }, []);
   async function handlePlusCartItem(cartItem: CartItem) {

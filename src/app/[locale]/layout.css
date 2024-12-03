@@ -30,8 +30,6 @@ h6 {
   font-size: 1.25rem;
 }
 
-
-
 body {
   font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
     "Arial", sans-serif;
@@ -46,14 +44,6 @@ header {
   padding: 0 1rem;
   align-content: center;
   z-index: 99;
-
-  &>*:nth-child(1) {
-    margin-right: auto;
-  }
-
-  &>*:not(:first-child) {
-    margin-left: 1rem;
-  }
 }
 
 main {

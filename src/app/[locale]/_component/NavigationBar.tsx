@@ -64,7 +64,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         <nav
           className={`${
             isOpen ? "opacity-100" : "opacity-0"
-          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 ease-in-out duration-300 md:hidden`}
+          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 ease-in-out duration-300 md:hidden m-0`}
         >
           <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
             <li
@@ -180,7 +180,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       )}
       <button
         onClick={() => handleAnimation()}
-        className="mobile-menu-button md:hidden"
+        className="mobile-menu-button md:hidden ml-auto"
       >
         <div className={`${isOpen && "menu-open"}`}></div>
       </button>
