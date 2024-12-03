@@ -8,9 +8,11 @@ import { Dispatch, SetStateAction, useState } from "react";
 export default function ProductFilter({
   filterOption,
   setFilterOption,
+  setShowFilter,
 }: {
   filterOption: FilterOptions;
   setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
+  setShowFilter: Dispatch<SetStateAction<boolean>>;
 }) {
   const [localOption, setLocalOption] = useState<FilterOptions>(filterOption);
   return (
@@ -92,7 +94,10 @@ export default function ProductFilter({
       </div>
       <button
         className="rounded-md"
-        onClick={() => setFilterOption(localOption)}
+        onClick={() => {
+          setFilterOption(localOption);
+          setShowFilter(false);
+        }}
       >
         Apply filter
       </button>

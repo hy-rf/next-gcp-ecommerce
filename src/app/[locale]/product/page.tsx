@@ -51,6 +51,7 @@ export default async function Page({
           subCategoryId: subCategoryId || "",
           minPrice: minPrice || 0,
           maxPrice: maxPrice || Infinity,
+          sortOption: "sold-desc",
         }}
         products={products}
         maxP={maxPages}

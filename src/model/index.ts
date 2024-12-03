@@ -152,4 +152,5 @@ export interface FilterOptions {
   subCategoryId: string;
   minPrice: number;
   maxPrice: number;
+  sortOption?: string;
 }

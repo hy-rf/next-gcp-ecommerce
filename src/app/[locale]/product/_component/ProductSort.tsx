@@ -1,29 +1,74 @@
 "use client";
 
-//import { useState } from "react";
+import { FilterOptions } from "@/model";
+import { Dispatch, SetStateAction, useState } from "react";
 
-export default function ProductSort() {
-  //const [sortOption, setSortOption] = useState(null);
+export default function ProductSort({
+  filterOption,
+  setFilterOption,
+  setShowSort,
+}: {
+  filterOption: FilterOptions;
+  setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
+  setShowSort: Dispatch<SetStateAction<boolean>>;
+}) {
+  const [sortOption, setSortOption] = useState<string>(
+    filterOption.sortOption || "sold-desc"
+  );
+  const sortOptions = [
+    {
+      value: "sold-desc",
+      labelContent: "Sold DESC",
+    },
+    {
+      value: "sold-asc",
+      labelContent: "Sold ASC",
+    },
+    {
+      value: "price-desc",
+      labelContent: "Price DESC",
+    },
+    {
+      value: "price-asc",
+      labelContent: "Price ASC",
+    },
+    {
+      value: "created-desc",
+      labelContent: "Created DESC",
+    },
+    {
+      value: "created-asc",
+      labelContent: "Created ASC",
+    },
+  ];
   return (
-    <div className="fixed w-full rounded-tl-4 rounded-tr-4">
-      {/* Filter options */}
-      <div className="flex items-center gap-2 mt-2">
-        <label htmlFor="category">Category</label>
-        <select name="" id="category">
-          <option value="">Choose Category</option>
-          <option value="OhFPcQGt5B8iJ6TywjgS">Learning</option>
-          <option value="ujoJM3sLWQLd2G4QGYxu">Books</option>
-        </select>
-      </div>
-      <div className="flex items-center gap-2 mt-2">
-        <label htmlFor="sub-category">SubCategory</label>
-        <select name="" id="sub-category">
-          <option value="">Choose Sub Category</option>
-          <option value="8NTCSFSyKE1fXldHCDiu">Sketching</option>
-          <option value="nTvLmo7vdZYMx6NMWTsk">Health</option>
-          <option value="ooxykUV2QxMoQ39PYwiD">Language</option>
-        </select>
-      </div>
+    <div className="fixed bottom-[6rem] w-full rounded-tl-4 rounded-tr-4 flex flex-col bg-header-gray">
+      {sortOptions.map((ele) => (
+        <div key={ele.value}>
+          <label htmlFor={ele.value}>{ele.labelContent}</label>
+          <input
+            id={ele.value}
+            type="radio"
+            name="group"
+            value={ele.value}
+            onChange={(e) => setSortOption(e.target.value)}
+            checked={sortOption == ele.value}
+          />
+        </div>
+      ))}
+      <button
+        onClick={() => {
+          setFilterOption((old) => {
+            return {
+              ...old,
+              sortOption: sortOption,
+            };
+          });
+          setShowSort(false);
+        }}
+      >
+        Apply Sort
+      </button>
     </div>
   );
 }

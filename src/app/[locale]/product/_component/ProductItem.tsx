@@ -21,7 +21,10 @@ export default function ProductItem({ ele }: { ele: Product }) {
         </a>
         <p className="text-sm text-gray-600">{ele.description}</p>
         <p className="text-xl font-bold text-green-600">${ele.price}</p>
-        <p className="text-xl font-bold text-green-600">{ele.stock}</p>
+        <p className="text-xl font-bold text-green-600">Sold: {ele.sold}</p>
+        <p className="text-xl font-bold text-green-600">
+          In Stock: {ele.stock}
+        </p>
         <div className="text-sm text-gray-500 mt-2 space-y-1">
           <p>Category: {ele.categoryId}</p>
           <p>Subcategory: {ele.subCategoryId}</p>

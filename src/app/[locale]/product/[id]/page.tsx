@@ -31,6 +31,7 @@ export default async function Page({
           <p className="text-lg font-medium text-gray-900">{product.name}</p>
           <p className="text-gray-700">{product.description}</p>
           <p className="text-xl font-bold text-green-600">${product.price}</p>
+          <p className="text-sm text-gray-500">Sold: {product.sold}</p>
           <p className="text-sm text-gray-500">In Stock: {product.stock}</p>
 
           {/* Product Images */}

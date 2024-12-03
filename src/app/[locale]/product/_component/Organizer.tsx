@@ -54,9 +54,16 @@ export default function Organizer({
         <ProductFilter
           filterOption={filterOption}
           setFilterOption={setFilterOption}
+          setShowFilter={setShowFilter}
         />
       )}
-      {showSort && <ProductSort />}
+      {showSort && (
+        <ProductSort
+          filterOption={filterOption}
+          setFilterOption={setFilterOption}
+          setShowSort={setShowSort}
+        />
+      )}
     </>
   );
 }

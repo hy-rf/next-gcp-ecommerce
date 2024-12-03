@@ -1,17 +1,10 @@
 "use client";
 
 import Organizer from "@/app/[locale]/product/_component/Organizer";
-import { Product } from "@/model";
+import { FilterOptions, Product } from "@/model";
 import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
-type FilterOptions = {
-  page: number;
-  storeId: string;
-  categoryId: string;
-  subCategoryId: string;
-  minPrice: number;
-  maxPrice: number;
-};
+
 export default function FilteredProducts({
   products,
   filterOptions,
@@ -48,6 +41,9 @@ export default function FilteredProducts({
     if (options.minPrice > 0) searchParam += `&minPrice=${options.minPrice}`;
     if (options.maxPrice < Infinity)
       searchParam += `&maxPrice=${options.maxPrice}`;
+    if (options.sortOption) {
+      searchParam += `&sort=${options.sortOption}`;
+    }
 
     fetch(`/api/product?${searchParam}`)
       .then((res) => res.json())

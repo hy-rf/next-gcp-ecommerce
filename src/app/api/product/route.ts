@@ -15,18 +15,9 @@ export async function GET(req: NextRequest) {
   const maxPrice = searchParams.get("maxPrice");
   let page = searchParams.get("page");
   const sort = searchParams.get("sort");
-  const productId = searchParams.get("id");
   const productsPerPage = 5;
   const db = database();
 
-  // get one if product id had
-  if (productId) {
-    const productSnapshot = await db.collection("Product").doc(productId).get();
-    return Response.json({
-      id: productSnapshot.id,
-      ...productSnapshot.data(),
-    });
-  }
   if (!page) {
     page = "1";
   }
