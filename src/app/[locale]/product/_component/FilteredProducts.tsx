@@ -4,7 +4,6 @@ import Organizer from "@/app/[locale]/product/_component/Organizer";
 import { Product } from "@/model";
 import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
-import { useRouter } from "next/navigation";
 type FilterOptions = {
   page: number;
   storeId: string;
@@ -22,7 +21,6 @@ export default function FilteredProducts({
   filterOptions: FilterOptions;
   maxP: number;
 }) {
-  const router = useRouter();
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [maxPages, setMaxPages] = useState(maxP);
