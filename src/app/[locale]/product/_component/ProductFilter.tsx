@@ -3,7 +3,8 @@
     add local state for this component
  */
 import { FilterOptions } from "@/model";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import CategoryFilterCheckboxGroup from "./CategoryFilterCheckboxGroup";
 
 export default function ProductFilter({
   filterOption,
@@ -15,6 +16,17 @@ export default function ProductFilter({
   setShowFilter: Dispatch<SetStateAction<boolean>>;
 }) {
   const [localOption, setLocalOption] = useState<FilterOptions>(filterOption);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    filterOption.categoryId.split(",")
+  );
+  useEffect(() => {
+    setLocalOption((old) => {
+      return {
+        ...old,
+        categoryId: selectedCategories.join(","),
+      };
+    });
+  }, [selectedCategories]);
   return (
     <div className="fixed bottom-[7rem] min-w-40 max-w-80 right-4 p-4 rounded-lg shadow-md bg-header-gray">
       {/* Filter options */}
@@ -52,7 +64,12 @@ export default function ProductFilter({
         />
       </div>
       <div className="flex items-center gap-2 mt-2">
-        <label htmlFor="category">Category</label>
+        <CategoryFilterCheckboxGroup
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+        />
+      </div>
+      {/* <label htmlFor="category">Category</label>
         <select
           name=""
           id="category"
@@ -69,9 +86,9 @@ export default function ProductFilter({
           <option value="">Choose Category</option>
           <option value="OhFPcQGt5B8iJ6TywjgS">Learning</option>
           <option value="ujoJM3sLWQLd2G4QGYxu">Books</option>
-        </select>
-      </div>
-      <div className="flex items-center gap-2 mt-2">
+        </select> */}
+
+      {/* <div className="flex items-center gap-2 mt-2">
         <label htmlFor="sub-category">SubCategory</label>
         <select
           name=""
@@ -91,7 +108,7 @@ export default function ProductFilter({
           <option value="nTvLmo7vdZYMx6NMWTsk">Health</option>
           <option value="ooxykUV2QxMoQ39PYwiD">Language</option>
         </select>
-      </div>
+      </div> */}
       <button
         className="rounded-md"
         onClick={() => {
