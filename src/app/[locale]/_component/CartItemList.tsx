@@ -1,107 +1,130 @@
 "use client";
-import { useCart } from "@/app/[locale]/_component/CartItemContext";
-import { useState } from "react";
+import fetchData from "@/lib/fetchData";
+import { CartItem } from "@/model";
+import { UpdateCartItemBody } from "@/model/dto";
+import { useEffect, useState } from "react";
 
 export default function CartItemList() {
-  const { cartItems, setCartItems } = useCart();
-  const [showCart, setShowCart] = useState(false);
-
-  const increaseQuantity = (index: number) => {
-    setCartItems((prev) =>
-      prev!.map((item, i) =>
-        i === index ? { ...item, quantity: item.quantity + 1 } : item,
-      ),
-    );
-  };
-
-  const decreaseQuantity = (index: number) => {
-    setCartItems(
-      (prev) =>
-        prev!
-          .map((item, i) =>
-            i === index && item.quantity > 1
-              ? { ...item, quantity: item.quantity - 1 }
-              : { ...item, quantity: item.quantity - 1 },
-          )
-          .filter((item) => item.quantity > 0), // Remove items with 0 quantity
-    );
-  };
-
-  const removeItem = (index: number) => {
-    setCartItems((prev) => prev!.filter((_, i) => i !== index));
-  };
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
+        setCartItems(cartItems);
+      } catch {
+        console.log("No cart item or not log in");
+        setCartItems([]);
+      }
+    })();
+  }, []);
+  async function handlePlusCartItem(cartItem: CartItem) {
+    const body: UpdateCartItemBody = {
+      id: cartItem.id!,
+      productId: cartItem.productId,
+      number: 1,
+      mode: "plus",
+    };
+    await fetch("/api/v2/cart-item", {
+      method: "put",
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
+    (async () => {
+      try {
+        const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
+        setCartItems(cartItems);
+      } catch {
+        console.log("No cart item or not log in");
+        setCartItems([]);
+      }
+    })();
+  }
+  async function handleMinusCartItem(cartItem: CartItem) {
+    const body: UpdateCartItemBody = {
+      id: cartItem.id!,
+      productId: cartItem.productId,
+      number: 1,
+      mode: "minus",
+    };
+    await fetch("/api/v2/cart-item", {
+      method: "put",
+      body: JSON.stringify(body),
+    }).then((res) => res.json());
+    (async () => {
+      try {
+        const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
+        setCartItems(cartItems);
+      } catch {
+        console.log("No cart item or not log in");
+        setCartItems([]);
+      }
+    })();
+  }
+  async function handleDeleteCartItem(cartItem: CartItem) {
+    return cartItem;
+  }
 
   return (
-    <div className="relative">
-      {/* Cart Button */}
-      <button
-        className="h-[70px] pl-4 flex items-center justify-center"
-        onClick={() => setShowCart((old) => !old)}
-      >
-        <svg
-          width="28px"
-          height="28px"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          stroke="#ffffff"
-        >
-          <path
-            d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z"
-            stroke="#ffffff"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></path>
-        </svg>
-      </button>
+    <div className="bg-gray-200 w-full dark:bg-gray-800 shadow-lg rounded-lg border dark:border-gray-700 mt-2 p-4 z-50">
+      {/* Cart Header */}
+      <h3 className="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">
+        Your Cart
+      </h3>
 
-      {/* Cart Popup */}
-      {showCart && (
-        <div className="absolute bg-white shadow-lg rounded-lg border right-0 mt-2 w-80 p-4 z-50">
-          {/* Cart Header */}
-          <h3 className="text-lg font-bold text-gray-700 mb-4">Your Cart</h3>
+      {/* Cart Items */}
+      {cartItems && cartItems.length > 0 ? (
+        cartItems.map((item, index) => (
+          <div
+            key={index}
+            className="flex justify-between items-center mb-4 p-3 rounded-md bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 shadow-sm"
+          >
+            <div>
+              <a href={`/product/${item.productId}`} className="no-underline">
+                <p className="text-sm text-gray-800 dark:text-gray-200 font-semibold">
+                  {item.name}
+                </p>
+              </a>
 
-          {/* Cart Items */}
-          {cartItems && cartItems.length > 0 ? (
-            cartItems.map((item, index) => (
-              <div
-                key={index}
-                className="flex justify-between items-center mb-4 p-3 rounded-md bg-gray-100 hover:bg-gray-200 shadow-sm"
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                Qty: {item.quantity}
+              </p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => handleMinusCartItem(item)}
+                className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
               >
-                <div>
-                  <a href={`/product/${item.productId}`}>
-                    <p className="text-sm text-gray-800 font-semibold">
-                      {item.name}
-                    </p>
-                  </a>
-                  <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => decreaseQuantity(index)}
-                    className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                  >
-                    -
-                  </button>
-                  <button
-                    onClick={() => increaseQuantity(index)}
-                    className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => removeItem(index)}
-                    className="px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
-                  >
-                    X
-                  </button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500 text-center">Your cart is empty!</p>
-          )}
+                -
+              </button>
+              <button
+                onClick={() => handlePlusCartItem(item)}
+                className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+              >
+                +
+              </button>
+              <button
+                onClick={() => handleDeleteCartItem(item)}
+                className="px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
+              >
+                X
+              </button>
+            </div>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500 dark:text-gray-400 text-center">
+          Your cart is empty!
+        </p>
+      )}
+
+      {/* Total Price */}
+      {cartItems && cartItems.length > 0 && (
+        <div className="flex justify-between items-center mt-4 border-t pt-4 border-gray-300 dark:border-gray-700">
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+            Total:
+          </p>
+          <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+            ${}
+          </p>
         </div>
       )}
     </div>

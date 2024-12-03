@@ -28,7 +28,6 @@ export interface Product {
   description: string;
   price: number;
   stock: number;
-
   sold?: number;
   imageUrl: string[];
   categoryId: string;
@@ -66,6 +65,7 @@ export interface CartItem {
   name: string;
   quantity: number;
   price: number;
+  spec?: string;
 }
 
 export interface Order {

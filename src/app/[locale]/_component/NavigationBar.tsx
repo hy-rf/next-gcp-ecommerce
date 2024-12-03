@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
-import MobileCartItemList from "@/app/[locale]/_component/MobileCartItemList";
+import CartItemList from "@/app/[locale]/_component/CartItemList";
 import { useRef } from "react";
 
 export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
@@ -174,7 +174,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
 
           {/* Cart Section */}
           <div className="flex grow flex-col items-end p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
-            <MobileCartItemList />
+            <CartItemList />
           </div>
         </nav>
       )}
@@ -248,7 +248,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           </Link>
         )}
         <div className="hidden md:hidden">
-          <MobileCartItemList />
+          <CartItemList />
         </div>
         <div
           className="md:items-center hidden md:flex"
