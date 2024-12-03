@@ -63,10 +63,10 @@ export async function GET(req: NextRequest) {
         productQuery = productQuery.orderBy("price", "asc");
         break;
       case "created-desc":
-        productQuery = productQuery.orderBy("createdAt", "desc");
+        productQuery = productQuery.orderBy("createdDate", "desc");
         break;
       case "created-asc":
-        productQuery = productQuery.orderBy("createdAt", "asc");
+        productQuery = productQuery.orderBy("createdDate", "asc");
         break;
       default:
         break;
@@ -245,6 +245,7 @@ export async function POST(req: NextRequest) {
     createdShopId: body.createdShopId,
     salePrice: body.price,
     specs: body.specs,
+    createdDate: new Date(),
   };
   const newProductRef = await db.collection("Product").add(newProduct);
   const newProductId = newProductRef.id;

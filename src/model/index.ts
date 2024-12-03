@@ -43,6 +43,7 @@ export interface Product {
   createdShopId: string;
   salePrice: number;
   specs?: string[];
+  createdDate?: Date;
 }
 
 export interface Review {

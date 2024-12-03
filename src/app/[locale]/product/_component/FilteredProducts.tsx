@@ -25,7 +25,14 @@ export default function FilteredProducts({
     document
       .getElementById("product-page-link")
       ?.addEventListener("click", () => {
-        setOptions(filterOptions);
+        setOptions({
+          page: 1,
+          storeId: "",
+          categoryId: "",
+          subCategoryId: "",
+          minPrice: 0,
+          maxPrice: Infinity,
+        });
       });
   }, []);
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
