@@ -42,7 +42,7 @@ export default function ProductSort({
     },
   ];
   return (
-    <div className="fixed bottom-[6rem] w-full rounded-tl-4 rounded-tr-4 flex flex-col bg-header-gray">
+    <div className="fixed bottom-[6rem] rounded-lg flex flex-col bg-header-gray p-4">
       {sortOptions.map((ele) => (
         <div key={ele.value}>
           <label htmlFor={ele.value}>{ele.labelContent}</label>

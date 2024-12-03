@@ -44,6 +44,7 @@ header {
   padding: 0 1rem;
   align-content: center;
   z-index: 99;
+  backdrop-filter: blur(1px);
 }
 
 main {

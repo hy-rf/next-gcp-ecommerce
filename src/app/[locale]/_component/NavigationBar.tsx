@@ -16,7 +16,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   // in ms
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   async function handleAnimation() {
-    if (window.innerWidth >= 768) return;
+    // if (window.innerWidth >= 768) return;
     // Clear any existing timeout to avoid conflicts
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -64,9 +64,10 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         <nav
           className={`${
             isOpen ? "opacity-100" : "opacity-0"
-          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 ease-in-out duration-300 md:hidden m-0`}
+          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 ease-in-out duration-300 m-0`}
+          style={{ backdropFilter: "blur(1px)" }}
         >
-          <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg">
+          <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg">
             <li
               style={{
                 transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
@@ -151,7 +152,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               }}
             >
               <button
-                className="px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
+                className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
                 onClick={() =>
                   fetch("/api/user/locale?newLocale=en-US", {
                     method: "put",
@@ -161,7 +162,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 EN
               </button>
               <button
-                className="px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
+                className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
                 onClick={() =>
                   fetch("/api/user/locale?newLocale=zh-TW", {
                     method: "put",
@@ -174,21 +175,21 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           </ul>
 
           {/* Cart Section */}
-          <div className="flex grow flex-col items-end p-4 bg-gray-900 bg-opacity-80 rounded-lg shadow-lg mr-4">
+          <div className="flex grow flex-col items-end p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg mr-4">
             <CartItemList />
           </div>
         </nav>
       )}
       <button
         onClick={() => handleAnimation()}
-        className="mobile-menu-button md:hidden ml-auto"
+        className="mobile-menu-button ml-auto"
       >
         <div className={`${isOpen && "menu-open"}`}></div>
       </button>
 
       {/* Desktop */}
       <nav
-        className={`hidden text-white md:leading-header-line md:text-center md:static md:flex md:flex-row md:gap-4 md:ml-auto md:mr-0 md:mt-0 md:w-auto md:h-auto md:z-auto md:p-0 md:bg-transparent md:opacity-100`}
+        className={`hidden text-white md:leading-header-line md:text-center md:static md:flex md:flex-row md:gap-4 md:ml-auto md:mr-0 md:mt-0 md:w-auto md:h-auto md:z-auto md:p-0 md:bg-transparent md:opacity-100  md:hidden`}
       >
         <Link
           style={{

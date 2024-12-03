@@ -26,7 +26,6 @@ export default function CategoryFilterCheckboxGroup({
 
   return (
     <div>
-      <h3>Category Options</h3>
       {options.map((option) => (
         <div key={option.value}>
           <label>

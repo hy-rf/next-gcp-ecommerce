@@ -22,14 +22,15 @@ export default function Organizer({
       <div className="fixed bottom-10 w-auto right-6">
         <div
           className={`justify-center flex m-auto p-0 rounded-[32px] shadow-category-card`}
+          style={{ backdropFilter: "blur(1px)" }}
         >
           <div
-            className={`${showSort ? "toggle-organizer-gray" : " bg-header-gray"} rounded-tl-[32px] rounded-bl-[32px] p-2 transform duration-300 select-none`}
+            className={`${!showSort ? "bg-[rgba(128,128,128,0.6)]" : "bg-header-gray"} rounded-tl-[32px] rounded-bl-[32px] p-2 transform duration-300 select-none`}
             onClick={() => setShowSort(!showSort)}
           >
             <Image src={"/sort.svg"} width={40} height={40} alt="sort"></Image>
           </div>
-          <div className="py-2 px-2 bg-header-gray select-none">
+          <div className="py-2 px-2 bg-[rgba(128,128,128,0.6)] select-none">
             <Image
               src={"/align.svg"}
               width={40}
@@ -38,7 +39,7 @@ export default function Organizer({
             ></Image>
           </div>
           <div
-            className={`${showFilter ? "toggle-organizer-gray" : " bg-header-gray"} rounded-tr-[32px] rounded-br-[32px] p-2  transform duration-300 select-none`}
+            className={`${!showFilter ? "bg-[rgba(128,128,128,0.6)]" : "bg-header-gray"} rounded-tr-[32px] rounded-br-[32px] p-2  transform duration-300 select-none`}
             onClick={() => setShowFilter(!showFilter)}
           >
             <Image

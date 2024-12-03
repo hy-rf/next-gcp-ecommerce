@@ -44,7 +44,7 @@ export default function ProductFilter({
           }
           type="number"
           value={localOption.minPrice}
-          className="w-16 p-2 text-black rounded"
+          className="w-10 p-1 text-black rounded"
         />
         <span>-</span>
         <input
@@ -60,7 +60,7 @@ export default function ProductFilter({
           value={
             localOption.maxPrice == Infinity ? "Infinity" : localOption.maxPrice
           }
-          className="w-16 p-2 text-black rounded"
+          className="w-10 p-1 text-black rounded"
         />
       </div>
       <div className="flex items-center gap-2 mt-2">
