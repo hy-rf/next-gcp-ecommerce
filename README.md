@@ -8,17 +8,23 @@ Interactive product filter and sort with bookmarkable result.
 
 ### Cart
 
-Add product to cart and change quantity of cart items while user is logged in.
+Add product to cart and change quantity of cart items.
+
+### Google login
 
 ## Features in Dev/Test
 
+### Order
+
+Place order.
+
 ### Password login
 
-Login method which is available for public before app publish without verification of app through google oauth consent screen.
+Login method which is available for public before app publish.
 
 ### OAuth2.0 Link providers
 
-Link other oauth login provider
+Link other oauth login providers
 
 ### Product search
 
