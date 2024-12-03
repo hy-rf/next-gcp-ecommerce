@@ -4,6 +4,7 @@ import Organizer from "@/app/[locale]/product/_component/Organizer";
 import { Product } from "@/model";
 import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
+import { useRouter } from "next/navigation";
 type FilterOptions = {
   page: number;
   storeId: string;
@@ -21,6 +22,7 @@ export default function FilteredProducts({
   filterOptions: FilterOptions;
   maxP: number;
 }) {
+  const router = useRouter();
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [maxPages, setMaxPages] = useState(maxP);
@@ -40,25 +42,13 @@ export default function FilteredProducts({
       .then((data) => {
         setFilteredProducts(data.products);
         setMaxPages(data.pages);
+        try {
+          window.history.pushState(null, "", searchParam);
+        } catch {
+          console.log("fail to update url");
+        }
       });
   }, [options]);
-  useEffect(() => {
-    let searchParam = `page=${options.page}`;
-    if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
-    if (options.categoryId !== "")
-      searchParam += `&categoryId=${options.categoryId}`;
-    if (options.subCategoryId !== "")
-      searchParam += `&subCategoryId=${options.subCategoryId}`;
-    if (options.minPrice > 0) searchParam += `&minPrice=${options.minPrice}`;
-    if (options.maxPrice < Infinity)
-      searchParam += `&maxPrice=${options.maxPrice}`;
-
-    fetch(`/api/product?${searchParam}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setFilteredProducts(data.products);
-      });
-  }, []);
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
