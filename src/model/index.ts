@@ -45,6 +45,7 @@ export interface Product {
   salePrice: number;
   specs?: string[];
   createdDate?: Date;
+  condition?: number;
 }
 
 export interface Review {

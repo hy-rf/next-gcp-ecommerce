@@ -98,6 +98,8 @@ interface PostBody {
   subCategory: string;
   createdShopId: string;
   specs?: string[];
+  sold?: number;
+  condition?: number;
 }
 
 export async function POST(req: NextRequest) {
@@ -246,6 +248,10 @@ export async function POST(req: NextRequest) {
   const newProductRef = await db.collection("Product").add(newProduct);
   const newProductId = newProductRef.id;
 
+  // TODO: add watermark if condition
+  if (body.condition) {
+    console.log("add watermark");
+  }
   const urls = await uploadBase64ImagesAndGetUrls(newProductId, body.imageList);
 
   await newProductRef.update({
