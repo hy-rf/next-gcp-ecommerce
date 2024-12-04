@@ -60,13 +60,12 @@ export default async function Page({
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md space-y-6">
-      <h4 className="text-2xl font-semibold text-gray-800">Product Details</h4>
+      <h4 className="text-2xl font-semibold text-gray-800">{product.name}</h4>
 
       {/* Flex container for left (details) and right (controls) */}
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Left side: Product details */}
         <div className="flex-1 space-y-4">
-          <p className="text-lg font-medium text-gray-900">{product.name}</p>
           <p className="text-gray-700">{product.description}</p>
           <p className="text-xl font-bold text-green-600">${product.price}</p>
           <p className="text-sm text-gray-500">Sold: {product.sold}</p>

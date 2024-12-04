@@ -221,7 +221,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
 
           {/* Cart Section */}
           <div className="flex grow flex-col items-end p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg mr-4">
-            <CartItemList />
+            <CartItemList onClickingLinksInCartItemList={handleAnimation} />
           </div>
         </nav>
       )}
@@ -296,7 +296,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           </Link>
         )}
         <div className="hidden md:hidden">
-          <CartItemList />
+          <CartItemList onClickingLinksInCartItemList={handleAnimation} />
         </div>
         <div
           className="md:items-center hidden md:flex"

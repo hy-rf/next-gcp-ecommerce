@@ -46,12 +46,13 @@ export default function AddToCartButton({ product }: { product: Product }) {
   //   setCartItems(newCartItems);
   //   return;
   // };
-  async function handleAddToCart() {
+  async function handleAddToCart(product: Product, quantity: number) {
     const newCart = {
       productId: product.id,
       name: product.name,
       quantity: quantity,
       price: product.price,
+      spec: selectedSpec,
     };
     const response = await fetch("/api/v2/cart-item", {
       method: "post",
@@ -74,7 +75,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
   return (
     <>
       {/* Right side: Controls (Specs, Quantity, Add to Cart) */}
-      <div className="flex flex-col items-end space-y-4 w-full sm:w-auto">
+      <div className="flex flex-col items-end space-y-4 w-full">
         {/* Specification Dropdown */}
         {product.specs && product.specs.length > 0 && (
           <div className="w-full">
@@ -114,7 +115,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
           />
         </div>
         <button
-          onClick={handleAddToCart}
+          onClick={() => handleAddToCart(product, quantity)}
           className="mt-4 bg-blue-600 text-white font-medium py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-200"
         >
           Add to Cart

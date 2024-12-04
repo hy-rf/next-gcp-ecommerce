@@ -2,9 +2,14 @@
 import fetchData from "@/lib/fetchData";
 import { CartItem } from "@/model";
 import { UpdateCartItemBody } from "@/model/dto";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
-export default function CartItemList() {
+export default function CartItemList({
+  onClickingLinksInCartItemList,
+}: {
+  onClickingLinksInCartItemList: () => void;
+}) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   useEffect(() => {
     (async () => {
@@ -17,6 +22,18 @@ export default function CartItemList() {
       }
     })();
   }, []);
+  const total = useMemo(() => {
+    if (cartItems.length == 0) return 0;
+    let ret = 0; // Initialize ret to 0
+    try {
+      cartItems.forEach((ele) => {
+        ret += ele.price * ele.quantity; // Accumulate the total
+      });
+      return ret;
+    } catch {
+      return 0;
+    } // Return the total
+  }, [cartItems]);
   async function handlePlusCartItem(cartItem: CartItem) {
     const body: UpdateCartItemBody = {
       id: cartItem.id!,
@@ -123,10 +140,13 @@ export default function CartItemList() {
             Total:
           </p>
           <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-            ${}
+            {total}
           </p>
         </div>
       )}
+      <Link href="/cart" onClick={onClickingLinksInCartItemList}>
+        Ckeck out
+      </Link>
     </div>
   );
 }
