@@ -28,12 +28,11 @@ export default function ProductFilter({
     });
   }, [selectedCategories]);
   return (
-    <div className="fixed bottom-[7rem] min-w-40 max-w-80 right-4 p-4 rounded-lg shadow-md bg-header-gray">
+    <div className="fixed bottom-28 rounded-lg bg-header-gray flex flex-col right-6 p-4 shadow-md items-center">
       {/* Filter options */}
-      <div className="flex items-center gap-2 mt-2">
-        <label htmlFor="price-range">Price range</label>
+      <div className="flex items-center gap-2 m-2">
+        <label htmlFor="price-range">Price</label>
         <input
-          id="price-range"
           onChange={(e) =>
             setLocalOption((old) => {
               return {
@@ -44,7 +43,7 @@ export default function ProductFilter({
           }
           type="number"
           value={localOption.minPrice}
-          className="w-10 p-1 text-black rounded"
+          className="w-11 px-1 text-black rounded"
         />
         <span>-</span>
         <input
@@ -60,57 +59,17 @@ export default function ProductFilter({
           value={
             localOption.maxPrice == Infinity ? "Infinity" : localOption.maxPrice
           }
-          className="w-10 p-1 text-black rounded"
+          className="w-11 px-1 text-black rounded"
         />
       </div>
-      <div className="flex items-center gap-2 mt-2">
+      <div className="items-center gap-2 m-2">
         <CategoryFilterCheckboxGroup
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
         />
       </div>
-      {/* <label htmlFor="category">Category</label>
-        <select
-          name=""
-          id="category"
-          value={localOption.categoryId}
-          onChange={(e) =>
-            setLocalOption((old) => {
-              return {
-                ...old,
-                categoryId: e.target.value,
-              };
-            })
-          }
-        >
-          <option value="">Choose Category</option>
-          <option value="OhFPcQGt5B8iJ6TywjgS">Learning</option>
-          <option value="ujoJM3sLWQLd2G4QGYxu">Books</option>
-        </select> */}
-
-      {/* <div className="flex items-center gap-2 mt-2">
-        <label htmlFor="sub-category">SubCategory</label>
-        <select
-          name=""
-          id="sub-category"
-          value={localOption.subCategoryId}
-          onChange={(e) =>
-            setLocalOption((old) => {
-              return {
-                ...old,
-                subCategoryId: e.target.value,
-              };
-            })
-          }
-        >
-          <option value="">Choose Sub Category</option>
-          <option value="8NTCSFSyKE1fXldHCDiu">Sketching</option>
-          <option value="nTvLmo7vdZYMx6NMWTsk">Health</option>
-          <option value="ooxykUV2QxMoQ39PYwiD">Language</option>
-        </select>
-      </div> */}
       <button
-        className="rounded-md"
+        className="bg-gray-400 rounded-md"
         onClick={() => {
           setFilterOption(localOption);
           setShowFilter(false);

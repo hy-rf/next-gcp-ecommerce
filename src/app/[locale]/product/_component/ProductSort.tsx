@@ -42,10 +42,9 @@ export default function ProductSort({
     },
   ];
   return (
-    <div className="fixed bottom-[6rem] rounded-lg flex flex-col bg-header-gray p-4">
+    <div className="fixed bottom-28 rounded-lg flex flex-col bg-header-gray p-4 left-6 shadow-md">
       {sortOptions.map((ele) => (
-        <div key={ele.value}>
-          <label htmlFor={ele.value}>{ele.labelContent}</label>
+        <div key={ele.value} className="flex gap-2 w-32">
           <input
             id={ele.value}
             type="radio"
@@ -53,7 +52,12 @@ export default function ProductSort({
             value={ele.value}
             onChange={(e) => setSortOption(e.target.value)}
             checked={sortOption == ele.value}
+            className="h-9"
           />
+          <label className="flex justify-between w-full" htmlFor={ele.value}>
+            <p className="leading-loose">{ele.labelContent.split(" ")[0]}</p>
+            <p className="leading-loose">{ele.labelContent.split(" ")[1]}</p>
+          </label>
         </div>
       ))}
       <button
@@ -66,6 +70,7 @@ export default function ProductSort({
           });
           setShowSort(false);
         }}
+        className="bg-gray-400 rounded-md"
       >
         Apply Sort
       </button>
