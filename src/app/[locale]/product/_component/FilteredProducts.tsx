@@ -58,6 +58,14 @@ export default function FilteredProducts({
         setFilteredProducts(data.products);
         setMaxPages(data.pages);
         setTotal(data.total);
+        if (maxPages < options.page) {
+          setOptions((old) => {
+            return {
+              ...old,
+              page: data.pages,
+            };
+          });
+        }
         try {
           window.history.pushState(null, "", `product?${searchParam}`);
         } catch {
