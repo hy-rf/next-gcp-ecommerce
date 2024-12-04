@@ -2,8 +2,9 @@
 
 import Organizer from "@/app/[locale]/product/_component/Organizer";
 import { FilterOptions, Product } from "@/model";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
+import LocaleContext from "../../_component/LocaleContext";
 
 export default function FilteredProducts({
   products,
@@ -16,6 +17,7 @@ export default function FilteredProducts({
   maxP: number;
   totalFromServerCpomonent: number;
 }) {
+  const dict = useContext(LocaleContext);
   useEffect(() => {
     document?.addEventListener("click", (e) => {
       const target = e.target as HTMLElement; // Typecasting e.target as HTMLElement
@@ -65,8 +67,12 @@ export default function FilteredProducts({
   }, [options]);
   return (
     <>
+      <p className="text-center">
+        {dict.product_total_1}
+        {total}
+        {dict.product_total_2}
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <p>{total}</p>
         {filteredProducts.map((ele) => (
           <ProductItem ele={ele} key={ele.id} />
         ))}

@@ -1,12 +1,52 @@
 import fetchData from "@/lib/fetchData";
 import { Product } from "@/model";
-import Image from "next/image";
+
 import AddToCartButton from "../_component/AddToCartButton";
+import type { Metadata } from "next";
+import ZoomImage from "./_component/ZoomImage";
 
 /**
  * This component is a Next.js page component.
  * It displays product details. The product id is passed as a parameter in the URL.
  */
+
+async function getProduct(id: string) {
+  const product: Product = await fetchData<Product>(
+    `${process.env.URL}/api/product/${id}`
+  );
+  return product;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{
+    id: string;
+  }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const product: Product = await getProduct(id);
+  return {
+    title: product.name,
+    description: product.description,
+    applicationName: "E-Commerce",
+    keywords: `${product.name},${product.description}`,
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      url: `${process.env.URL}/product/${product.id}`,
+      images: [
+        {
+          url: product.imageUrl[0],
+          width: 800,
+          height: 600,
+          alt: product.name,
+        },
+      ],
+      siteName: "E-Commerce",
+    },
+  };
+}
 
 export default async function Page({
   params,
@@ -16,9 +56,7 @@ export default async function Page({
   }>;
 }) {
   const { id } = await params;
-  const product: Product = await fetchData<Product>(
-    `${process.env.URL}/api/product/${id}`
-  );
+  const product: Product = await getProduct(id);
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md space-y-6">
@@ -37,15 +75,7 @@ export default async function Page({
           {/* Product Images */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {product.imageUrl.map((ele, index) => (
-              <div key={index} className="relative">
-                <Image
-                  src={ele}
-                  alt={`Product Image ${index + 1}`}
-                  width={200}
-                  height={200}
-                  className="w-full h-full object-cover rounded-md shadow-md"
-                />
-              </div>
+              <ZoomImage key={index} index={index} ele={ele} />
             ))}
           </div>
 

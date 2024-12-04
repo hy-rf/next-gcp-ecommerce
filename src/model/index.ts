@@ -138,6 +138,8 @@ export interface Dictionary {
   title: string;
   layout_title: string;
   user_login: string;
+  product_total_1: string;
+  product_total_2: string;
 }
 
 export interface CarouselItem {
