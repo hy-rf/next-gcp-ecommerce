@@ -40,7 +40,11 @@ export async function middleware(request: NextRequest) {
   if (cookie) {
     currentLocale = cookie.value;
   } else {
-    currentLocale = getLocale(request, locales);
+    try {
+      currentLocale = getLocale(request, locales);
+    } catch {
+      currentLocale = "en-US";
+    }
   }
   if (pathContainsLocale) {
     // this if is for avoiding repeating redirect when locale in cookie matches locale in pathneme
