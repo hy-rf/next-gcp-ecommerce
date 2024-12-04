@@ -28,7 +28,7 @@ export default function CategoryFilterCheckboxGroup({
     <div className="flex flex-col gap-3">
       {options.map((option) => (
         <div key={option.value}>
-          <label className="flex justify-between items-center gap-2">
+          <label className="flex items-center gap-2">
             <input
               type="checkbox"
               value={option.value}
