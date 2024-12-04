@@ -12,8 +12,6 @@ export default async function UserLayout({
   params: Params;
 }>) {
   const dict = await getDictionary((await params).locale, "index");
-  console.log(dict);
-
   return (
     <div className="flex flex-col bg-gray-50 md:flex-row user-sidebar">
       {/* Sidebar */}
