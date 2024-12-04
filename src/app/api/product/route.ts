@@ -240,6 +240,7 @@ export async function POST(req: NextRequest) {
     createdShopId: body.createdShopId,
     salePrice: body.price,
     specs: body.specs,
+    sold: 0,
     createdDate: new Date(),
   };
   const newProductRef = await db.collection("Product").add(newProduct);

@@ -34,12 +34,22 @@ async function filesToBase64(files: File[]): Promise<string[]> {
 export default function NewProduct() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState<number>(NaN);
+  const [price, setPrice] = useState<number>(0);
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
-  const [stock, setStock] = useState(1);
-  const [image, setImage] = useState<File[] | null>(null);
+  const [stock, setStock] = useState<number>(1);
   const [specs, setSpecs] = useState<string[]>([]);
+  const [image, setImage] = useState<File[] | null>(null);
+
+  const [isNameValid, setIsNameValid] = useState(true);
+  const [isDescriptionValid, setIsDescriptionValid] = useState(true);
+  // const [isPriceValid, setIsPriceValid] = useState(true);
+  // const [isCategoryValid, setIsCategoryValid] = useState(true);
+  // const [isSubCategoryValid, setIsSubCategoryValid] = useState(true);
+  // const [isStockValid, setIsStockValid] = useState(true);
+  // const [isImageValid, setIsImageValid] = useState(true);
+  const [isSpecsValid, setIsSpecsValid] = useState(true);
+
   const [showFileNameHint, setShowFileNameHint] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState("");
   const [hintPositionX, setHintPositionX] = useState(0);
@@ -89,6 +99,7 @@ export default function NewProduct() {
       specs.some((ele) => ele === "") ||
       new Set(specs).size !== specs.length
     ) {
+      alert("Invalid Input");
       setShowConfirmModal(false);
       return;
     }
@@ -133,7 +144,11 @@ export default function NewProduct() {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+            onBlur={() => setIsNameValid(name !== "")}
+            className={`w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500`}
+            style={{
+              borderColor: !isNameValid ? "red" : "",
+            }}
           />
         </div>
         <div>
@@ -147,7 +162,11 @@ export default function NewProduct() {
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            onBlur={() => setIsDescriptionValid(description !== "")}
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+            style={{
+              borderColor: !isDescriptionValid ? "red" : "",
+            }}
           />
         </div>
         <div>
@@ -163,7 +182,7 @@ export default function NewProduct() {
             value={price}
             onChange={(e) => setPrice(parseFloat(e.target.value))}
             min="0"
-            step="0.01"
+            step="1"
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -180,11 +199,16 @@ export default function NewProduct() {
             value={stock}
             onChange={(e) => setStock(parseInt(e.target.value))}
             min="0"
-            step="0.01"
+            step="1"
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
-        <div className="flex flex-col gap-1">
+        <div
+          className="flex flex-col gap-1"
+          style={{
+            borderColor: !isSpecsValid ? "red" : "",
+          }}
+        >
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Specs:
           </label>
@@ -203,15 +227,27 @@ export default function NewProduct() {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     handleChangeSpec(e, index)
                   }
+                  onBlur={() => {
+                    setIsSpecsValid(
+                      !(
+                        specs.some((ele) => ele === "") ||
+                        new Set(specs).size !== specs.length
+                      )
+                    );
+                  }}
                   min="0"
                   step="0.01"
                   className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                  style={{
+                    borderColor: !isSpecsValid ? "red" : "",
+                  }}
                 />
                 <button onClick={() => handleDeleteSpec(index)}>x</button>
               </div>
             ))}
           </div>
         </div>
+        {/* select category */}
         <div>
           <label
             htmlFor="category"
@@ -227,6 +263,7 @@ export default function NewProduct() {
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
+        {/* select subcategory */}
         <div>
           <label
             htmlFor="sub-category"
