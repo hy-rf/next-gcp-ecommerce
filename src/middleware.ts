@@ -28,7 +28,6 @@ export async function middleware(request: NextRequest) {
     return;
   if (pathname.startsWith("/api")) return;
   // handle locale
-  // TODO: locale priority: user language setting>cookie>path, process: pipeline with processes of getting settings from different sources to determine locale -> extract url without locale then add locale determined from previous process then redirect to final url and set locale cookie
   const locales = ["en-US", "zh-TW", "zh-CN"];
   const pathContainsLocale =
     pathname.startsWith("/en-US") ||
