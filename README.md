@@ -42,6 +42,51 @@ pnpm dev
 bun dev
 ```
 
+## API list
+
+`POST` `/api/user/login` oauth login
+
+`GET` `/api/user/login-method` get login methods
+
+`GET` `/api/user/store` get owned store
+
+`PUT` `/api/user/locale` change locale
+
+`GET` `/api/user/token` get new token
+
+`GET` `/api/v2/cart-item` get cart items
+
+`POST` `/api/v2/cart-item` add cart item
+
+`PUT` `/api/v2/cart-item` change cart item
+
+`GET` `/api/product` get products
+
+#### params:
+
+- page: current page number
+- categoryId: ids of categories, separated by ","
+- subCategoryId: ids of sub categories, separated by ","
+- minPrice: number
+- maxPrice: number
+- sort: way of sort, ex:price-asc
+
+#### response
+
+```json
+{
+  "pages": "max number of pages",
+  "products": ["product1", "product2", "..."],
+  "total": "numbers of all products in all pages"
+}
+```
+
+`GET` `/api/product/:id` get product
+
+`POST` `/api/product` add product
+
+`GET` `/api/category` get categories
+
 <!-- ## API list
 
 ### User
