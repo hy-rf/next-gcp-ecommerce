@@ -75,6 +75,7 @@ export async function GET(req: NextRequest) {
   if (maxPrice) {
     products = products.filter((ele) => ele.price <= parseInt(maxPrice));
   }
+  const total = products.length;
   const pages =
     products.length % productsPerPage != 0
       ? Math.floor(products.length / productsPerPage) + 1
@@ -84,7 +85,7 @@ export async function GET(req: NextRequest) {
     productsPerPage * parseInt(page)
   );
 
-  return Response.json({ pages: pages, products: products });
+  return Response.json({ pages: pages, products: products, total: total });
 }
 
 interface PostBody {

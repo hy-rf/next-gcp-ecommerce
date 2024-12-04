@@ -9,10 +9,12 @@ export default function FilteredProducts({
   products,
   filterOptions,
   maxP,
+  totalFromServerCpomonent,
 }: {
   products: Product[];
   filterOptions: FilterOptions;
   maxP: number;
+  totalFromServerCpomonent: number;
 }) {
   useEffect(() => {
     document?.addEventListener("click", (e) => {
@@ -33,6 +35,7 @@ export default function FilteredProducts({
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [maxPages, setMaxPages] = useState(maxP);
+  const [total, setTotal] = useState(totalFromServerCpomonent);
   useEffect(() => {
     let searchParam = `page=${options.page}`;
     if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
@@ -52,6 +55,7 @@ export default function FilteredProducts({
       .then((data) => {
         setFilteredProducts(data.products);
         setMaxPages(data.pages);
+        setTotal(data.total);
         try {
           window.history.pushState(null, "", `product?${searchParam}`);
         } catch {
@@ -62,6 +66,7 @@ export default function FilteredProducts({
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+        <p>{total}</p>
         {filteredProducts.map((ele) => (
           <ProductItem ele={ele} key={ele.id} />
         ))}
@@ -75,7 +80,7 @@ export default function FilteredProducts({
             setOptions((old) => {
               return {
                 ...old,
-                page: currentPage - 1,
+                page: parseInt(currentPage.toString()) - 1,
               };
             });
           }}
@@ -88,13 +93,10 @@ export default function FilteredProducts({
           className="z-[100]"
           onClick={() => {
             const currentPage: number = options.page;
-
-            console.log(currentPage);
-
             setOptions((old) => {
               return {
                 ...old,
-                page: currentPage + 1,
+                page: parseInt(currentPage.toString()) + 1,
               };
             });
           }}

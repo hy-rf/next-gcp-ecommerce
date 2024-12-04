@@ -2,13 +2,14 @@ import { Product } from "@/model";
 import FilteredProducts from "./_component/FilteredProducts";
 
 type SearchParams = {
-  page?: string;
+  page?: number;
   filter?: string;
   categoryId?: string;
   subCategoryId?: string;
   minPrice: number;
   maxPrice: number;
   storeId: string;
+  sort: string;
 };
 
 export default async function Page({
@@ -16,9 +17,16 @@ export default async function Page({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const { filter, categoryId, subCategoryId, minPrice, maxPrice, storeId } =
-    await searchParams;
-  const page = parseInt((await searchParams).page || "1");
+  const {
+    page,
+    sort,
+    filter,
+    categoryId,
+    subCategoryId,
+    minPrice,
+    maxPrice,
+    storeId,
+  } = await searchParams;
 
   let searchParam = `page=${page}`;
   if (storeId) searchParam += `&storeId=${storeId}`;
@@ -26,11 +34,13 @@ export default async function Page({
   if (subCategoryId) searchParam += `&subCategoryId=${subCategoryId}`;
   if (minPrice) searchParam += `&minPrice=${minPrice}`;
   if (maxPrice) searchParam += `&maxPrice=${maxPrice}`;
+  if (sort) searchParam += `&sort=${sort}`;
   const response = await fetch(
     `${process.env.URL}/api/product?${searchParam}`
   ).then((res) => res.json());
   const products = response.products as Product[];
   const maxPages = response.pages as number;
+  const total = response.total as number;
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-semibold text-gray-800">{filter}</h2>
@@ -40,8 +50,12 @@ export default async function Page({
             <h3>{ele.name}</h3>
           </a>
         ))}
-        {page > 1 && <a href={`/product?page=${page - 1}`}>page-</a>}
-        {page < maxPages && <a href={`/product?page=${page + 1}`}>page+</a>}
+        {page && page > 1 && (
+          <a href={`/product?page=${parseInt(page.toString()) - 1}`}>page-</a>
+        )}
+        {page && page < maxPages && (
+          <a href={`/product?page=${parseInt(page.toString()) + 1}`}>page+</a>
+        )}
       </div>
       <FilteredProducts
         filterOptions={{
@@ -55,6 +69,7 @@ export default async function Page({
         }}
         products={products}
         maxP={maxPages}
+        totalFromServerCpomonent={total}
       />
     </div>
   );
