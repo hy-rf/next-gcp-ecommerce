@@ -1,22 +1,60 @@
 "use client";
 
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
 import CartItemList from "@/app/[locale]/_component/CartItemList";
 import { useRef } from "react";
 import LocaleContext from "./LocaleContext";
+function throttle<T extends (...args: unknown[]) => void>(
+  func: T,
+  limit: number
+): (...args: Parameters<T>) => void {
+  let inThrottle = false;
+
+  return (...args: Parameters<T>) => {
+    if (!inThrottle) {
+      func(...args);
+      inThrottle = true;
+      setTimeout(() => {
+        inThrottle = false;
+      }, limit);
+    }
+  };
+}
 
 export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   const dict = useContext(LocaleContext);
   // for mobile
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isHidden, setIsHidden] = useState(false);
   // for desktop
   const [showLocaleOptions, setShowLocaleOptions] = useState(false);
   // in ms
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const handleScroll = throttle(() => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        setIsHidden(true);
+      } else {
+        setIsHidden(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    }, 100); // Adjust throttle delay as needed
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
   async function handleAnimation() {
     // if (window.innerWidth >= 768) return;
     // Clear any existing timeout to avoid conflicts
@@ -44,7 +82,12 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
   }
   const animationDelayUnit = 35;
   return (
-    <>
+    <header
+      className={`flex bg-[rgba(128,128,128,0.9)] transform duration-500`}
+      style={{
+        transform: isHidden ? "translateY(-70px)" : "translateY(0px)",
+      }}
+    >
       {/*Mobile*/}
       <div
         style={{
@@ -287,6 +330,6 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           )}
         </div>
       </nav>
-    </>
+    </header>
   );
 }
