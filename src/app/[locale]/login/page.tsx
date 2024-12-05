@@ -1,5 +1,6 @@
 "use client";
 
+import { Button, Input, TextField } from "@mui/material";
 import { useState } from "react";
 
 export default function Page() {
@@ -33,7 +34,7 @@ export default function Page() {
     }
   }
   return (
-    <div className="flex flex-col items-center justify-center text-gray-600">
+    <div className="flex flex-col items-center justify-center text-gray-600 pt-4">
       {isRegistering && (
         <>
           <h1 className="text-2xl font-bold">Register</h1>
@@ -41,10 +42,9 @@ export default function Page() {
             id="login-register-form"
             className="w-60 mt-4 mb-4 flex flex-col items-end gap-6"
           >
-            <input
+            <TextField
               type="password"
-              placeholder="confirm password"
-              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+              label="confirm password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -65,27 +65,27 @@ export default function Page() {
             id="login-register-form"
             className="w-60 mt-4 mb-4 flex flex-col items-end gap-6"
           >
-            <input
+            <TextField
+              variant="outlined"
               type="text"
-              placeholder="username/email"
-              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+              label="username"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <input
+            <TextField
+              variant="outlined"
               type="password"
-              placeholder="password"
-              className="w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+              label="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button
+            <Button
               type="submit"
               className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300"
               onClick={handleLoginOrRegister}
             >
               Login/Register
-            </button>
+            </Button>
           </div>
           <div id="third-party-login-links" className="flex gap-4">
             <div className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300">

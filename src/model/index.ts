@@ -75,6 +75,7 @@ export interface CartItem {
   quantity: number;
   price: number;
   spec?: string;
+  imageUrl?: string;
 }
 
 export interface Order {
@@ -136,14 +137,6 @@ export interface tokenPayload {
   exp?: number;
 }
 
-export interface Dictionary {
-  title: string;
-  layout_title: string;
-  user_login: string;
-  product_total_1: string;
-  product_total_2: string;
-}
-
 export interface CarouselItem {
   id?: string;
   title: string;
@@ -159,4 +152,12 @@ export interface FilterOptions {
   minPrice: number;
   maxPrice: number;
   sortOption?: string;
+}
+
+export interface Dictionary {
+  title: string;
+  layout_title: string;
+  user_login: string;
+  product_total_1: string;
+  product_total_2: string;
 }

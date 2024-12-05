@@ -144,9 +144,13 @@ export default function CartItemList({
           </p>
         </div>
       )}
-      <Link href="/cart" onClick={onClickingLinksInCartItemList}>
-        Ckeck out
-      </Link>
+      {cartItems.length > 0 && (
+        <div className="pt-4">
+          <Link href="/cart" onClick={onClickingLinksInCartItemList}>
+            Ckeck out
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

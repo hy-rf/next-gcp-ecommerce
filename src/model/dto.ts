@@ -15,3 +15,14 @@ export interface R {
 export interface APIOrderPostBody {
   cartItems: CartItem[];
 }
+
+export interface CartItemViewModel {
+  id?: string;
+  productId: string;
+  userId?: string;
+  name: string;
+  quantity: number;
+  price: number;
+  spec?: string;
+  imageUrl: string;
+}
