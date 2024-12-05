@@ -17,6 +17,33 @@ export default function FilteredProducts({
   maxP: number;
   totalFromServerCpomonent: number;
 }) {
+  useEffect(() => {
+    const handlePopState = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const storeId = searchParams.get("storeId");
+      const categoryId = searchParams.get("categoryId");
+      const subCategoryId = searchParams.get("subCategoryId");
+      const minPrice = searchParams.get("minPrice");
+      const maxPrice = searchParams.get("maxPrice");
+      const page = searchParams.get("page");
+      const sort = searchParams.get("sort");
+      setOptions({
+        page: page ? parseInt(page) : 1,
+        storeId: storeId ? storeId : "",
+        categoryId: categoryId ? categoryId : "",
+        subCategoryId: subCategoryId ? subCategoryId : "",
+        minPrice: minPrice ? parseFloat(minPrice) : 0,
+        maxPrice: maxPrice ? parseFloat(maxPrice) : Infinity,
+        sortOption: sort ? sort : "sold-desc",
+      });
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
   const dict = useContext(LocaleContext);
   useEffect(() => {
     document?.addEventListener("click", (e) => {
@@ -80,6 +107,51 @@ export default function FilteredProducts({
         {total}
         {dict.product_total_2}
       </p>
+      {false && (
+        <div className="bg-white p-6 rounded-lg shadow-md w-full ">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+            Filter Options
+          </h3>
+          <div className="space-y-4 flex justify-around w-full">
+            <div className="w-full m-0" style={{ marginTop: 0 }}>
+              <p className="text-gray-600 font-medium mb-1">Sort Option:</p>
+              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                {options.sortOption}
+              </p>
+            </div>
+            <div className="w-full m-0" style={{ marginTop: 0 }}>
+              <p className="text-gray-600 font-medium mb-1">Min Price:</p>
+              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                ${options.minPrice}
+              </p>
+            </div>
+            <div className="w-full m-0" style={{ marginTop: 0 }}>
+              <p className="text-gray-600 font-medium mb-1">Max Price:</p>
+              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                ${options.maxPrice}
+              </p>
+            </div>
+            <div className="w-full m-0" style={{ marginTop: 0 }}>
+              <p className="text-gray-600 font-medium mb-1">Category:</p>
+              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                {options.categoryId || "All"}
+              </p>
+            </div>
+            <div className="w-full m-0" style={{ marginTop: 0 }}>
+              <p className="text-gray-600 font-medium mb-1">Subcategory:</p>
+              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                {options.subCategoryId || "All"}
+              </p>
+            </div>
+            <div className="w-full m-0" style={{ marginTop: 0 }}>
+              <p className="text-gray-600 font-medium mb-1">Store:</p>
+              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                {options.storeId || "All"}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
         {filteredProducts.map((ele) => (
           <ProductItem ele={ele} key={ele.id} />

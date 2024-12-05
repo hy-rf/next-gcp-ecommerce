@@ -23,7 +23,11 @@ export async function GET(req: NextRequest) {
   }
   let productQuery: Query = db.collection("Product");
   if (storeId) {
-    productQuery = productQuery.where("storeId", "in", storeId.split(","));
+    productQuery = productQuery.where(
+      "createdShopId",
+      "in",
+      storeId.split(",")
+    );
   }
   if (categoryId) {
     productQuery = productQuery.where(

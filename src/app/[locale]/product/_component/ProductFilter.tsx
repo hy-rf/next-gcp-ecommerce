@@ -69,7 +69,7 @@ export default function ProductFilter({
         />
       </div>
       <button
-        className="bg-gray-400 rounded-md"
+        className="bg-gray-400 rounded-md px-6"
         onClick={() => {
           setFilterOption(localOption);
           setShowFilter(false);
