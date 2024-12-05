@@ -2,6 +2,7 @@ import fetchData from "@/lib/fetchData";
 import { CartItem } from "@/model";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import CartItemList from "./CartItems";
 
 export default async function Page() {
   /* eslint-disable prefer-const */
@@ -34,20 +35,7 @@ export default async function Page() {
         Your Cart
       </h1>
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {cartItems.map((item) => (
-          <div
-            key={item.productId}
-            className="bg-white p-4 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition duration-300"
-          >
-            <p className="text-lg font-semibold text-gray-800 mb-2">
-              {item.name}
-            </p>
-            <p className="text-gray-600">Price: ${item.price}</p>
-            <p className="text-gray-600">Product ID: {item.productId}</p>
-            <p className="text-gray-600">Quantity: {item.quantity}</p>
-            <p className="text-gray-600">Specification: {item.spec}</p>
-          </div>
-        ))}
+        <CartItemList cartItems={cartItems} />
       </div>
     </div>
   );
