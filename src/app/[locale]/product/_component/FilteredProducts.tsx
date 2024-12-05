@@ -11,11 +11,13 @@ export default function FilteredProducts({
   filterOptions,
   maxP,
   totalFromServerCpomonent,
+  defaultFilterOptions,
 }: {
   products: Product[];
   filterOptions: FilterOptions;
   maxP: number;
   totalFromServerCpomonent: number;
+  defaultFilterOptions: FilterOptions;
 }) {
   useEffect(() => {
     const handlePopState = () => {
@@ -49,15 +51,7 @@ export default function FilteredProducts({
     document?.addEventListener("click", (e) => {
       const target = e.target as HTMLElement; // Typecasting e.target as HTMLElement
       if (target.id === "product-page-link") {
-        setOptions({
-          page: 1,
-          storeId: "",
-          categoryId: "",
-          subCategoryId: "",
-          minPrice: 0,
-          maxPrice: Infinity,
-          sortOption: "sold-desc",
-        });
+        setOptions(defaultFilterOptions);
       }
     });
   }, []);

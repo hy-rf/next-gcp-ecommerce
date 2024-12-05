@@ -1,4 +1,4 @@
-import { Product } from "@/model";
+import { FilterOptions, Product } from "@/model";
 import FilteredProducts from "./_component/FilteredProducts";
 
 type SearchParams = {
@@ -27,6 +27,15 @@ export default async function Page({
     maxPrice,
     storeId,
   } = await searchParams;
+  const defaultFilterOptions: FilterOptions = {
+    page: 1,
+    storeId: "",
+    categoryId: "",
+    subCategoryId: "",
+    minPrice: 0,
+    maxPrice: Infinity,
+    sortOption: "sold-desc",
+  };
 
   let searchParam = `page=${page}`;
   if (storeId) searchParam += `&storeId=${storeId}`;
@@ -67,6 +76,7 @@ export default async function Page({
           maxPrice: maxPrice || Infinity,
           sortOption: "sold-desc",
         }}
+        defaultFilterOptions={defaultFilterOptions}
         products={products}
         maxP={maxPages}
         totalFromServerCpomonent={total}
