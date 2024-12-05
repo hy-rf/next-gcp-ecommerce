@@ -1,38 +1,36 @@
-# E-Commerce powered by Next.js
+# Next.js電商
 
-[![zh-tw](https://img.shields.io/badge/lang-zh--tw-green.svg)](https://github.com/hy-rf/next-gcp-ecommerce/blob/main/README.zh-tw.md)
+[![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/hy-rf/next-gcp-ecommerce/blob/main/README.md)
 
-## Features
+## 功能
 
-### Product filter/sort
+### 商品排序/過濾
 
-Customizable and expandable product filter/sort solution.
+彈性客製化商品排序過濾解決方案。
 
-### Cart
+### 購物車
 
-Add product to cart and change quantity of cart items.
+商品加入購物車，加減數量，從購物車刪除商品。
 
-### Password login
+### 密碼登入
 
-Login method which is available for public before app publish.
+可以用帳號密碼登入與註冊。
 
-### Google login
+### Google 登入
 
-## Features in Dev/Test
+## 開發中
 
-### Order
+### 訂單
 
-Place order.
+下訂單。
 
-### OAuth2.0 Link providers
+### 連結多個OAuth2.0提供者
 
-Link other oauth login providers
+### 商品搜尋
 
-### Product search
+## 開始
 
-## Getting Started
-
-First, run the development server:
+第一，跑開發server：
 
 ```bash
 npm run dev
@@ -44,7 +42,7 @@ pnpm dev
 bun dev
 ```
 
-## API list
+## API列表
 
 `POST` `/api/user/login` oauth login
 
@@ -66,20 +64,20 @@ bun dev
 
 #### params:
 
-- page: current page number
-- categoryId: ids of categories, separated by ","
-- subCategoryId: ids of sub categories, separated by ","
-- minPrice: number
-- maxPrice: number
-- sort: way of sort, ex:price-asc
+- page: 頁數
+- categoryId: 分類id，以","分隔。
+- subCategoryId: 次分類id，以","分隔。
+- minPrice: 低價
+- maxPrice: 高價
+- sort: 排序方式, 例:price-asc
 
-#### response
+#### 回傳
 
 ```json
 {
-  "pages": "max number of pages",
-  "products": ["product1", "product2", "..."],
-  "total": "numbers of all products in all pages"
+  "pages": "全部頁數",
+  "products": ["product1", "product2", "詳見model -> Product"],
+  "total": "所有頁數的所有商品數量"
 }
 ```
 
