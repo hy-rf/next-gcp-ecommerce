@@ -78,14 +78,15 @@ export interface CartItem {
 }
 
 export interface Order {
+  id?: string;
   userId: string;
   total: number;
   createdAt: Date;
+  orderItems: OrderItem[];
 }
 
 export interface OrderItem {
   productId: string;
-  cartId: string;
   quantity: number;
   unitPrice: number;
 }

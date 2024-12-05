@@ -161,6 +161,23 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 >
                   <Link
                     onClick={() => handleAnimation()}
+                    href={"/order"}
+                    className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                  >
+                    Order
+                  </Link>
+                </li>
+                <li
+                  style={{
+                    transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
+                    transition: "0.5s",
+                    transitionDelay: isOpen
+                      ? `${3 * animationDelayUnit}ms`
+                      : `${2 * animationDelayUnit}ms`,
+                  }}
+                >
+                  <Link
+                    onClick={() => handleAnimation()}
                     href={"/user/logout"}
                     className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                   >

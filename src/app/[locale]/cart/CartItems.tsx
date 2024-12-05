@@ -1,6 +1,7 @@
 "use client";
 
 import { CartItem } from "@/model";
+import { APIOrderPostBody } from "@/model/dto";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -27,8 +28,16 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
     });
   };
 
-  const handlePlaceOrder = () => {
-    console.log(getSelectedItems());
+  const handlePlaceOrder = async () => {
+    const cartItems = getSelectedItems();
+    const postBody: APIOrderPostBody = {
+      cartItems: cartItems,
+    };
+    const res = await fetch("/api/order", {
+      method: "post",
+      body: JSON.stringify(postBody),
+    }).then((res) => res.json());
+    console.log(res);
   };
   const getSelectedItems = () => {
     // Filter the cartItems based on the selected state (value true in the map)

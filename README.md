@@ -18,11 +18,11 @@ Login method which is available for public before app publish.
 
 ### Google login
 
-## Features in Dev/Test
-
 ### Order
 
 Place order.
+
+## Features in Dev/Test
 
 ### OAuth2.0 Link providers
 
