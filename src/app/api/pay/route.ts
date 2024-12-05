@@ -1,3 +1,4 @@
+import { Order } from "@/model";
 import {
   //ApiError,
   CheckoutPaymentIntent,
@@ -10,6 +11,9 @@ import {
 } from "@paypal/paypal-server-sdk";
 import { NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
+  //const paymentsController = new PaymentsController(client);
+  const { searchParams } = new URL(req.url);
+  const orderID = searchParams.get("id") as string;
   const client = new Client({
     clientCredentialsAuthCredentials: {
       oAuthClientId: process.env.PAYPAL_CLIENT_ID!,
@@ -24,27 +28,25 @@ export async function POST(req: NextRequest) {
     },
   });
   const ordersController = new OrdersController(client);
-  //const paymentsController = new PaymentsController(client);
-  const { searchParams } = new URL(req.url);
-  const orderID = searchParams.get("id") as string;
   if (orderID) {
-    console.log(orderID);
+    // capture order(move money to seller who checked the order) if paypal order id was sent
     const collect = {
       id: orderID,
       prefer: "return=minimal",
     };
     const res = await ordersController.ordersCapture(collect);
-    const body = res.body as string;
-    return Response.json(JSON.parse(body));
+    const bodyres = res.body as string;
+    return Response.json(JSON.parse(bodyres));
   }
-  // const body: PostBody = await req.json();
+  // create order if no paypal order id was sent
+  const body: Order = await req.json();
   const orderRequest: OrderRequest = {
     intent: CheckoutPaymentIntent.Capture,
     purchaseUnits: [
       {
         amount: {
           currencyCode: "USD",
-          value: "100",
+          value: body.total.toString(),
         },
       },
     ],
@@ -55,8 +57,6 @@ export async function POST(req: NextRequest) {
   };
 
   const res = await ordersController.ordersCreate(collect);
-  const body = res.body as string;
-  console.log(body);
-
-  return Response.json(JSON.parse(body));
+  const bodyres = res.body as string;
+  return Response.json(JSON.parse(bodyres));
 }

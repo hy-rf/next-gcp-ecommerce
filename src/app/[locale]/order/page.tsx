@@ -1,7 +1,7 @@
 import fetchData from "@/lib/fetchData";
 import { Order } from "@/model";
 import { cookies } from "next/headers";
-import PaypalPayment from "../cart/PaypalPayment";
+import PaypalPayment from "./PaypalPayment";
 
 export default async function Page() {
   const orders: Order[] = await fetchData<Order[]>(
@@ -31,10 +31,10 @@ export default async function Page() {
                 </div>
               );
             })}
+            <PaypalPayment order={ele} />
           </div>
         );
       })}
-      <PaypalPayment />
     </>
   );
 }

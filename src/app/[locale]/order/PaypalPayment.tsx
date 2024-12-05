@@ -5,13 +5,14 @@ import {
   PayPalButtons,
   ReactPayPalScriptOptions,
 } from "@paypal/react-paypal-js";
+import { Order } from "@/model";
 
 // Renders errors or successfull transactions on the screen.
 function Message({ content }: { content: string }) {
   return <p>{content}</p>;
 }
 
-function PaypalPayment() {
+function PaypalPayment({ order }: { order: Order }) {
   const initialOptions: ReactPayPalScriptOptions = {
     clientId:
       "AdAwNGwtEh9YZNq30hDpOwVXgcjU4Avq1p8Ulf3J6mKKHG_gSQRiweYoKTHfcd76NnIrROzy5iQYwl1i",
@@ -43,16 +44,8 @@ function PaypalPayment() {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                // use the "body" param to optionally pass additional order information
-                // like product ids and quantities
-                body: JSON.stringify({
-                  cart: [
-                    {
-                      id: "563",
-                      quantity: 3,
-                    },
-                  ],
-                }),
+
+                body: JSON.stringify(order),
               });
 
               const orderData = await response.json();

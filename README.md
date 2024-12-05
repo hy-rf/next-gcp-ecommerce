@@ -46,6 +46,8 @@ bun dev
 
 ## API list
 
+### User
+
 `POST` `/api/user/login` oauth login
 
 `GET` `/api/user/login-method` get login methods
@@ -56,11 +58,15 @@ bun dev
 
 `GET` `/api/user/token` get new token
 
+### Cart
+
 `GET` `/api/v2/cart-item` get cart items
 
 `POST` `/api/v2/cart-item` add cart item
 
 `PUT` `/api/v2/cart-item` change cart item
+
+### Cart
 
 `GET` `/api/product` get products
 
@@ -88,6 +94,12 @@ bun dev
 `POST` `/api/product` add product
 
 `GET` `/api/category` get categories
+
+### Payment
+
+`POST` `/api/pay` create paypal order
+
+`POST` `/api/pay?id=<paypal order id>` send money to seller
 
 <!-- ## API list
 
