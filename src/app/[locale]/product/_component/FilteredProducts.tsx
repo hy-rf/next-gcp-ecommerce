@@ -59,40 +59,47 @@ export default function FilteredProducts({
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [maxPages, setMaxPages] = useState(maxP);
   const [total, setTotal] = useState(totalFromServerCpomonent);
+  const [isNotFirstFetch, setIsNotFirstFetch] = useState(false);
   useEffect(() => {
-    let searchParam = `page=${options.page}`;
-    if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
-    if (options.categoryId !== "")
-      searchParam += `&categoryId=${options.categoryId}`;
-    if (options.subCategoryId !== "")
-      searchParam += `&subCategoryId=${options.subCategoryId}`;
-    if (options.minPrice > 0) searchParam += `&minPrice=${options.minPrice}`;
-    if (options.maxPrice < Infinity)
-      searchParam += `&maxPrice=${options.maxPrice}`;
-    if (options.sortOption) {
-      searchParam += `&sort=${options.sortOption}`;
-    }
+    if (isNotFirstFetch === false) {
+      setIsNotFirstFetch(true);
+      return;
+    } else {
+      console.log("load new set of sorted and filtered product");
+      let searchParam = `page=${options.page}`;
+      if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
+      if (options.categoryId !== "")
+        searchParam += `&categoryId=${options.categoryId}`;
+      if (options.subCategoryId !== "")
+        searchParam += `&subCategoryId=${options.subCategoryId}`;
+      if (options.minPrice > 0) searchParam += `&minPrice=${options.minPrice}`;
+      if (options.maxPrice < Infinity)
+        searchParam += `&maxPrice=${options.maxPrice}`;
+      if (options.sortOption) {
+        searchParam += `&sort=${options.sortOption}`;
+      }
 
-    fetch(`/api/product?${searchParam}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setFilteredProducts(data.products);
-        setMaxPages(data.pages);
-        setTotal(data.total);
-        if (maxPages < options.page) {
-          setOptions((old) => {
-            return {
-              ...old,
-              page: data.pages,
-            };
-          });
-        }
-        try {
-          window.history.pushState(null, "", `product?${searchParam}`);
-        } catch {
-          console.log("fail to update url");
-        }
-      });
+      fetch(`/api/product?${searchParam}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setFilteredProducts(data.products);
+          setMaxPages(data.pages);
+          setTotal(data.total);
+          if (maxPages < options.page) {
+            setOptions((old) => {
+              return {
+                ...old,
+                page: data.pages,
+              };
+            });
+          }
+          try {
+            window.history.pushState(null, "", `product?${searchParam}`);
+          } catch {
+            console.log("fail to update url");
+          }
+        });
+    }
   }, [options]);
   return (
     <>
