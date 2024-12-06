@@ -24,7 +24,7 @@ export default function ProductFilter({
       return {
         ...old,
         ...filterOption,
-        categoryId: selectedCategories.join(","),
+        categoryId: selectedCategories.filter((ele) => ele !== "").join(","),
       };
     });
   }, [selectedCategories]);
