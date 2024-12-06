@@ -21,6 +21,8 @@ export default function Organizer({
       setShowFilter(true);
       setShowSort(true);
     }
+  });
+  useEffect(() => {
     window.addEventListener("resize", () => {
       if (window.innerWidth >= 768) {
         setShowFilter(true);
@@ -30,7 +32,7 @@ export default function Organizer({
         setShowSort(false);
       }
     });
-  });
+  }, []);
 
   return (
     <>
