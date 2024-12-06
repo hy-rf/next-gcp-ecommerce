@@ -1,6 +1,7 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
+import { Category } from "@/model";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export default function CategoryFilterCheckboxGroup({
   selectedCategories,
@@ -9,12 +10,15 @@ export default function CategoryFilterCheckboxGroup({
   selectedCategories: string[];
   setSelectedCategories: Dispatch<SetStateAction<string[]>>;
 }) {
-  const options = [
-    { value: "OhFPcQGt5B8iJ6TywjgS", label: "Learning" },
-    { value: "ujoJM3sLWQLd2G4QGYxu", label: "Books" },
-    { value: "PR5oSDeaJP2VD1XlIu6I", label: "Electronics" },
-  ];
-
+  const [categories, setCategories] = useState<Category[]>([]);
+  useEffect(() => {
+    (async () => {
+      const categories: Category[] = await fetch("/api/category/").then((res) =>
+        res.json()
+      );
+      setCategories(categories);
+    })();
+  }, []);
   const handleCheckboxChange = (value: string) => {
     setSelectedCategories(
       (prev) =>
@@ -26,16 +30,16 @@ export default function CategoryFilterCheckboxGroup({
 
   return (
     <div className="flex flex-col gap-3">
-      {options.map((option) => (
-        <div key={option.value}>
+      {categories.map((option) => (
+        <div key={option.id}>
           <label className="flex items-center gap-2">
             <input
               type="checkbox"
-              value={option.value}
-              checked={selectedCategories.includes(option.value)}
-              onChange={() => handleCheckboxChange(option.value)}
+              value={option.id}
+              checked={selectedCategories.includes(option.id!)}
+              onChange={() => handleCheckboxChange(option.id!)}
             />
-            <p className="leading-loose">{option.label}</p>
+            <p className="leading-loose">{option.name}</p>
           </label>
         </div>
       ))}

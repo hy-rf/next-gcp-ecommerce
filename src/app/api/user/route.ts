@@ -27,6 +27,11 @@ interface LoginPostBody {
 
 export async function POST(req: NextRequest) {
   const body: LoginPostBody = await req.json();
+  if (body.name === "" || body.password === "")
+    return Response.json({
+      code: 400,
+      message: "Invalid data",
+    });
   const db = database();
   const userRef = db.collection("User").where("name", "==", body.name).get();
   if ((await userRef).empty) {

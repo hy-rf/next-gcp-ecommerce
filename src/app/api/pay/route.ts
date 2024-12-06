@@ -21,11 +21,11 @@ export async function POST(req: NextRequest) {
     },
     timeout: 0,
     environment: Environment.Sandbox,
-    logging: {
-      logLevel: LogLevel.Info,
-      logRequest: { logBody: true },
-      logResponse: { logHeaders: true },
-    },
+    // logging: {
+    //   logLevel: LogLevel.Info,
+    //   logRequest: { logBody: true },
+    //   logResponse: { logHeaders: true },
+    // },
   });
   const ordersController = new OrdersController(client);
   if (orderID) {
@@ -35,6 +35,8 @@ export async function POST(req: NextRequest) {
       prefer: "return=minimal",
     };
     const res = await ordersController.ordersCapture(collect);
+    console.log(res);
+
     const bodyres = res.body as string;
     return Response.json(JSON.parse(bodyres));
   }

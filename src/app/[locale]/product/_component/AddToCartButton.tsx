@@ -4,7 +4,15 @@ import { Product } from "@/model";
 import { UpdateCartItemBody } from "@/model/dto";
 import { useState } from "react";
 
-export default function AddToCartButton({ product }: { product: Product }) {
+export default function AddToCartButton({
+  product,
+  showSpec,
+  showQuantity,
+}: {
+  product: Product;
+  showSpec: boolean;
+  showQuantity: boolean;
+}) {
   const [quantity, setQuantity] = useState(1);
   const [selectedSpec, setSelectedSpec] = useState(
     product.specs ? product.specs[0] : null
@@ -75,9 +83,9 @@ export default function AddToCartButton({ product }: { product: Product }) {
   return (
     <>
       {/* Right side: Controls (Specs, Quantity, Add to Cart) */}
-      <div className="flex flex-col items-end space-y-4 w-full">
+      <div className="flex flex-col items-end space-y-4">
         {/* Specification Dropdown */}
-        {product.specs && product.specs.length > 0 && (
+        {showSpec && product.specs && product.specs.length > 0 && (
           <div className="w-full">
             <label
               htmlFor="spec"
@@ -101,22 +109,24 @@ export default function AddToCartButton({ product }: { product: Product }) {
         )}
 
         {/* Quantity Selector */}
-        <div className="flex items-center space-x-4">
-          <label htmlFor="quantity" className="text-sm text-gray-700">
-            Quantity
-          </label>
-          <input
-            id="quantity"
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(Math.max(1, +e.target.value))}
-            min="1"
-            className="p-2 border rounded-md w-20"
-          />
-        </div>
+        {showQuantity && (
+          <div className="flex items-center space-x-0">
+            <label htmlFor="quantity" className="text-sm text-gray-700">
+              Quantity
+            </label>
+            <input
+              id="quantity"
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(Math.max(1, +e.target.value))}
+              min="1"
+              className="p-1 border rounded-md w-20"
+            />
+          </div>
+        )}
         <button
           onClick={() => handleAddToCart(product, quantity)}
-          className="mt-4 bg-blue-600 text-white font-medium py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-200"
+          className="bg-add-to-cart-button-bg-color text-white font-medium p-1 rounded-md transition duration-200"
         >
           Add to Cart
         </button>

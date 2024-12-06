@@ -103,94 +103,100 @@ export default function FilteredProducts({
   }, [options]);
   return (
     <>
-      <p className="text-center">
-        {dict.product_total_1}
-        {total}
-        {dict.product_total_2}
-      </p>
-      {false && (
-        <div className="bg-white p-6 rounded-lg shadow-md w-full ">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-            Filter Options
-          </h3>
-          <div className="space-y-4 flex justify-around w-full">
-            <div className="w-full m-0" style={{ marginTop: 0 }}>
-              <p className="text-gray-600 font-medium mb-1">Sort Option:</p>
-              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                {options.sortOption}
-              </p>
-            </div>
-            <div className="w-full m-0" style={{ marginTop: 0 }}>
-              <p className="text-gray-600 font-medium mb-1">Min Price:</p>
-              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                ${options.minPrice}
-              </p>
-            </div>
-            <div className="w-full m-0" style={{ marginTop: 0 }}>
-              <p className="text-gray-600 font-medium mb-1">Max Price:</p>
-              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                ${options.maxPrice}
-              </p>
-            </div>
-            <div className="w-full m-0" style={{ marginTop: 0 }}>
-              <p className="text-gray-600 font-medium mb-1">Category:</p>
-              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                {options.categoryId || "All"}
-              </p>
-            </div>
-            <div className="w-full m-0" style={{ marginTop: 0 }}>
-              <p className="text-gray-600 font-medium mb-1">Subcategory:</p>
-              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                {options.subCategoryId || "All"}
-              </p>
-            </div>
-            <div className="w-full m-0" style={{ marginTop: 0 }}>
-              <p className="text-gray-600 font-medium mb-1">Store:</p>
-              <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                {options.storeId || "All"}
-              </p>
+      <div className="flex">
+        {false && (
+          <div className="bg-white p-6 rounded-lg shadow-md w-full ">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+              Filter Options
+            </h3>
+            <div className="space-y-4 flex justify-around w-full">
+              <div className="w-full m-0" style={{ marginTop: 0 }}>
+                <p className="text-gray-600 font-medium mb-1">Sort Option:</p>
+                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                  {options.sortOption}
+                </p>
+              </div>
+              <div className="w-full m-0" style={{ marginTop: 0 }}>
+                <p className="text-gray-600 font-medium mb-1">Min Price:</p>
+                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                  ${options.minPrice}
+                </p>
+              </div>
+              <div className="w-full m-0" style={{ marginTop: 0 }}>
+                <p className="text-gray-600 font-medium mb-1">Max Price:</p>
+                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                  ${options.maxPrice}
+                </p>
+              </div>
+              <div className="w-full m-0" style={{ marginTop: 0 }}>
+                <p className="text-gray-600 font-medium mb-1">Category:</p>
+                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                  {options.categoryId || "All"}
+                </p>
+              </div>
+              <div className="w-full m-0" style={{ marginTop: 0 }}>
+                <p className="text-gray-600 font-medium mb-1">Subcategory:</p>
+                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                  {options.subCategoryId || "All"}
+                </p>
+              </div>
+              <div className="w-full m-0" style={{ marginTop: 0 }}>
+                <p className="text-gray-600 font-medium mb-1">Store:</p>
+                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
+                  {options.storeId || "All"}
+                </p>
+              </div>
             </div>
           </div>
+        )}
+        <Organizer filterOption={options} setFilterOption={setOptions} />
+        <div>
+          <p className="text-center">
+            {dict.product_total_1}
+            {total}
+            {dict.product_total_2}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+            {filteredProducts.map((ele) => (
+              <ProductItem product={ele} key={ele.id} />
+            ))}
+          </div>
+          <div>
+            {options.page > 1 && (
+              <button
+                className="z-[100]"
+                onClick={() => {
+                  const currentPage: number = options.page;
+                  setOptions((old) => {
+                    return {
+                      ...old,
+                      page: parseInt(currentPage.toString()) - 1,
+                    };
+                  });
+                }}
+              >
+                Previous page
+              </button>
+            )}
+            {options.page < maxPages && (
+              <button
+                className="z-[100]"
+                onClick={() => {
+                  const currentPage: number = options.page;
+                  setOptions((old) => {
+                    return {
+                      ...old,
+                      page: parseInt(currentPage.toString()) + 1,
+                    };
+                  });
+                }}
+              >
+                Next page
+              </button>
+            )}
+          </div>
         </div>
-      )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        {filteredProducts.map((ele) => (
-          <ProductItem ele={ele} key={ele.id} />
-        ))}
       </div>
-      <Organizer filterOption={options} setFilterOption={setOptions} />
-      {options.page > 1 && (
-        <button
-          className="z-[100]"
-          onClick={() => {
-            const currentPage: number = options.page;
-            setOptions((old) => {
-              return {
-                ...old,
-                page: parseInt(currentPage.toString()) - 1,
-              };
-            });
-          }}
-        >
-          Previous page
-        </button>
-      )}
-      {options.page < maxPages && (
-        <button
-          className="z-[100]"
-          onClick={() => {
-            const currentPage: number = options.page;
-            setOptions((old) => {
-              return {
-                ...old,
-                page: parseInt(currentPage.toString()) + 1,
-              };
-            });
-          }}
-        >
-          Next page
-        </button>
-      )}
     </>
   );
 }

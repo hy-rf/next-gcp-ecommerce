@@ -51,7 +51,7 @@ export default async function Page({
   const maxPages = response.pages as number;
   const total = response.total as number;
   return (
-    <div className="space-y-4">
+    <div className="relative">
       <h2 className="text-2xl font-semibold text-gray-800">{filter}</h2>
       <div className="hidden">
         {products.map((ele, index) => (

@@ -2,28 +2,53 @@
 import Image from "next/image";
 import { Product } from "@/model";
 import AddToCartButton from "./AddToCartButton";
+import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 
-export default function ProductItem({ ele }: { ele: Product }) {
+export default function ProductItem({ product }: { product: Product }) {
   return (
-    <div className="flex bg-white p-4 rounded-md shadow-product-card transition-shadow w-full gap-4">
+    <div className="flex bg-white p-2 rounded-md shadow-product-card transition-shadow w-full gap-3">
       <div className="w-40 h-40 flex-shrink-0">
         <Image
-          src={ele.imageUrl[0]}
-          alt={ele.name}
+          src={product.imageUrl[0]}
+          alt={product.name}
           width={160}
           height={160}
           className="w-full h-full object-cover rounded-md"
         />
       </div>
-      <div className="flex flex-col justify-between ml-auto w-[60%]">
-        <a href={`/product/${ele.id}`}>
-          <h3 className="text-lg font-semibold text-gray-800">{ele.name}</h3>
+      <div className="flex flex-col w-full">
+        <a href={`/product/${product.id}`}>
+          <h3
+            className="text-lg font-semibold text-gray-800"
+            style={{
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 1,
+            }}
+          >
+            {product.name}
+          </h3>
         </a>
-        <p className="text-sm text-gray-600">{ele.description}</p>
-        <p className="text-xl font-bold text-green-600">${ele.price}</p>
-        <p className="text-md text-gray-700">Sold: {ele.sold}</p>
-        <p className="text-md text-gray-700">In Stock: {ele.stock}</p>
-        <AddToCartButton product={ele} />
+        <p
+          className="text-sm text-gray-600 overflow-hidden text-ellipsis"
+          style={{
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 2,
+          }}
+        >
+          {product.description}
+        </p>
+        <p className="text-xl font-bold text-green-600">${product.price}</p>
+        <p className="text-sm text-gray-700">Sold: {product.sold}</p>
+        <p className="text-sm text-gray-700">In Stock: {product.stock}</p>
+        <div className="self-end">
+          <AddToCartButton
+            product={product}
+            showSpec={false}
+            showQuantity={false}
+          />
+        </div>
       </div>
     </div>
   );

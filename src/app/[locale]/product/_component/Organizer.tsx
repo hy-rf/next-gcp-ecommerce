@@ -3,7 +3,7 @@
 import Image from "next/image";
 import ProductFilter from "./ProductFilter";
 import ProductSort from "./ProductSort";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FilterOptions } from "@/model";
 
 // general buttons for generating of sort and filter popup
@@ -16,10 +16,25 @@ export default function Organizer({
 }) {
   const [showFilter, setShowFilter] = useState(false);
   const [showSort, setShowSort] = useState(false);
+  useEffect(() => {
+    if (window.innerWidth >= 768) {
+      setShowFilter(true);
+      setShowSort(true);
+    }
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768) {
+        setShowFilter(true);
+        setShowSort(true);
+      } else {
+        setShowFilter(false);
+        setShowSort(false);
+      }
+    });
+  });
 
   return (
     <>
-      <div className="fixed bottom-10 w-auto right-6">
+      <div className="fixed bottom-10 w-40 right-6 md:hidden">
         <div
           className={`justify-center flex m-auto p-0 rounded-[32px] shadow-category-card`}
           style={{ backdropFilter: "blur(1px)" }}
@@ -51,20 +66,29 @@ export default function Organizer({
           </div>
         </div>
       </div>
-      {showFilter && (
-        <ProductFilter
-          filterOption={filterOption}
-          setFilterOption={setFilterOption}
-          setShowFilter={setShowFilter}
-        />
-      )}
-      {showSort && (
-        <ProductSort
-          filterOption={filterOption}
-          setFilterOption={setFilterOption}
-          setShowSort={setShowSort}
-        />
-      )}
+      <div
+        id="desktop-filter"
+        className="md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40"
+      >
+        {showFilter && (
+          <div className="fixed bottom-28 rounded-lg flex flex-col right-6 p-4 shadow-md items-center md:flex md:static bg-header-gray md:bg-filter-and-sort-bg-color">
+            <ProductFilter
+              filterOption={filterOption}
+              setFilterOption={setFilterOption}
+              setShowFilter={setShowFilter}
+            />
+          </div>
+        )}
+        {showSort && (
+          <div className="fixed bottom-28 rounded-lg flex flex-col p-4 left-6 shadow-md md:static md:flex bg-header-gray md:bg-filter-and-sort-bg-color">
+            <ProductSort
+              filterOption={filterOption}
+              setFilterOption={setFilterOption}
+              setShowSort={setShowSort}
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 }

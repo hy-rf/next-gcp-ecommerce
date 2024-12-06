@@ -104,7 +104,11 @@ export default async function Page({
         </div>
 
         {/* Add to Cart Button */}
-        <AddToCartButton product={product} />
+        <AddToCartButton
+          product={product}
+          showSpec={true}
+          showQuantity={true}
+        />
       </div>
     </div>
   );

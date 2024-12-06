@@ -4,7 +4,9 @@ export const theme = {
   extend: {
     colors: {
       "header-gray": "rgba(128, 128, 128, 0.9)",
+      "filter-and-sort-bg-color": "rgba(128, 128, 128, 0.6)",
       "toggle-organizer-gray": "rgba(128, 128, 128, 0.1)",
+      "add-to-cart-button-bg-color": "rgba(128, 128, 128, 0.8)",
     },
     spacing: {
       "header-height": "70px",

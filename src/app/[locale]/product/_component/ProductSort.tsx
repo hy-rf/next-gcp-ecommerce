@@ -42,7 +42,7 @@ export default function ProductSort({
     },
   ];
   return (
-    <div className="fixed bottom-28 rounded-lg flex flex-col bg-header-gray p-4 left-6 shadow-md">
+    <>
       {sortOptions.map((ele) => (
         <div key={ele.value} className="flex gap-2 w-32">
           <input
@@ -74,6 +74,6 @@ export default function ProductSort({
       >
         Apply Sort
       </button>
-    </div>
+    </>
   );
 }

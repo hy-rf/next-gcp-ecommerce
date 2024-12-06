@@ -28,7 +28,7 @@ export default function ProductFilter({
     });
   }, [selectedCategories]);
   return (
-    <div className="fixed bottom-28 rounded-lg bg-header-gray flex flex-col right-6 p-4 shadow-md items-center">
+    <>
       {/* Filter options */}
       <div className="flex items-center gap-2 m-2">
         <label htmlFor="price-range">Price</label>
@@ -67,7 +67,14 @@ export default function ProductFilter({
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
         />
+        <button
+          className="rounded-md border border-[rgba(128, 128, 128, 0.3)]"
+          onClick={() => setSelectedCategories([])}
+        >
+          Clear Categories
+        </button>
       </div>
+
       <button
         className="bg-gray-400 rounded-md px-6"
         onClick={() => {
@@ -77,6 +84,6 @@ export default function ProductFilter({
       >
         Apply filter
       </button>
-    </div>
+    </>
   );
 }
