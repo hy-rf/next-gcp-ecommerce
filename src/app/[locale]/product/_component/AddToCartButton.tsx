@@ -2,7 +2,8 @@
 
 import { Product } from "@/model";
 import { UpdateCartItemBody } from "@/model/dto";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import LocaleContext from "../../_component/LocaleContext";
 
 export default function AddToCartButton({
   product,
@@ -13,6 +14,7 @@ export default function AddToCartButton({
   showSpec: boolean;
   showQuantity: boolean;
 }) {
+  const dict = useContext(LocaleContext);
   const [quantity, setQuantity] = useState(1);
   const [selectedSpec, setSelectedSpec] = useState(
     product.specs ? product.specs[0] : null
@@ -126,9 +128,16 @@ export default function AddToCartButton({
         )}
         <button
           onClick={() => handleAddToCart(product, quantity)}
-          className="bg-add-to-cart-button-bg-color text-white font-medium p-1 rounded-md transition duration-200"
+          className="bg-add-to-cart-button-bg-color text-white font-medium p-1 rounded-md transition duration-200 overflow-hidden text-ellipsis"
+          style={{
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 1, // Adjust the value here if you want more lines
+            lineClamp: 1,
+            overflow: "hidden", // Ensure this is present for ellipsis to work
+          }}
         >
-          Add to Cart
+          {dict.add_to_cart_button_inner_text}
         </button>
       </div>
     </>

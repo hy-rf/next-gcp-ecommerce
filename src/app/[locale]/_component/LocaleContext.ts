@@ -3,11 +3,15 @@
 import { Dictionary } from "@/model";
 import { createContext } from "react";
 
-const LocaleContext = createContext<Dictionary>({
-  title: "",
-  layout_title: "",
-  user_login: "",
-  product_total_1: "",
-  product_total_2: "",
-});
+// Helper function to initialize all fields with an empty string
+const initializeDictionary = (): Dictionary => {
+  return new Proxy(
+    {},
+    {
+      get: () => "",
+    }
+  ) as Dictionary;
+};
+
+const LocaleContext = createContext<Dictionary>(initializeDictionary());
 export default LocaleContext;

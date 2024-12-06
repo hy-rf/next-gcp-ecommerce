@@ -19,11 +19,12 @@ export default function ProductItem({ product }: { product: Product }) {
       <div className="flex flex-col w-full">
         <a href={`/product/${product.id}`}>
           <h3
-            className="text-lg font-semibold text-gray-800"
+            className="text-lg font-semibold overflow-hidden text-gray-800 text-ellipsis"
             style={{
               display: "-webkit-box",
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 1,
+              lineClamp: 1,
             }}
           >
             {product.name}
@@ -35,6 +36,7 @@ export default function ProductItem({ product }: { product: Product }) {
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
             WebkitLineClamp: 2,
+            lineClamp: 2,
           }}
         >
           {product.description}
@@ -42,7 +44,7 @@ export default function ProductItem({ product }: { product: Product }) {
         <p className="text-xl font-bold text-green-600">${product.price}</p>
         <p className="text-sm text-gray-700">Sold: {product.sold}</p>
         <p className="text-sm text-gray-700">In Stock: {product.stock}</p>
-        <div className="self-end">
+        <div className="self-end mt-auto">
           <AddToCartButton
             product={product}
             showSpec={false}
