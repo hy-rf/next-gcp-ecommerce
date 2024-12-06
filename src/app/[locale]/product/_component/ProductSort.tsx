@@ -1,7 +1,8 @@
 "use client";
 
 import { FilterOptions } from "@/model";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import LocaleContext from "../../_component/LocaleContext";
 
 export default function ProductSort({
   filterOption,
@@ -12,33 +13,34 @@ export default function ProductSort({
   setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
   setShowSort: Dispatch<SetStateAction<boolean>>;
 }) {
+  const dict = useContext(LocaleContext);
   const [sortOption, setSortOption] = useState<string>(
     filterOption.sortOption || "sold-desc"
   );
   const sortOptions = [
     {
       value: "sold-desc",
-      labelContent: "Sold DESC",
+      labelContent: `${dict.product_sort_sold} ${dict.product_sort_desc}`,
     },
     {
       value: "sold-asc",
-      labelContent: "Sold ASC",
+      labelContent: `${dict.product_sort_sold} ${dict.product_sort_asc}`,
     },
     {
       value: "price-desc",
-      labelContent: "Price DESC",
+      labelContent: `${dict.product_sort_price} ${dict.product_sort_desc}`,
     },
     {
       value: "price-asc",
-      labelContent: "Price ASC",
+      labelContent: `${dict.product_sort_price} ${dict.product_sort_asc}`,
     },
     {
       value: "created-desc",
-      labelContent: "Created DESC",
+      labelContent: `${dict.product_sort_created} ${dict.product_sort_desc}`,
     },
     {
       value: "created-asc",
-      labelContent: "Created ASC",
+      labelContent: `${dict.product_sort_created} ${dict.product_sort_asc}`,
     },
   ];
   return (
@@ -72,7 +74,7 @@ export default function ProductSort({
         }}
         className="bg-gray-400 rounded-md"
       >
-        Apply Sort
+        {dict.product_sort_apply}
       </button>
     </>
   );

@@ -5,6 +5,12 @@ export interface Dictionary {
   product_total_1: string;
   product_total_2: string;
   add_to_cart_button_inner_text: string;
+  product_sort_sold: string;
+  product_sort_price: string;
+  product_sort_created: string;
+  product_sort_desc: string;
+  product_sort_asc: string;
+  product_sort_apply: string;
 }
 
 export interface User {
