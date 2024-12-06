@@ -23,6 +23,7 @@ export default function ProductFilter({
     setLocalOption((old) => {
       return {
         ...old,
+        ...filterOption,
         categoryId: selectedCategories.join(","),
       };
     });
@@ -78,7 +79,12 @@ export default function ProductFilter({
       <button
         className="bg-gray-400 rounded-md px-6"
         onClick={() => {
-          setFilterOption(localOption);
+          setFilterOption((old) => {
+            return {
+              ...old,
+              ...localOption,
+            };
+          });
           setShowFilter(false);
         }}
       >

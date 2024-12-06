@@ -78,6 +78,7 @@ export default function FilteredProducts({
       if (options.sortOption) {
         searchParam += `&sort=${options.sortOption}`;
       }
+      console.log(options.sortOption);
 
       fetch(`/api/product?${searchParam}`)
         .then((res) => res.json())
