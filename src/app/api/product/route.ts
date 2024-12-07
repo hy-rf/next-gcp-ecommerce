@@ -113,6 +113,13 @@ export async function POST(req: NextRequest) {
   }
   const token = tokenInRequestCookie.value;
   const body: PostBody = await req.json();
+  // Remove all leading and trailing spaces for all text inputs
+  body.name = body.name.trim();
+  body.description = body.description.trim();
+  body.category = body.category.trim();
+  body.subCategory = body.subCategory.trim();
+  body.specs = body.specs?.map((spec) => spec.trim());
+
   if (body.name === "") {
     return Response.error();
   }
