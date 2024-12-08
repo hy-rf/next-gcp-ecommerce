@@ -106,141 +106,151 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       </div>
 
       {!hide && (
-        <nav
+        <div
           className={`${
             isOpen ? "opacity-100" : "opacity-0"
-          } flex p-5 gap-4 flex-row w-full mt-[70px] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 ease-in-out duration-300 m-0`}
+          } bg-black/30 top-[70px] left-0 w-[100dvw] h-[100dvh] fixed ease-in-out duration-300`}
           style={{ backdropFilter: "blur(1px)" }}
         >
-          <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg">
-            <li
-              style={{
-                transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                transition: "0.5s",
-                transitionDelay: isOpen
-                  ? `${0 * animationDelayUnit}ms`
-                  : `${5 * animationDelayUnit}ms`,
-              }}
-            >
-              <Link
-                onClick={() => handleAnimation()}
-                href={"/product?page=1&sort=sold-desc"}
-                className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
-                id="product-page-link"
-              >
-                Product
-              </Link>
-            </li>
-            {loggedIn && (
-              <>
-                <li
-                  style={{
-                    transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                    transition: "0.5s",
-                    transitionDelay: isOpen
-                      ? `${1 * animationDelayUnit}ms`
-                      : `${4 * animationDelayUnit}ms`,
-                  }}
-                >
-                  <Link
-                    onClick={() => handleAnimation()}
-                    href={"/user"}
-                    className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
-                  >
-                    User
-                  </Link>
-                </li>
-                <li
-                  style={{
-                    transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                    transition: "0.5s",
-                    transitionDelay: isOpen
-                      ? `${2 * animationDelayUnit}ms`
-                      : `${3 * animationDelayUnit}ms`,
-                  }}
-                >
-                  <Link
-                    onClick={() => handleAnimation()}
-                    href={"/order"}
-                    className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
-                  >
-                    Order
-                  </Link>
-                </li>
-                <li
-                  style={{
-                    transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                    transition: "0.5s",
-                    transitionDelay: isOpen
-                      ? `${3 * animationDelayUnit}ms`
-                      : `${2 * animationDelayUnit}ms`,
-                  }}
-                >
-                  <Link
-                    onClick={() => handleAnimation()}
-                    href={"/user/logout"}
-                    className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
-                  >
-                    Logout
-                  </Link>
-                </li>
-              </>
-            )}
-            {!loggedIn && (
+          <nav
+            className={`flex p-5 gap-4 flex-row w-full mt-[0] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 m-0`}
+          >
+            <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg">
               <li
                 style={{
                   transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
                   transition: "0.5s",
                   transitionDelay: isOpen
                     ? `${0 * animationDelayUnit}ms`
-                    : `${1 * animationDelayUnit}ms`,
+                    : `${5 * animationDelayUnit}ms`,
                 }}
               >
                 <Link
                   onClick={() => handleAnimation()}
-                  href={"/login"}
+                  href={"/product?page=1&sort=sold-desc"}
                   className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                  id="product-page-link"
                 >
-                  {dict.user_login}
+                  Product
                 </Link>
               </li>
-            )}
-            <div
-              className="flex gap-3 text-white mt-4"
-              style={{
-                transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                transition: "0.5s",
-                transitionDelay: "0.1s",
-              }}
-            >
-              <button
-                className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
-                onClick={() =>
-                  fetch("/api/user/locale?newLocale=en-US", {
-                    method: "put",
-                  }).then(() => window.location.reload())
-                }
+              {loggedIn && (
+                <>
+                  <li
+                    style={{
+                      transform: isOpen
+                        ? "translateX(0px)"
+                        : "translateX(-10px)",
+                      transition: "0.5s",
+                      transitionDelay: isOpen
+                        ? `${1 * animationDelayUnit}ms`
+                        : `${4 * animationDelayUnit}ms`,
+                    }}
+                  >
+                    <Link
+                      onClick={() => handleAnimation()}
+                      href={"/user"}
+                      className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                    >
+                      User
+                    </Link>
+                  </li>
+                  <li
+                    style={{
+                      transform: isOpen
+                        ? "translateX(0px)"
+                        : "translateX(-10px)",
+                      transition: "0.5s",
+                      transitionDelay: isOpen
+                        ? `${2 * animationDelayUnit}ms`
+                        : `${3 * animationDelayUnit}ms`,
+                    }}
+                  >
+                    <Link
+                      onClick={() => handleAnimation()}
+                      href={"/order"}
+                      className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                    >
+                      Order
+                    </Link>
+                  </li>
+                  <li
+                    style={{
+                      transform: isOpen
+                        ? "translateX(0px)"
+                        : "translateX(-10px)",
+                      transition: "0.5s",
+                      transitionDelay: isOpen
+                        ? `${3 * animationDelayUnit}ms`
+                        : `${2 * animationDelayUnit}ms`,
+                    }}
+                  >
+                    <Link
+                      onClick={() => handleAnimation()}
+                      href={"/user/logout"}
+                      className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                </>
+              )}
+              {!loggedIn && (
+                <li
+                  style={{
+                    transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
+                    transition: "0.5s",
+                    transitionDelay: isOpen
+                      ? `${0 * animationDelayUnit}ms`
+                      : `${1 * animationDelayUnit}ms`,
+                  }}
+                >
+                  <Link
+                    onClick={() => handleAnimation()}
+                    href={"/login"}
+                    className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                  >
+                    {dict.user_login}
+                  </Link>
+                </li>
+              )}
+              <div
+                className="flex gap-3 text-white mt-4"
+                style={{
+                  transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
+                  transition: "0.5s",
+                  transitionDelay: "0.1s",
+                }}
               >
-                EN
-              </button>
-              <button
-                className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
-                onClick={() =>
-                  fetch("/api/user/locale?newLocale=zh-TW", {
-                    method: "put",
-                  }).then(() => window.location.reload())
-                }
-              >
-                中文
-              </button>
-            </div>
-          </ul>
+                <button
+                  className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
+                  onClick={() =>
+                    fetch("/api/user/locale?newLocale=en-US", {
+                      method: "put",
+                    }).then(() => window.location.reload())
+                  }
+                >
+                  EN
+                </button>
+                <button
+                  className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
+                  onClick={() =>
+                    fetch("/api/user/locale?newLocale=zh-TW", {
+                      method: "put",
+                    }).then(() => window.location.reload())
+                  }
+                >
+                  中文
+                </button>
+              </div>
+            </ul>
 
-          {/* Cart Section */}
-          <div className="flex grow flex-col items-end p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg mr-4">
-            <CartItemList onClickingLinksInCartItemList={handleAnimation} />
-          </div>
-        </nav>
+            {/* Cart Section */}
+            <div className="flex grow flex-col items-end p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg mr-4">
+              <CartItemList onClickingLinksInCartItemList={handleAnimation} />
+            </div>
+          </nav>
+        </div>
       )}
       <button
         onClick={() => handleAnimation()}
