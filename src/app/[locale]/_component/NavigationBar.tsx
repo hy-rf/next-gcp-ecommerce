@@ -40,8 +40,9 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
     const handleScroll = throttle(() => {
       const currentScrollY = window.scrollY;
 
+      // this if is for handling bumping of safari
       if (currentScrollY > lastScrollY) {
-        setIsHidden(true);
+        if (lastScrollY > 0) setIsHidden(true);
       } else {
         setIsHidden(false);
       }
@@ -110,7 +111,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
           className={`${
             isOpen ? "opacity-100" : "opacity-0"
           } bg-black/30 top-[70px] left-0 w-[100dvw] h-[100dvh] fixed ease-in-out duration-300`}
-          style={{ backdropFilter: "blur(1px)" }}
+          style={{ backdropFilter: "blur(1px)", zIndex: 99 }}
         >
           <nav
             className={`flex p-5 gap-4 flex-row w-full mt-[0] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 m-0`}
