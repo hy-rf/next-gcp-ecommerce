@@ -5,6 +5,7 @@ import { FilterOptions, Product } from "@/model";
 import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import LocaleContext from "../../_component/LocaleContext";
+import { useRouter } from "next/navigation";
 
 export default function FilteredProducts({
   products,
@@ -60,6 +61,7 @@ export default function FilteredProducts({
   const [maxPages, setMaxPages] = useState(maxP);
   const [total, setTotal] = useState(totalFromServerCpomonent);
   const [isNotFirstFetch, setIsNotFirstFetch] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     if (isNotFirstFetch === false) {
       setIsNotFirstFetch(true);
@@ -95,7 +97,8 @@ export default function FilteredProducts({
             });
           }
           try {
-            window.history.pushState(null, "", `product?${searchParam}`);
+            router.push(`product?${searchParam}`);
+            // window.history.pushState(null, "", `product?${searchParam}`);
           } catch {
             console.log("fail to update url");
           }
