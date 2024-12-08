@@ -17,45 +17,8 @@ export default function AddToCartButton({
   const dict = useContext(LocaleContext);
   const [quantity, setQuantity] = useState(1);
   const [selectedSpec, setSelectedSpec] = useState(
-    product.specs ? product.specs[0] : null
+    product.specs ? product.specs[0] : null,
   );
-  // const handleAddToCart = async () => {
-  //   // handle different conditions of add product
-  //   // 1.empty, 2.have same product, 3.have other product(s)
-  //   if (!cartItems || cartItems.length === 0) {
-  //     setCartItems([
-  //       {
-  //         userId: "",
-  //         name: product.name,
-  //         productId: product.id!,
-  //         price: product.price,
-  //         quantity: quantity,
-  //       },
-  //     ]);
-  //     return;
-  //   }
-  //   const newCartItems = [...cartItems];
-  //   if (newCartItems.length > 0) {
-  //     for (let i = 0; i < newCartItems?.length; i++) {
-  //       if (newCartItems[i].productId == product.id) {
-  //         newCartItems[i].quantity += quantity;
-  //         setCartItems(newCartItems);
-  //         return;
-  //       }
-  //     }
-  //     if (!newCartItems.some((item) => item.productId == product.id)) {
-  //       newCartItems.push({
-  //         userId: "",
-  //         name: product.name,
-  //         productId: product.id!,
-  //         price: product.price,
-  //         quantity: quantity,
-  //       });
-  //     }
-  //   }
-  //   setCartItems(newCartItems);
-  //   return;
-  // };
   async function handleAddToCart(product: Product, quantity: number) {
     const newCart = {
       productId: product.id,
