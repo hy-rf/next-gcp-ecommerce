@@ -1,15 +1,28 @@
 "use client";
 import fetchData from "@/lib/fetchData";
+import { fetchCartItems } from "@/lib/store/features/cartSlice";
+import { AppDispatch, RootState } from "@/lib/store/store";
 import { CartItem } from "@/model";
 import { UpdateCartItemBody } from "@/model/dto";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CartItemList({
   onClickingLinksInCartItemList,
 }: {
   onClickingLinksInCartItemList: () => void;
 }) {
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    cartItems: items,
+    loading,
+    error,
+  } = useSelector((state: RootState) => state.cart);
+  useEffect(() => {
+    // Fetch cart items when the component mounts
+    dispatch(fetchCartItems());
+  }, [dispatch]);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   useEffect(() => {
     (async () => {
