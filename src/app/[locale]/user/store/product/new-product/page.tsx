@@ -5,6 +5,7 @@ import FileUploader from "./_component/FileUploader";
 import FileNameHint from "./_component/FileNameHint";
 import Image from "next/image";
 import Modal from "@/components/Modal";
+import { useSearchParams } from "next/navigation";
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -32,6 +33,7 @@ async function filesToBase64(files: File[]): Promise<string[]> {
 }
 
 export default function NewProduct() {
+  const searchParams = useSearchParams();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState<number>(0);
@@ -115,7 +117,7 @@ export default function NewProduct() {
         imageList: imageBytes,
         category: category,
         subCategory: subCategory,
-        createdShopId: "7I9C1WozQl20WtsDkvut",
+        createdShopId: searchParams.get("id"),
         specs: specs,
       }),
     }).then((res) => res.json());

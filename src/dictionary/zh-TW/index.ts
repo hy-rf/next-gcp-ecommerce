@@ -1,7 +1,7 @@
 import { Dictionary } from "@/model";
 
 const index: Dictionary = {
-  title: "便宜購物網",
+  title: "二手拍賣網",
   layout_title: "帳戶",
   user_login: "登入",
   product_total_1: "總共",
@@ -13,5 +13,6 @@ const index: Dictionary = {
   product_sort_desc: "下降",
   product_sort_asc: "上升",
   product_sort_apply: "套用排序方式",
+  all_product_link: "查看所有商品",
 };
 export default index;

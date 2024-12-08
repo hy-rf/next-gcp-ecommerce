@@ -1,5 +1,6 @@
 import { Store } from "@/model";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 export default async function StoreList() {
   const stores: Store[] = await fetch(`${process.env.URL}/api/user/store`, {
@@ -26,6 +27,12 @@ export default async function StoreList() {
           <p className="text-sm text-gray-500 mt-1">
             <span className="font-medium">Owned by:</span> {ele.ownerUserId}
           </p>
+          <Link
+            href={`/user/store/product/new-product?id=${ele.id}`}
+            className="px-4 py-2 text-blue-500 hover:text-blue-600 border border-blue-500 hover:border-blue-600 rounded-lg transition"
+          >
+            New Product
+          </Link>
         </div>
       ))}
     </div>

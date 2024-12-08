@@ -10,7 +10,10 @@ export async function GET(req: NextRequest) {
     .doc(req.nextUrl.searchParams.get("id")!)
     .get();
 
-  return Response.json(storeSnapshot.data());
+  return Response.json({
+    id: storeSnapshot.id,
+    ...storeSnapshot.data(),
+  });
 }
 
 interface PostBody {

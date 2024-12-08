@@ -13,5 +13,6 @@ const index: Dictionary = {
   product_sort_desc: "DESC",
   product_sort_asc: "ASC",
   product_sort_apply: "Apply Sort",
+  all_product_link: "All Products",
 };
 export default index;

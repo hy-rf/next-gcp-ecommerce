@@ -70,10 +70,10 @@ export default function Organizer({
       </div>
       <div
         id="desktop-filter"
-        className="md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40"
+        className="md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40 md:backdrop-blur-sm md:border md:shadow-sm md:px-1"
       >
         {showFilter && (
-          <div className="fixed bottom-28 rounded-lg flex flex-col right-6 p-4 shadow-md items-center md:flex md:static bg-header-gray md:bg-filter-and-sort-bg-color">
+          <div className="fixed bottom-28 rounded-lg flex flex-col right-6 p-4 shadow-md items-center backdrop-blur-sm md:flex md:static bg-header-gray md:bg-transparent md:shadow-none">
             <ProductFilter
               filterOption={filterOption}
               setFilterOption={setFilterOption}
@@ -82,7 +82,7 @@ export default function Organizer({
           </div>
         )}
         {showSort && (
-          <div className="fixed bottom-28 rounded-lg flex flex-col p-4 left-6 shadow-md md:static md:flex bg-header-gray md:bg-filter-and-sort-bg-color">
+          <div className="fixed bottom-28 rounded-lg flex flex-col p-4 left-6 shadow-md backdrop-blur-sm md:static md:flex bg-header-gray md:bg-transparent md:shadow-none">
             <ProductSort
               filterOption={filterOption}
               setFilterOption={setFilterOption}
@@ -90,6 +90,21 @@ export default function Organizer({
             />
           </div>
         )}
+        {/* <button
+          onClick={() =>
+            setFilterOption({
+              page: 1,
+              storeId: "",
+              categoryId: "",
+              subCategoryId: "",
+              minPrice: 0,
+              maxPrice: Infinity,
+              sortOption: "sold-desc",
+            })
+          }
+        >
+          Reset
+        </button> */}
       </div>
     </>
   );

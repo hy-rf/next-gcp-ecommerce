@@ -17,7 +17,7 @@ export default function Hero() {
       {
         title: "test2",
         description: "testD2",
-        imageUrl: "/2.jpg",
+        imageUrl: "/ElectronicsSale.webp",
       },
       {
         title: "test3",

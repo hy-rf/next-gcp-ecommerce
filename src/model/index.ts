@@ -11,6 +11,7 @@ export interface Dictionary {
   product_sort_desc: string;
   product_sort_asc: string;
   product_sort_apply: string;
+  all_product_link: string;
 }
 
 export interface User {
