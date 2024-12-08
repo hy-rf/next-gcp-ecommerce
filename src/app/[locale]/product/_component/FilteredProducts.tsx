@@ -62,11 +62,13 @@ export default function FilteredProducts({
   const [total, setTotal] = useState(totalFromServerCpomonent);
   const [isNotFirstFetch, setIsNotFirstFetch] = useState(false);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (isNotFirstFetch === false) {
       setIsNotFirstFetch(true);
       return;
     } else {
+      setIsLoading(true);
       console.log("load new set of sorted and filtered product");
       let searchParam = `page=${options.page}`;
       if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
@@ -96,6 +98,7 @@ export default function FilteredProducts({
               };
             });
           }
+          setIsLoading(false);
           try {
             router.push(`product?${searchParam}`);
             // window.history.pushState(null, "", `product?${searchParam}`);
@@ -160,7 +163,12 @@ export default function FilteredProducts({
             {total}
             {dict.product_total_2}
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4"
+            style={{
+              opacity: isLoading ? "0.5" : "1",
+            }}
+          >
             {filteredProducts.map((ele) => (
               <ProductItem product={ele} key={ele.id} />
             ))}
