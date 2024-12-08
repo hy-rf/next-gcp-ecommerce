@@ -7,6 +7,19 @@ import { useCallback, useEffect, useState } from "react";
 export default function Hero() {
   const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [heroHeight, setHeroHeight] = useState(0);
+  useEffect(() => {
+    const height = window.innerWidth / 1.755;
+    setHeroHeight(height);
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= 768) {
+        const height = window.innerWidth / 1.755;
+        setHeroHeight(height);
+      } else {
+        setHeroHeight(NaN);
+      }
+    });
+  }, []);
   useEffect(() => {
     setCarouselItems([
       {
@@ -53,15 +66,18 @@ export default function Hero() {
             {carouselItems.map((item, index) => (
               <div
                 key={item.id ? item.id : index}
-                className="flex-[0_0_100%] flex justify-center"
+                className="flex-[0_0_100%] flex justify-center overflow-hidden"
+                style={{
+                  height: `${heroHeight}px`,
+                }}
               >
                 <Image
-                  className="overflow-hidden min-w-full md:max-w-[1024px] md:min-w-[768px] md:max-h-[437px]"
+                  className="overflow-hidden min-w-full md:max-w-[1024px] md:min-w-[768px] md:max-h-[437px] pb-4"
                   src={item.imageUrl}
                   alt={item.title}
                   width={0}
                   height={0}
-                  sizes="100vw"
+                  sizes="100%"
                 />
               </div>
             ))}
