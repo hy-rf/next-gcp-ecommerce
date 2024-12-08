@@ -7,12 +7,14 @@ import { useCallback, useEffect, useState } from "react";
 export default function Hero() {
   const [carouselItems, setCarouselItems] = useState<CarouselItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [heroHeight, setHeroHeight] = useState(0);
+  const [heroHeight, setHeroHeight] = useState(NaN);
   useEffect(() => {
-    const height = window.innerWidth / 1.755;
-    setHeroHeight(height);
+    if (window.innerWidth < 768) {
+      const height = window.innerWidth / 1.755;
+      setHeroHeight(height);
+    }
     window.addEventListener("resize", () => {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth < 768) {
         const height = window.innerWidth / 1.755;
         setHeroHeight(height);
       } else {
