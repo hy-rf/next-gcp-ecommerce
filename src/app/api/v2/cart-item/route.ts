@@ -7,7 +7,9 @@ import { NextRequest } from "next/server";
 export async function GET() {
   const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
   if (!decoded) {
-    return Response.json({ code: 400 });
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+    });
   }
   return Response.json(
     (
@@ -27,7 +29,9 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
   if (!decoded) {
-    return Response.error();
+    return new Response(JSON.stringify({ error: "Auth is required" }), {
+      status: 406, // Bad Request
+    });
   }
   const body: CartItem = await req.json();
   const db = database();
