@@ -4,15 +4,17 @@ import Image from "next/image";
 import ProductFilter from "./ProductFilter";
 import ProductSort from "./ProductSort";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { FilterOptions } from "@/model";
+import { Category, FilterOptions } from "@/model";
 
 // general buttons for generating of sort and filter popup
 export default function Organizer({
   filterOption,
   setFilterOption,
+  categories,
 }: {
   filterOption: FilterOptions;
   setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
+  categories: Category[];
 }) {
   const [showFilter, setShowFilter] = useState(false);
   const [showSort, setShowSort] = useState(false);
@@ -75,6 +77,7 @@ export default function Organizer({
         {showFilter && (
           <div className="fixed bottom-28 rounded-lg flex flex-col right-6 p-4 shadow-md items-center backdrop-blur-sm md:flex md:static bg-header-gray md:bg-transparent md:shadow-none">
             <ProductFilter
+              categories={categories}
               filterOption={filterOption}
               setFilterOption={setFilterOption}
               setShowFilter={setShowFilter}

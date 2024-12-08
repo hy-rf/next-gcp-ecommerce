@@ -1,7 +1,7 @@
 "use client";
 
 import Organizer from "@/app/[locale]/product/_component/Organizer";
-import { FilterOptions, Product } from "@/model";
+import { Category, FilterOptions, Product } from "@/model";
 import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import LocaleContext from "../../_component/LocaleContext";
@@ -13,12 +13,14 @@ export default function FilteredProducts({
   maxP,
   totalFromServerCpomonent,
   defaultFilterOptions,
+  categories,
 }: {
   products: Product[];
   filterOptions: FilterOptions;
   maxP: number;
   totalFromServerCpomonent: number;
   defaultFilterOptions: FilterOptions;
+  categories: Category[];
 }) {
   useEffect(() => {
     const handlePopState = () => {
@@ -156,7 +158,11 @@ export default function FilteredProducts({
             </div>
           </div>
         )}
-        <Organizer filterOption={options} setFilterOption={setOptions} />
+        <Organizer
+          filterOption={options}
+          setFilterOption={setOptions}
+          categories={categories}
+        />
         <div>
           <p className="text-center">
             {dict.product_total_1}

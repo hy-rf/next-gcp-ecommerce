@@ -6,19 +6,12 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 export default function CategoryFilterCheckboxGroup({
   selectedCategories,
   setSelectedCategories,
+  categories,
 }: {
   selectedCategories: string[];
   setSelectedCategories: Dispatch<SetStateAction<string[]>>;
+  categories: Category[];
 }) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  useEffect(() => {
-    (async () => {
-      const categories: Category[] = await fetch("/api/category/").then((res) =>
-        res.json()
-      );
-      setCategories(categories);
-    })();
-  }, []);
   const handleCheckboxChange = (value: string) => {
     setSelectedCategories(
       (prev) =>

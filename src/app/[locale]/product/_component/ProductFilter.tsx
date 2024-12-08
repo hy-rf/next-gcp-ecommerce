@@ -2,7 +2,7 @@
 /* TODO: setFilterOption after clicking apply button
     add local state for this component
  */
-import { FilterOptions } from "@/model";
+import { Category, FilterOptions } from "@/model";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import CategoryFilterCheckboxGroup from "./CategoryFilterCheckboxGroup";
 
@@ -10,10 +10,12 @@ export default function ProductFilter({
   filterOption,
   setFilterOption,
   setShowFilter,
+  categories,
 }: {
   filterOption: FilterOptions;
   setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
   setShowFilter: Dispatch<SetStateAction<boolean>>;
+  categories: Category[];
 }) {
   const [localOption, setLocalOption] = useState<FilterOptions>(filterOption);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
@@ -65,6 +67,7 @@ export default function ProductFilter({
       </div>
       <div className="items-center gap-2 m-2">
         <CategoryFilterCheckboxGroup
+          categories={categories}
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
         />
