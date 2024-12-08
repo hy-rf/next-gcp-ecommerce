@@ -56,7 +56,7 @@ export default function Hero() {
                 className="flex-[0_0_100%] flex justify-center"
               >
                 <Image
-                  className="overflow-hidden min-w-full md:max-w-[1024px] md:min-w-[768px]"
+                  className="overflow-hidden min-w-full md:max-w-[1024px] md:min-w-[768px] md:max-h-[437px]"
                   src={item.imageUrl}
                   alt={item.title}
                   width={0}
