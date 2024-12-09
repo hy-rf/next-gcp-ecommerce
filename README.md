@@ -56,7 +56,7 @@ bun dev
 
 `PUT` `/api/user/locale` change locale
 
-`GET` `/api/user/token` get new token
+`GET` `/api/user/token` Get new token, it is used when other api requests failed for expired token.
 
 ### Cart
 
