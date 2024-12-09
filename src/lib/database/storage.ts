@@ -1,12 +1,11 @@
 import { Storage } from "@google-cloud/storage";
+import { getVercelOidcToken } from "@vercel/functions/oidc";
+import { ExternalAccountClient } from "google-auth-library";
 // import { getVercelOidcToken } from "@vercel/functions/oidc";
 // import { ExternalAccountClient } from "google-auth-library";
 
 export default function storage() {
-  if (true || process.env.NODE_ENV === "production") {
-    return new Storage();
-  }
-  if (process.env.URL === "https://myshop-phi-ten.vercel.app") {
+  if (process.env.NODE_ENV === "production") {
     // const GCP_PROJECT_ID = process.env.GCP_PROJECT_ID;
     // const GCP_PROJECT_NUMBER = process.env.GCP_PROJECT_NUMBER;
     // const GCP_SERVICE_ACCOUNT_EMAIL = process.env.GCP_SERVICE_ACCOUNT_EMAIL;
@@ -14,7 +13,6 @@ export default function storage() {
     //   process.env.GCP_WORKLOAD_IDENTITY_POOL_ID;
     // const GCP_WORKLOAD_IDENTITY_POOL_PROVIDER_ID =
     //   process.env.GCP_WORKLOAD_IDENTITY_POOL_PROVIDER_ID;
-
     // const authClient = ExternalAccountClient.fromJSON({
     //   type: "external_account",
     //   audience: `//iam.googleapis.com/projects/${GCP_PROJECT_NUMBER}/locations/global/workloadIdentityPools/${GCP_WORKLOAD_IDENTITY_POOL_ID}/providers/${GCP_WORKLOAD_IDENTITY_POOL_PROVIDER_ID}`,
@@ -27,10 +25,6 @@ export default function storage() {
     //   },
     // });
     return new Storage();
-    // { projectId: GCP_PROJECT_ID, authClient }
   }
-  return new Storage({
-    projectId: "e-commerce-442014",
-    keyFilename: "./key.json",
-  });
+  return new Storage();
 }
