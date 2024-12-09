@@ -24,12 +24,12 @@ export default function Page() {
         name: name,
         password: password,
       }),
-    }).then((res) => res.json());
-    if (response.message === "Register succeed") {
+    });
+    if (response.statusText === "Register succeed!") {
       setIsRegistering(true);
       setPassword("");
     }
-    if (response.code == 200) {
+    if (response.statusText == "Login Succeed") {
       location.replace("/");
     }
   }

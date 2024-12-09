@@ -7,8 +7,9 @@ import { NextRequest } from "next/server";
 export async function GET() {
   const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
   if (!decoded) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+    return new Response(null, {
       status: 401,
+      statusText: "Unauthorized",
     });
   }
   return Response.json(

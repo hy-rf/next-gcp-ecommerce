@@ -20,17 +20,20 @@ export async function GET() {
   return Response.json(user);
 }
 
-interface LoginPostBody {
-  name: string;
-  password: string;
-}
-
+/**
+ * Password Login or Register endpoint
+ * @param req
+ */
 export async function POST(req: NextRequest) {
-  const body: LoginPostBody = await req.json();
-  if (body.name === "" || body.password === "")
-    return Response.json({
-      code: 400,
-      message: "Invalid data",
+  const body: {
+    name: string;
+    password: string;
+  } = await req.json();
+  // validate login
+  if (body.name.trim() === "" || body.password.trim() === "")
+    return new Response(null, {
+      status: 400,
+      statusText: "Bad Request",
     });
   const db = database();
   const userRef = db.collection("User").where("name", "==", body.name).get();
@@ -39,8 +42,9 @@ export async function POST(req: NextRequest) {
       name: body.name,
       password: body.password,
     });
-    return Response.json({
-      message: "Register succeed",
+    return new Response(null, {
+      status: 200,
+      statusText: "Register succeed!",
     });
   }
 
@@ -48,12 +52,13 @@ export async function POST(req: NextRequest) {
   const userId = user.id;
   const userData = user.data() as User;
   if (userData.password && userData.password !== body.password) {
-    return Response.json({
-      message: "Wrong password",
+    return new Response(null, {
+      status: 401,
+      statusText: "Wrong password!",
     });
   }
   const token = jwt.sign({ userId }, process.env.JWT_SECRET!, {
-    expiresIn: "24h",
+    expiresIn: "1m",
   });
   const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!, {
     expiresIn: "24h",
@@ -61,8 +66,8 @@ export async function POST(req: NextRequest) {
   const cookieStore = await cookies();
   cookieStore.set("token", token);
   cookieStore.set("refresh", refreshToken);
-  return Response.json({
-    code: 200,
-    message: token,
+  return new Response(null, {
+    status: 200,
+    statusText: "Login Succeed",
   });
 }

@@ -23,7 +23,7 @@ export async function getRefreshTokenPayload(): Promise<tokenPayload | null> {
   }
   const token = tokenInRequestCookie.value;
   try {
-    return jwt.verify(token, process.env.JWT_SECRET!) as tokenPayload;
+    return jwt.verify(token, process.env.JWT_REFRESH_SECRET!) as tokenPayload;
   } catch {
     return null;
   }
