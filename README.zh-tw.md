@@ -4,178 +4,141 @@
 
 ## 功能
 
-### 商品排序/過濾
+### 產品篩選/排序
 
-彈性客製化商品排序過濾解決方案。
+可自定義和擴展的產品篩選/排序解決方案。
 
 ### 購物車
 
-商品加入購物車，加減數量，從購物車刪除商品。
+將產品添加到購物車並更改購物車項目的數量。
 
-### 密碼登入
+### 密碼登錄
 
-可以用帳號密碼登入與註冊。
+在應用程序發布之前，對公眾可用的登錄方法。
 
-### Google 登入
+### Google 登錄
 
 ### 訂單
 
 下訂單。
 
-## 開發中
+## 開發/測試中的功能
 
-### 連結多個OAuth2.0提供者
+### OAuth2.0 連接提供者
 
-### 商品搜尋
+連接其他 oauth 登錄提供者。
 
-## 開始
+### 產品搜索
 
-第一，跑開發server：
+## 開始使用
+
+首先，運行開發伺服器：
 
 ```bash
 npm run dev
-# or
+
+# 或
+
 yarn dev
-# or
+
+# 或
+
 pnpm dev
-# or
+
+# 或
+
 bun dev
 ```
 
-## API列表
+## API 列表
 
-`POST` `/api/user/login` oauth login
+### 用戶
 
-`GET` `/api/user/login-method` get login methods
+`POST` `/api/user/login oauth` 登錄
 
-`GET` `/api/user/store` get owned store
+`GET` `/api/user/login-method` 獲取登錄方法
 
-`PUT` `/api/user/locale` change locale
+`GET` `/api/user/store` 獲取擁有的商店
 
-`GET` `/api/user/token` get new token
+`PUT` `/api/user/locale` 更改語言
 
-`GET` `/api/v2/cart-item` get cart items
+`GET` `/api/user/token` 獲取新令牌
 
-`POST` `/api/v2/cart-item` add cart item
+### 購物車
 
-`PUT` `/api/v2/cart-item` change cart item
+`GET` `/api/v2/cart-item` 獲取購物車項目
 
-`GET` `/api/product` get products
+`POST` `/api/v2/cart-item` 添加購物車項目
 
-#### params:
+`PUT` `/api/v2/cart-item` 更改購物車項目
 
-- page: 頁數
-- categoryId: 分類id，以","分隔。
-- subCategoryId: 次分類id，以","分隔。
-- minPrice: 低價
-- maxPrice: 高價
-- sort: 排序方式, 例:price-asc
+`DELETE` `/api/v2/cart-item` 刪除購物車項目
 
-#### 回傳
+- **請求主體**:
+
+```json
+[
+  {
+    "id": "string",
+    "productId": "string"
+  }
+]
+```
+
+## **響應**
+
+### **成功響應**
+
+- **狀態碼**: 200 OK
+- **響應主體**: 一個 JSON 對象，確認刪除購物車項目及其相關產品的更新庫存。
 
 ```json
 {
-  "pages": "全部頁數",
-  "products": ["product1", "product2", "詳見model -> Product"],
-  "total": "所有頁數的所有商品數量"
+  "time": "添加到購物車的時間"
 }
 ```
 
-`GET` `/api/product/:id` get product
+### **錯誤響應**
 
-`POST` `/api/product` add product
+- **狀態碼**: 401 未授權
 
-`GET` `/api/category` get categories
+- **原因**: 身份驗證令牌缺失或無效。
 
-<!-- ## API list
+- **狀態碼**: 403 禁止
 
-### User
+- **原因**: 用戶不擁有該購物車項目。
 
-#### User login
+### 購物車
 
-- **Endpoint**: `/user/login/api`
-- **Description**: User login and get login result.
-- **Request Body**:
-  ```json
-  {
-    "id": "user id from oauth provider",
-    "oauth_provider": "provider name"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "code": "200/300/400",
-    "message": "string"
-  }
-  ```
+GET /api/product 獲取產品
 
-### Store
+- **參數**:
 
-#### Get stores owned by certain user
+- page: 當前頁碼
+- categoryId: 類別的 ID，以 "," 分隔
+- subCategoryId: 子類別的 ID，以 "," 分隔
+- minPrice: 數字
+- maxPrice: 數字
+- sort: 排序方式，例如: price-asc
 
-- **Endpoint**: `/user/store/api`
-- **Method**: `GET`
-- **Description**: Get stores owned by authenticated user.
-- **Parameters**: None
-- **Response**:
-  ```json
-  [
-    {
-      "name": "string",
-      "description": "string",
-      "createdUserId": "string",
-      "ownerUserId": "string"
-    }
-  ]
-  ```
+- **響應**:
 
----
+```json
+{
+  "pages": "最大頁數",
+  "products": ["product1", "product2", "..."],
+  "total": "所有頁面中的產品總數"
+}
+```
 
-#### Get all store submissions
+`GET` `/api/product/:id` 獲取產品
 
-- **Endpoint**: `/store-submission/api`
-- **Method**: `GET`
-- **Description**: Get stores submissions by all user.
-- **Parameters**:
-  ```json
-  [{}, {}]
-  ```
+`POST` `/api/product` 添加產品
 
----
+`GET` `/api/category` 獲取類別
 
-#### Get stores by given id
+### 付款
 
-- **Endpoint**: `/store/api`
-- **Method**: `GET`
-- **Description**: Get stores owned by authenticated user.
-- **Parameters**: `id:string`
-- **Response**:
-  ```json
-  {
-    "name": "string",
-    "description": "string",
-    "createdUserId": "string",
-    "ownerUserId": "string"
-  }
-  ```
+`POST` `/api/pay` 創建 paypal 訂單
 
-### Cart
-
-#### Get cart items by cart id
-
-- **Endpoint**: `/cart/cartitem/api`
-- **Method**: `GET`
-- **Description**: Get cart item in certain cart.
-- **Parameters**: `id:string`
-- **Response**:
-  ```json
-  {
-    "name": "string",
-    "description": "string",
-    "createdUserId": "string",
-    "ownerUserId": "string"
-  }
-  ```
-
---- -->
+`POST` `/api/pay?id=<paypal 訂單 ID>` 向賣家發送款項
