@@ -19,7 +19,6 @@ export default function CartItemList({
       } catch {
         console.log("No cart item or not log in");
         setCartItems([]);
-        fetch("/api/user/token");
       }
     })();
   }, []);
