@@ -3,7 +3,7 @@ import { Firestore } from "@google-cloud/firestore";
 // import { getVercelOidcToken } from "@vercel/functions/oidc";
 
 export default function database() {
-  if (process.env.NODE_ENV === "production") {
+  if (true || process.env.NODE_ENV === "production") {
     return new Firestore();
   }
   // if (process.env.URL === "https://myshop-phi-ten.vercel.app") {

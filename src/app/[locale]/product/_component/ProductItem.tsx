@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { Product } from "@/model";
 import AddToCartButton from "./AddToCartButton";
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 
 export default function ProductItem({ product }: { product: Product }) {
   return (

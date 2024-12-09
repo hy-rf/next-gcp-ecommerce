@@ -94,7 +94,20 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
     })();
   }
   async function handleDeleteCartItem(cartItem: CartItem) {
-    return cartItem;
+    const res = await fetch("/api/v2/cart-item", {
+      method: "delete",
+      body: JSON.stringify({
+        id: cartItem.id,
+      }),
+    });
+    if (res.status === 200) {
+      alert("Delete Success!");
+    } else if (res.status === 401) {
+      alert("Unauthorized");
+    } else if (res.status === 403) {
+      alert("Forbidden");
+    }
+    setCart((old) => old.filter((el) => el.id !== cartItem.id));
   }
 
   return (
@@ -110,7 +123,7 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
             flexDirection: "row",
             alignItems: "center",
             borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
             border: "1px solid #e0e0e0",
             overflow: "hidden",
           }}
@@ -118,7 +131,7 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
           {/* Placeholder for Product Image */}
           <CardMedia
             component="img"
-            image="a.png" // Placeholder image
+            image={item.imageUrl} // Placeholder image
             alt="Product Placeholder"
             sx={{
               width: "100px",
@@ -203,6 +216,21 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
                 }}
               >
                 +
+              </Button>
+              <Button
+                onClick={() => handleDeleteCartItem(item)}
+                variant="outlined"
+                size="small"
+                sx={{
+                  minWidth: "32px",
+                  height: "32px",
+                  padding: 0,
+                  fontSize: "1.25rem",
+                  lineHeight: 1,
+                  color: "red",
+                }}
+              >
+                x
               </Button>
             </Box>
           </CardActions>

@@ -1,5 +1,6 @@
 import fetchData from "@/lib/fetchData";
 import { Category } from "@/model";
+import Link from "next/link";
 
 export default async function CategoryList() {
   const categories: Category[] = await fetchData<Category[]>(
@@ -13,9 +14,9 @@ export default async function CategoryList() {
             key={ele.id}
             className="flex flex-col items-center justify-center p-1 min-w-40 bg-white border-black shadow-category-card rounded-lg "
           >
-            <a href={`/product?categoryId=${ele.id}&page=1&sort=sold-desc`}>
+            <Link href={`/product?categoryId=${ele.id}&page=1&sort=sold-desc`}>
               <p className="text-lg font-medium text-gray-800">{ele.name}</p>
-            </a>
+            </Link>
           </div>
         ))}
       </div>

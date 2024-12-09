@@ -1,7 +1,7 @@
 "use client";
 
 import { Category } from "@/model";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export default function CategoryFilterCheckboxGroup({
   selectedCategories,

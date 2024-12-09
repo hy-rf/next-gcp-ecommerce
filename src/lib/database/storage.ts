@@ -3,7 +3,7 @@ import { Storage } from "@google-cloud/storage";
 // import { ExternalAccountClient } from "google-auth-library";
 
 export default function storage() {
-  if (process.env.NODE_ENV === "production") {
+  if (true || process.env.NODE_ENV === "production") {
     return new Storage();
   }
   if (process.env.URL === "https://myshop-phi-ten.vercel.app") {

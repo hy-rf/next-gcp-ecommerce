@@ -30,38 +30,41 @@ export async function POST(req: NextRequest) {
   const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
   if (!decoded) {
     return new Response(JSON.stringify({ error: "Auth is required" }), {
-      status: 406, // Bad Request
+      status: 401,
     });
   }
   const body: CartItem = await req.json();
   const db = database();
-  if (
-    !(
-      await db
-        .collection("CartItem")
-        .where("userId", "==", decoded.userId)
-        .where("productId", "==", body.productId)
-        .get()
-    ).empty
-  ) {
-    return Response.json({
-      code: 400,
-      message: "already in cart",
-      cartItemId: (
-        await db
-          .collection("CartItem")
-          .where("userId", "==", decoded.userId)
-          .where("productId", "==", body.productId)
-          .get()
-      ).docs[0].id,
-    });
-  }
+  const cartItemRefOfSameUserIdAndSpec = db
+    .collection("CartItem")
+    .where("userId", "==", decoded.userId)
+    .where("productId", "==", body.productId)
+    .where("spec", "==", body.spec);
+  if (cartItemRefOfSameUserIdAndSpec.count())
+    if ((await cartItemRefOfSameUserIdAndSpec.count().get()).data().count > 0) {
+      return new Response(
+        JSON.stringify({
+          cartItemId: (
+            await db
+              .collection("CartItem")
+              .where("userId", "==", decoded.userId)
+              .where("productId", "==", body.productId)
+              .get()
+          ).docs[0].id,
+        }),
+        {
+          status: 409,
+          statusText: "Conflict",
+        }
+      );
+    }
+  const productRef = db.collection("Product").doc(body.productId);
+  const product: Product = (await productRef.get()).data() as Product;
   const newCartItemId = await db.collection("CartItem").add({
     ...body,
     userId: decoded.userId,
+    imageUrl: product.imageUrl[0],
   });
-  const productRef = db.collection("Product").doc(body.productId);
-  const product: Product = (await productRef.get()).data() as Product;
   productRef.update({
     stock: product.stock - body.quantity,
   });
@@ -105,4 +108,38 @@ export async function PUT(req: NextRequest) {
     });
   }
   return Response.json(body);
+}
+
+export async function DELETE(req: NextRequest) {
+  const body: { id: string; productId: string } = await req.json();
+  const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
+  return (async (db = database()) => {
+    if (!decoded)
+      return new Response(null, {
+        status: 401,
+      });
+    const cartItemToDelete = db.collection("CartItem").doc(body.id);
+    if (
+      ((await cartItemToDelete.get()).data() as CartItem).userId !==
+      decoded.userId
+    )
+      return new Response(null, {
+        status: 403,
+      });
+    const productRef = db.collection("Product").doc(body.productId);
+    await productRef.update({
+      quantity:
+        ((await productRef.get()).data() as Product).stock +
+        ((await cartItemToDelete.get()).data() as CartItem).quantity,
+    });
+    const result = await cartItemToDelete.delete();
+    return new Response(
+      JSON.stringify({
+        time: result.writeTime.toDate(),
+      }),
+      {
+        status: 200,
+      }
+    );
+  })();
 }

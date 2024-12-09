@@ -17,7 +17,7 @@ export default function AddToCartButton({
   const dict = useContext(LocaleContext);
   const [quantity, setQuantity] = useState(1);
   const [selectedSpec, setSelectedSpec] = useState(
-    product.specs ? product.specs[0] : null,
+    product.specs ? product.specs[0] : null
   );
   async function handleAddToCart(product: Product, quantity: number) {
     const newCart = {
@@ -30,20 +30,26 @@ export default function AddToCartButton({
     const response = await fetch("/api/v2/cart-item", {
       method: "post",
       body: JSON.stringify(newCart),
-    }).then((res) => res.json());
-    if (response.message == "already in cart") {
+    });
+    if (response.status === 409) {
+      // if conflict
       const body: UpdateCartItemBody = {
-        id: response.cartItemId,
+        id: (await response.json()).cartItemId,
         productId: product.id!,
         number: quantity,
         mode: "plus",
       };
-      const response2 = await fetch("/api/v2/cart-item", {
+      const addQuantityResponse = await fetch("/api/v2/cart-item", {
         method: "put",
         body: JSON.stringify(body),
-      }).then((res) => res.json());
-      alert(response2.message);
+      });
+      alert("Add to Cart Success!");
+      console.log(addQuantityResponse.status);
+      return;
     }
+    // handle success result
+    alert("Add to Cart Success!");
+    return;
   }
   return (
     <>

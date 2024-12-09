@@ -4,7 +4,6 @@ import {
   CheckoutPaymentIntent,
   Client,
   Environment,
-  LogLevel,
   OrderRequest,
   OrdersController,
   //PaymentsController,
