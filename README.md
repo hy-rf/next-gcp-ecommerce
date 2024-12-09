@@ -66,11 +66,47 @@ bun dev
 
 `PUT` `/api/v2/cart-item` change cart item
 
+`DELETE` `/api/v2/cart-item` delete cart item
+
+- **Request body**:
+
+```json
+[
+  {
+    "id": "string",
+    "productId": "string"
+  }
+]
+```
+
+## **Response**
+
+### **Successful Response**
+
+- **Status Code**: `200 OK`
+- **Response Body**: A JSON object confirming the deletion of the cart item and the updated stock of the associated product.
+
+```json
+{
+  "time": "add to cart time"
+}
+```
+
+### **Error Responses**
+
+- **Status Code**: `401 Unauthorized`
+
+- **Reason**: Authentication token is missing or invalid.
+
+- **Status Code**: `403 Forbidden`
+
+- **Reason**: The user does not own the cart item.
+
 ### Cart
 
 `GET` `/api/product` get products
 
-#### params:
+- **Params**:
 
 - page: current page number
 - categoryId: ids of categories, separated by ","
@@ -79,7 +115,7 @@ bun dev
 - maxPrice: number
 - sort: way of sort, ex:price-asc
 
-#### response
+- **Response**:
 
 ```json
 {
