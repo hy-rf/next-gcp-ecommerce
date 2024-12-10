@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, TextField } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import LocaleContext from "../_component/LocaleContext";
@@ -16,16 +16,20 @@ export default function Page() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth";
-  const params = {
-    client_id:
-      "981674263788-sfp6ddbl5pn1in3vmvgpbvre83bjigjm.apps.googleusercontent.com",
-    redirect_uri: `${process.env.NEXT_PUBLIC_URL}/user/login-callback`,
-    response_type: "token",
-    scope: "https://www.googleapis.com/auth/userinfo.profile",
-    include_granted_scopes: "true",
-    state: "pass-through value",
-  };
+  const [oauth2Endpoint, setOauth2Endpoint] = useState("");
+  const [params, setParams] = useState({});
+  useEffect(() => {
+    setOauth2Endpoint("https://accounts.google.com/o/oauth2/v2/auth");
+    setParams({
+      client_id:
+        "981674263788-sfp6ddbl5pn1in3vmvgpbvre83bjigjm.apps.googleusercontent.com",
+      redirect_uri: `${process.env.NEXT_PUBLIC_URL}/user/login-callback`,
+      response_type: "token",
+      scope: "https://www.googleapis.com/auth/userinfo.profile",
+      include_granted_scopes: "true",
+      state: "pass-through value",
+    });
+  }, []);
   async function handleLoginOrRegister() {
     const response = await fetch("/api/user", {
       method: "post",

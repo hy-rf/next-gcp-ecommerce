@@ -48,10 +48,19 @@ export async function POST(req: NextRequest) {
   const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!);
   const cookieStore = await cookies();
   cookieStore.set("token", token, {
-    sameSite: true,
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
   });
   cookieStore.set("refresh", refreshToken, {
-    sameSite: true,
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
+  });
+
+  cookieStore.set("loggedIn", "1", {
+    sameSite: "none",
+    secure: true,
   });
 
   return Response.json({
