@@ -71,9 +71,11 @@ export async function POST(req: NextRequest) {
   const cookieStore = cookies();
   cookieStore.set("token", token, {
     sameSite: "none",
+    secure: true,
   });
   cookieStore.set("refresh", refreshToken, {
     sameSite: "none",
+    secure: true,
   });
   return new Response(null, {
     status: 200,
