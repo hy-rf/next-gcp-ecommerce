@@ -1,15 +1,16 @@
 "use client";
 
+import fetchData from "@/lib/fetchData";
 import { StoreSubmission } from "@/model";
 
 export default function StoreSubmissionItem({ ele }: { ele: StoreSubmission }) {
   async function ApproveStoreSubmission(id: string) {
-    const res = await fetch("/api/store", {
+    const res = await fetchData<{ id: string }>("/api/store", {
       method: "post",
       body: JSON.stringify({
         id: id,
       }),
-    }).then((res) => res.json());
+    });
     console.log(res);
     console.log("id: ", res.id);
   }

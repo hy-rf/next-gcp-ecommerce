@@ -45,9 +45,7 @@ export async function POST(req: NextRequest) {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET!, {
     expiresIn: "24h",
   });
-  const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!, {
-    expiresIn: "24h",
-  });
+  const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!);
   const cookieStore = await cookies();
   cookieStore.set("token", token);
   cookieStore.set("refresh", refreshToken);

@@ -7,6 +7,7 @@ import "./NavigationBar.css";
 import CartItemList from "@/app/[locale]/_component/CartItemList";
 import { useRef } from "react";
 import LocaleContext from "./LocaleContext";
+import fetchData from "@/lib/fetchData";
 function throttle<T extends (...args: unknown[]) => void>(
   func: T,
   limit: number
@@ -110,7 +111,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         <div
           className={`${
             isOpen ? "opacity-100" : "opacity-0"
-          } bg-black/30 top-[70px] left-0 w-[100dvw] h-[100dvh] fixed ease-in-out duration-300`}
+          } bg-black/30 top-[70px] left-0 w-[100dvw] h-[100dvh] fixed ease-in-out duration-300 md:hidden`}
           style={{
             WebkitBackdropFilter: "blur(1px)",
             backdropFilter: "blur(1px)",
@@ -230,7 +231,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 <button
                   className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
                   onClick={() =>
-                    fetch("/api/user/locale?newLocale=en-US", {
+                    fetchData<null>("/api/user/locale?newLocale=en-US", {
                       method: "put",
                     }).then(() => window.location.reload())
                   }
@@ -240,7 +241,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                 <button
                   className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
                   onClick={() =>
-                    fetch("/api/user/locale?newLocale=zh-TW", {
+                    fetchData<null>("/api/user/locale?newLocale=zh-TW", {
                       method: "put",
                     }).then(() => window.location.reload())
                   }
@@ -259,14 +260,14 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
       )}
       <button
         onClick={() => handleAnimation()}
-        className="mobile-menu-button ml-auto"
+        className="mobile-menu-button ml-auto md:hidden"
       >
         <div className={`${isOpen && "menu-open"}`}></div>
       </button>
 
       {/* Desktop */}
       <nav
-        className={`hidden text-white md:leading-header-line md:text-center md:static md:flex md:flex-row md:gap-4 md:ml-auto md:mr-0 md:mt-0 md:w-auto md:h-auto md:z-auto md:p-0 md:bg-transparent md:opacity-100  md:hidden`}
+        className={`hidden text-white md:leading-header-line md:text-center md:static md:flex md:flex-row md:gap-4 md:ml-auto md:mr-0 md:mt-0 md:w-auto md:h-auto md:z-auto md:p-0 md:bg-transparent md:opacity-100`}
       >
         <Link
           style={{
@@ -341,7 +342,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               <button
                 className="p-1 hover:underline"
                 onClick={() =>
-                  fetch("/api/user/locale?newLocale=en-US", {
+                  fetchData<null>("/api/user/locale?newLocale=en-US", {
                     method: "put",
                   }).then(() => window.location.reload())
                 }
@@ -351,7 +352,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
               <button
                 className="p-1 hover:underline"
                 onClick={() =>
-                  fetch("/api/user/locale?newLocale=zh-TW", {
+                  fetchData<null>("/api/user/locale?newLocale=zh-TW", {
                     method: "put",
                   }).then(() => window.location.reload())
                 }

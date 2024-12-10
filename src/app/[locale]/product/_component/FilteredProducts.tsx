@@ -6,7 +6,10 @@ import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import LocaleContext from "../../_component/LocaleContext";
 import { useRouter } from "next/navigation";
-
+/**
+ * Content of filtered products
+ * There is no need of token to fetch products
+ */
 export default function FilteredProducts({
   products,
   filterOptions,

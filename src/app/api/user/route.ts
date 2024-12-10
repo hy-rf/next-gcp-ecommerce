@@ -6,7 +6,7 @@ import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
 export async function GET() {
-  const tokenInRequestCookie = (await cookies()).get("token");
+  const tokenInRequestCookie = cookies().get("token");
   if (!tokenInRequestCookie) {
     return Response.error();
   }
@@ -22,20 +22,21 @@ export async function GET() {
 
 /**
  * Password Login or Register endpoint
- * @param req
+ *
  */
 export async function POST(req: NextRequest) {
   const body: {
     name: string;
     password: string;
   } = await req.json();
-  // validate login
+  // Validate login info
   if (body.name.trim() === "" || body.password.trim() === "")
     return new Response(null, {
       status: 400,
       statusText: "Bad Request",
     });
   const db = database();
+  // Check if user exists, register if not exist
   const userRef = db.collection("User").where("name", "==", body.name).get();
   if ((await userRef).empty) {
     db.collection("User").add({
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
       statusText: "Register succeed!",
     });
   }
-
+  // User exists then validate password
   const user = (await userRef).docs[0];
   const userId = user.id;
   const userData = user.data() as User;
@@ -58,12 +59,10 @@ export async function POST(req: NextRequest) {
     });
   }
   const token = jwt.sign({ userId }, process.env.JWT_SECRET!, {
-    expiresIn: "1m",
-  });
-  const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!, {
     expiresIn: "24h",
   });
-  const cookieStore = await cookies();
+  const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!);
+  const cookieStore = cookies();
   cookieStore.set("token", token);
   cookieStore.set("refresh", refreshToken);
   return new Response(null, {

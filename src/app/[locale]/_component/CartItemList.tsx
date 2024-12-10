@@ -41,10 +41,10 @@ export default function CartItemList({
       number: 1,
       mode: "plus",
     };
-    await fetch("/api/v2/cart-item", {
+    await fetchData<null>("/api/v2/cart-item", {
       method: "put",
       body: JSON.stringify(body),
-    }).then((res) => res.json());
+    });
     (async () => {
       try {
         const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
@@ -62,10 +62,10 @@ export default function CartItemList({
       number: 1,
       mode: "minus",
     };
-    await fetch("/api/v2/cart-item", {
+    await fetchData<null>("/api/v2/cart-item", {
       method: "put",
       body: JSON.stringify(body),
-    }).then((res) => res.json());
+    });
     (async () => {
       try {
         const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");

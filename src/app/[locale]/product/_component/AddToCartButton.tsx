@@ -39,6 +39,7 @@ export default function AddToCartButton({
         number: quantity,
         mode: "plus",
       };
+      // if same product and spec was added to cart, call put api
       const addQuantityResponse = await fetch("/api/v2/cart-item", {
         method: "put",
         body: JSON.stringify(body),

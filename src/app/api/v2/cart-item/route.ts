@@ -69,13 +69,16 @@ export async function POST(req: NextRequest) {
   productRef.update({
     stock: product.stock - body.quantity,
   });
-  return Response.json(newCartItemId.id);
+  return new Response(JSON.stringify({ id: newCartItemId }), {
+    status: 200,
+    statusText: "OK",
+  });
 }
 
 export async function PUT(req: NextRequest) {
   const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
   if (!decoded) {
-    return Response.error();
+    return new Response(null, { status: 401, statusText: "Unauthorized" });
   }
   const body: UpdateCartItemBody = await req.json();
   const db = database();
@@ -108,7 +111,10 @@ export async function PUT(req: NextRequest) {
         (body.mode == "plus" ? body.number : -1 * body.number),
     });
   }
-  return Response.json(body);
+  return new Response(null, {
+    status: 200,
+    statusText: "OK",
+  });
 }
 
 export async function DELETE(req: NextRequest) {
