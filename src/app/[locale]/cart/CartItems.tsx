@@ -14,11 +14,10 @@ import {
   Button,
   CardMedia,
 } from "@mui/material";
-import useCart from "../hooks/useCart";
 import fetchData from "@/lib/fetchData";
 
 export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
-  const { cart, setCart } = useCart("/api/v2/cart-item");
+  const [cart, setCart] = useState<CartItem[]>(cartItems);
   const [selectedCartItem, setSelectedCartItem] = useState<
     Map<number, boolean>
   >(new Map(cartItems.map((_, index) => [index, true])));

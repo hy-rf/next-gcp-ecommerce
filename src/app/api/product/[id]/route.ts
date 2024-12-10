@@ -1,5 +1,8 @@
 import database from "@/lib/database/database";
 
+/**
+ * Working api
+ */
 export async function GET(
   req: Request,
   {

@@ -28,8 +28,8 @@ export async function middleware(request: NextRequest) {
     pathname.endsWith("webp")
   )
     return;
-  if (pathname.startsWith("/api")) return;
-  if (pathname.startsWith("/admin")) {
+  // Validate permission of admin
+  if (pathname.startsWith("/api/admin") || pathname.startsWith("/admin")) {
     const cookie = cookies();
     const token = cookie.get("token");
     console.log(token);
@@ -42,6 +42,8 @@ export async function middleware(request: NextRequest) {
 
     return;
   }
+  if (pathname.startsWith("/api")) return;
+
   // handle locale
   const locales = ["en-US", "zh-TW", "zh-CN"];
   const pathContainsLocale =

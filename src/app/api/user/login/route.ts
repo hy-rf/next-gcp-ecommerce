@@ -47,8 +47,12 @@ export async function POST(req: NextRequest) {
   });
   const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!);
   const cookieStore = await cookies();
-  cookieStore.set("token", token);
-  cookieStore.set("refresh", refreshToken);
+  cookieStore.set("token", token, {
+    sameSite: true,
+  });
+  cookieStore.set("refresh", refreshToken, {
+    sameSite: true,
+  });
 
   return Response.json({
     code: 200,
