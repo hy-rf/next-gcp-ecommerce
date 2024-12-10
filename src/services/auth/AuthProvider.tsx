@@ -9,7 +9,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("loggedIn");
     if (token) {
       fetchData<User>("/api/user").then((user) => setUser(user));
     }
@@ -17,6 +17,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const logOut = async () => {
     Cookies.remove("token");
     Cookies.remove("refresh");
+    Cookies.remove("loggedIn");
     setUser(null);
   };
 

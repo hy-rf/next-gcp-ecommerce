@@ -20,7 +20,7 @@ export default function Page() {
   const params = {
     client_id:
       "981674263788-sfp6ddbl5pn1in3vmvgpbvre83bjigjm.apps.googleusercontent.com",
-    redirect_uri: `${process.env.URL}/user/login-callback`,
+    redirect_uri: `${process.env.NEXT_PUBLIC_URL}/user/login-callback`,
     response_type: "token",
     scope: "https://www.googleapis.com/auth/userinfo.profile",
     include_granted_scopes: "true",

@@ -72,8 +72,14 @@ export async function POST(req: NextRequest) {
   cookieStore.set("token", token, {
     sameSite: "none",
     secure: true,
+    httpOnly: true,
   });
   cookieStore.set("refresh", refreshToken, {
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
+  });
+  cookieStore.set("loggedIn", "1", {
     sameSite: "none",
     secure: true,
   });
