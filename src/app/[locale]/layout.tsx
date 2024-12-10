@@ -5,6 +5,7 @@ import Header from "@/app/[locale]/_component/Header";
 import getDictionary from "@/dictionary/dictionary";
 import LocaleProvider from "./_component/LocaleProvider";
 import { Toaster } from "sonner";
+import AuthProvider from "@/services/auth/AuthProvider";
 
 type Params = {
   locale: string;
@@ -50,16 +51,18 @@ export default async function RootLayout({
   const dict = await getDictionary(locale, "index");
   return (
     <LocaleProvider dict={dict}>
-      <html lang={locale}>
-        <body className="flex flex-col h-screen">
-          <Header />
-          <main>{children}</main>
-          <footer>
-            <p>@ 2023 E-Shop. All Rights Reserved.</p>
-          </footer>
-          <Toaster position="top-center" />
-        </body>
-      </html>
+      <AuthProvider>
+        <html lang={locale}>
+          <body className="flex flex-col h-screen">
+            <Header />
+            <main>{children}</main>
+            <footer>
+              <p>@ 2023 E-Shop. All Rights Reserved.</p>
+            </footer>
+            <Toaster position="top-center" />
+          </body>
+        </html>
+      </AuthProvider>
     </LocaleProvider>
   );
 }

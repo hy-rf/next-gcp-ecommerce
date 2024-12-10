@@ -1,9 +1,19 @@
 "use client";
+
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useContext } from "react";
+import LocaleContext from "../../_component/LocaleContext";
+import useAuth from "../../hooks/useAuth";
+
 export default function Logout() {
-  const handleLogout = () => {
-    document.cookie =
-      "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;refresh=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "/";
+  const { logout } = useAuth();
+  const dict = useContext(LocaleContext);
+  const router = useRouter();
+  const handleLogout = async () => {
+    await logout();
+    toast.success(dict.auth_message_logout_success);
+    router.replace("/");
   };
   return (
     <div className="flex justify-center h-screen text-center">

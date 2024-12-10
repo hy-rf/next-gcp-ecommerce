@@ -4,6 +4,8 @@ import { Product } from "@/model";
 import { UpdateCartItemBody } from "@/model/dto";
 import { useContext, useState } from "react";
 import LocaleContext from "../../_component/LocaleContext";
+import Cookies from "js-cookie";
+import { toast } from "sonner";
 
 export default function AddToCartButton({
   product,
@@ -20,6 +22,10 @@ export default function AddToCartButton({
     product.specs ? product.specs[0] : null
   );
   async function handleAddToCart(product: Product, quantity: number) {
+    if (!Cookies.get("token")) {
+      toast.error(dict.product_add_to_cart_toast_message_not_logged_in);
+      return;
+    }
     const newCart = {
       productId: product.id,
       name: product.name,
@@ -48,8 +54,6 @@ export default function AddToCartButton({
       console.log(addQuantityResponse.status);
       return;
     }
-    // handle success result
-    alert("Add to Cart Success!");
     return;
   }
   return (

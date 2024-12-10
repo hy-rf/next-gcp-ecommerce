@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import LocaleContext from "@/app/[locale]/_component/LocaleContext";
+import fetchData from "@/lib/fetchData";
+import { User } from "@/model";
+import { useRouter } from "next/navigation";
+import { useContext, useEffect } from "react";
+import { toast } from "sonner";
+import useAuth from "@/app/[locale]/hooks/useAuth";
 
 interface R {
   code: number;
@@ -8,6 +14,9 @@ interface R {
 }
 
 export default function ClientProcessingUserLogin() {
+  const router = useRouter();
+  const dict = useContext(LocaleContext);
+  const { setAuth } = useAuth();
   useEffect(() => {
     const fetchUserInfo = async () => {
       const token = document.URL.split("#")[1].split("&")[1].split("=")[1];
@@ -25,10 +34,16 @@ export default function ClientProcessingUserLogin() {
           }),
         }).then((res) => res.json());
         if ((await loginResult).code == 200) {
-          location.replace("/");
+          toast.success(dict.auth_message_login_success);
+          fetchData<User>("/api/user").then((user) => setAuth(user));
+          router.replace("/");
+          return;
         }
-      } catch (error) {
-        console.error("Error fetching user info:", error);
+      } catch {
+        toast.error(dict.auth_message_login_error_wrong_password);
+
+        router.replace("/login");
+        return;
       }
     };
     document.querySelector(".user-sidebar")?.remove();

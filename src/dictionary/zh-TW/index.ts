@@ -14,5 +14,10 @@ const index: Dictionary = {
   product_sort_asc: "上升",
   product_sort_apply: "套用排序方式",
   all_product_link: "查看所有商品",
+  product_add_to_cart_toast_message_not_logged_in: "請先登入！",
+  auth_message_logout_success: "登出成功！",
+  auth_message_login_success: "登入成功！",
+  auth_message_login_error_wrong_password: "帳號或密碼錯誤！",
+  auth_message_login_error_oauth: "OAuth錯誤，請再試一次。",
 };
 export default index;

@@ -16,8 +16,14 @@ export async function GET() {
     process.env.JWT_SECRET!
   ) as tokenPayload;
   const db = database();
-  const user = (await db.collection("User").doc(decoded.userId).get()).data();
-  return Response.json(user);
+  const user = (
+    await db.collection("User").doc(decoded.userId).get()
+  ).data() as User;
+  return Response.json({
+    name: user.name,
+    email: user.email,
+    lastLogin: user.lastLogin,
+  });
 }
 
 /**
@@ -45,7 +51,7 @@ export async function POST(req: NextRequest) {
     });
     return new Response(null, {
       status: 200,
-      statusText: "Register succeed!",
+      statusText: "Register succeed",
     });
   }
   // User exists then validate password
@@ -55,7 +61,7 @@ export async function POST(req: NextRequest) {
   if (userData.password && userData.password !== body.password) {
     return new Response(null, {
       status: 401,
-      statusText: "Wrong password!",
+      statusText: "Wrong password",
     });
   }
   const token = jwt.sign({ userId }, process.env.JWT_SECRET!, {

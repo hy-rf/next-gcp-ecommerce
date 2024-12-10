@@ -8,6 +8,7 @@ import CartItemList from "@/app/[locale]/_component/CartItemList";
 import { useRef } from "react";
 import LocaleContext from "./LocaleContext";
 import fetchData from "@/lib/fetchData";
+import { AuthContext } from "@/services/auth/AuthContext";
 function throttle<T extends (...args: unknown[]) => void>(
   func: T,
   limit: number
@@ -25,7 +26,8 @@ function throttle<T extends (...args: unknown[]) => void>(
   };
 }
 
-export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
+export default function NavigationBar() {
+  const { user } = useContext(AuthContext);
   const dict = useContext(LocaleContext);
   // for mobile
   const [isOpen, setIsOpen] = useState(false);
@@ -140,7 +142,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                   Product
                 </Link>
               </li>
-              {loggedIn && (
+              {user && (
                 <>
                   <li
                     style={{
@@ -201,7 +203,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
                   </li>
                 </>
               )}
-              {!loggedIn && (
+              {!user && (
                 <li
                   style={{
                     transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
@@ -283,7 +285,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
         >
           Product
         </Link>
-        {loggedIn && (
+        {user && (
           <>
             <Link
               style={{
@@ -313,7 +315,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
             </Link>
           </>
         )}
-        {!loggedIn && (
+        {!user && (
           <Link
             style={{
               transform: isOpen ? "translateX(0px)" : "translateX(-10px)",

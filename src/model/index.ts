@@ -12,6 +12,11 @@ export interface Dictionary {
   product_sort_asc: string;
   product_sort_apply: string;
   all_product_link: string;
+  product_add_to_cart_toast_message_not_logged_in: string;
+  auth_message_login_success: string;
+  auth_message_logout_success: string;
+  auth_message_login_error_wrong_password: string;
+  auth_message_login_error_oauth: string;
 }
 
 export interface User {

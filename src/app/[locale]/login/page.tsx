@@ -1,12 +1,18 @@
 "use client";
 
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import LocaleContext from "../_component/LocaleContext";
+import fetchData from "@/lib/fetchData";
+import { User } from "@/model";
+import { AuthActionsContext } from "@/services/auth/AuthContext";
 
 export default function Page() {
+  const { setUser } = useContext(AuthActionsContext);
   const router = useRouter();
+  const dict = useContext(LocaleContext);
   const [isRegistering, setIsRegistering] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -28,13 +34,21 @@ export default function Page() {
         password: password,
       }),
     });
-    if (response.statusText === "Register succeed!") {
+    if (response.statusText === "Register succeed") {
       setIsRegistering(true);
       setPassword("");
+      return;
     }
-    if (response.statusText == "Login Succeed") {
-      toast("Login Succeed");
+    if (response.statusText === "Login Succeed") {
+      toast.success(dict.auth_message_login_success);
+      await fetchData<User>("/api/user").then((user) => setUser(user));
       router.replace("/");
+      return;
+    }
+    if (response.statusText === "Wrong password") {
+      toast.error(dict.auth_message_login_error_wrong_password);
+      setName("");
+      setPassword("");
     }
   }
   return (
