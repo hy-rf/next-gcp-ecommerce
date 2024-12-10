@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
     secure: true,
   });
   return new Response(null, {
-    status: 200,
+    status: 100,
     statusText: "Login Succeed",
   });
 }

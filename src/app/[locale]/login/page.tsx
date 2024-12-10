@@ -39,7 +39,7 @@ export default function Page() {
       setPassword("");
       return;
     }
-    if (response.statusText === "Login Succeed") {
+    if (response.status === 100) {
       toast.success(dict.auth_message_login_success);
       await fetchData<User>("/api/user").then((user) => setUser(user));
       router.replace("/");
