@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useContext } from "react";
 import LocaleContext from "../../_component/LocaleContext";
-import useAuth from "../../hooks/useAuth";
+import { AuthActionsContext } from "@/services/auth/AuthContext";
 
 export default function Logout() {
-  const { logout } = useAuth();
+  const { logOut } = useContext(AuthActionsContext);
   const dict = useContext(LocaleContext);
   const router = useRouter();
   const handleLogout = async () => {
-    await logout();
+    await logOut();
     toast.success(dict.auth_message_logout_success);
     router.replace("/");
   };
