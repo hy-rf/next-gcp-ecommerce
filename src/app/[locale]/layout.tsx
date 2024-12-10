@@ -57,7 +57,7 @@ export default async function RootLayout({
           <footer>
             <p>@ 2023 E-Shop. All Rights Reserved.</p>
           </footer>
-          <Toaster />
+          <Toaster position="top-center" />
         </body>
       </html>
     </LocaleProvider>

@@ -2,7 +2,7 @@
 
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function Page() {

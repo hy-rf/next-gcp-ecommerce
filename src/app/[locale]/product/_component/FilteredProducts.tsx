@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import LocaleContext from "../../_component/LocaleContext";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 /**
  * Content of filtered products
  * There is no need of token to fetch products
@@ -104,6 +105,7 @@ export default function FilteredProducts({
             });
           }
           setIsLoading(false);
+          toast("Refreshed");
           try {
             router.push(`product?${searchParam}`);
             // window.history.pushState(null, "", `product?${searchParam}`);
