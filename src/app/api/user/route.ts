@@ -69,8 +69,12 @@ export async function POST(req: NextRequest) {
   });
   const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!);
   const cookieStore = cookies();
-  cookieStore.set("token", token);
-  cookieStore.set("refresh", refreshToken);
+  cookieStore.set("token", token, {
+    sameSite: "none",
+  });
+  cookieStore.set("refresh", refreshToken, {
+    sameSite: "none",
+  });
   return new Response(null, {
     status: 200,
     statusText: "Login Succeed",
