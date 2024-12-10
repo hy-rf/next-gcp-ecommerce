@@ -29,6 +29,19 @@ export async function middleware(request: NextRequest) {
   )
     return;
   if (pathname.startsWith("/api")) return;
+  if (pathname.startsWith("/admin")) {
+    const cookie = cookies();
+    const token = cookie.get("token");
+    console.log(token);
+
+    // if isn't admin redirect to another page
+    if (false) {
+      request.nextUrl.pathname = "/test";
+      return NextResponse.rewrite(request.nextUrl);
+    }
+
+    return;
+  }
   // handle locale
   const locales = ["en-US", "zh-TW", "zh-CN"];
   const pathContainsLocale =

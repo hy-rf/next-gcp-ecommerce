@@ -13,5 +13,8 @@ const initializeDictionary = (): Dictionary => {
   ) as Dictionary;
 };
 
-const LocaleContext = createContext<Dictionary>(initializeDictionary());
+const LocaleContext = createContext<{ locale: string; dict: Dictionary }>({
+  locale: "en",
+  dict: initializeDictionary(),
+});
 export default LocaleContext;

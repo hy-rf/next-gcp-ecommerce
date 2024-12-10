@@ -1,7 +1,12 @@
 export interface Dictionary {
   title: string;
   layout_title: string;
-  user_login: string;
+  header_link_login_inner_text: string;
+  header_link_user_inner_text: string;
+  header_link_product_inner_text: string;
+  header_link_cart_inner_text: string;
+  header_link_order_inner_text: string;
+  header_link_logout_inner_text: string;
   product_total_1: string;
   product_total_2: string;
   add_to_cart_button_inner_text: string;
@@ -67,6 +72,7 @@ export interface Product {
   specs?: string[];
   createdDate?: Date;
   condition?: number;
+  "zh-TW"?: { name: string; description: string; specs?: string[] };
 }
 
 export interface Review {

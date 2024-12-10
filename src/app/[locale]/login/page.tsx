@@ -12,7 +12,7 @@ import { AuthActionsContext } from "@/services/auth/AuthContext";
 export default function Page() {
   const { setUser } = useContext(AuthActionsContext);
   const router = useRouter();
-  const dict = useContext(LocaleContext);
+  const { dict } = useContext(LocaleContext);
   const [isRegistering, setIsRegistering] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");

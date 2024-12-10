@@ -15,7 +15,7 @@ interface R {
 
 export default function ClientProcessingUserLogin() {
   const router = useRouter();
-  const dict = useContext(LocaleContext);
+  const { dict } = useContext(LocaleContext);
   const { setUser } = useContext(AuthActionsContext);
   useEffect(() => {
     const fetchUserInfo = async () => {

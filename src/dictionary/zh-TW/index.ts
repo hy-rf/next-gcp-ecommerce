@@ -3,7 +3,7 @@ import { Dictionary } from "@/model";
 const index: Dictionary = {
   title: "二手拍賣網",
   layout_title: "帳戶",
-  user_login: "登入",
+  header_link_login_inner_text: "登入",
   product_total_1: "總共",
   product_total_2: "件商品",
   add_to_cart_button_inner_text: "加入",
@@ -19,5 +19,10 @@ const index: Dictionary = {
   auth_message_login_success: "登入成功！",
   auth_message_login_error_wrong_password: "帳號或密碼錯誤！",
   auth_message_login_error_oauth: "OAuth錯誤，請再試一次。",
+  header_link_product_inner_text: "商品",
+  header_link_user_inner_text: "帳戶",
+  header_link_cart_inner_text: "購物車",
+  header_link_order_inner_text: "訂單",
+  header_link_logout_inner_text: "登出",
 };
 export default index;

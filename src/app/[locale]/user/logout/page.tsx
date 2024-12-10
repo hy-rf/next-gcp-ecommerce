@@ -8,7 +8,7 @@ import { AuthActionsContext } from "@/services/auth/AuthContext";
 
 export default function Logout() {
   const { logOut } = useContext(AuthActionsContext);
-  const dict = useContext(LocaleContext);
+  const { dict } = useContext(LocaleContext);
   const router = useRouter();
   const handleLogout = async () => {
     await logOut();

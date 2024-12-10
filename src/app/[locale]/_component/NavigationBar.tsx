@@ -28,7 +28,7 @@ function throttle<T extends (...args: unknown[]) => void>(
 
 export default function NavigationBar() {
   const { user } = useContext(AuthContext);
-  const dict = useContext(LocaleContext);
+  const { dict } = useContext(LocaleContext);
   // for mobile
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(true);
@@ -75,6 +75,9 @@ export default function NavigationBar() {
       timeoutRef.current = setTimeout(() => setHide(true), 500); // Hide the menu after 500ms
     }
   }
+  /**
+   * This is for clicking logo
+   */
   async function handleAnimation2() {
     // Clear any existing timeout to avoid conflicts
     if (timeoutRef.current) {
@@ -139,7 +142,7 @@ export default function NavigationBar() {
                   className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                   id="product-page-link"
                 >
-                  Product
+                  {dict.header_link_product_inner_text}
                 </Link>
               </li>
               {user && (
@@ -160,7 +163,26 @@ export default function NavigationBar() {
                       href={"/user"}
                       className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                     >
-                      User
+                      {dict.header_link_user_inner_text}
+                    </Link>
+                  </li>
+                  <li
+                    style={{
+                      transform: isOpen
+                        ? "translateX(0px)"
+                        : "translateX(-10px)",
+                      transition: "0.5s",
+                      transitionDelay: isOpen
+                        ? `${2 * animationDelayUnit}ms`
+                        : `${3 * animationDelayUnit}ms`,
+                    }}
+                  >
+                    <Link
+                      onClick={() => handleAnimation()}
+                      href={"/cart"}
+                      className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                    >
+                      {dict.header_link_cart_inner_text}
                     </Link>
                   </li>
                   <li
@@ -179,7 +201,7 @@ export default function NavigationBar() {
                       href={"/order"}
                       className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                     >
-                      Order
+                      {dict.header_link_order_inner_text}
                     </Link>
                   </li>
                   <li
@@ -198,7 +220,7 @@ export default function NavigationBar() {
                       href={"/user/logout"}
                       className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                     >
-                      Logout
+                      {dict.header_link_logout_inner_text}
                     </Link>
                   </li>
                 </>
@@ -218,7 +240,7 @@ export default function NavigationBar() {
                     href={"/login"}
                     className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
                   >
-                    {dict.user_login}
+                    {dict.header_link_login_inner_text}
                   </Link>
                 </li>
               )}
@@ -283,7 +305,7 @@ export default function NavigationBar() {
           href={"/product?page=1&sort=sold-desc"}
           id="product-page-link"
         >
-          Product
+          {dict.header_link_product_inner_text}
         </Link>
         {user && (
           <>
@@ -298,7 +320,20 @@ export default function NavigationBar() {
               onClick={() => handleAnimation()}
               href={"/user"}
             >
-              User
+              {dict.header_link_user_inner_text}
+            </Link>
+            <Link
+              style={{
+                transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
+                transition: "0.5s",
+                transitionDelay: isOpen
+                  ? `${3 * animationDelayUnit}ms`
+                  : `${3 * animationDelayUnit}ms`,
+              }}
+              onClick={() => handleAnimation()}
+              href={"/cart"}
+            >
+              {dict.header_link_cart_inner_text}
             </Link>
             <Link
               style={{
@@ -311,7 +346,7 @@ export default function NavigationBar() {
               onClick={() => handleAnimation()}
               href={"/user/logout"}
             >
-              Logout
+              {dict.header_link_logout_inner_text}
             </Link>
           </>
         )}
@@ -327,7 +362,7 @@ export default function NavigationBar() {
             onClick={() => handleAnimation()}
             href={"/login"}
           >
-            Login
+            {dict.header_link_login_inner_text}
           </Link>
         )}
         <div className="hidden md:hidden">

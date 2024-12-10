@@ -22,12 +22,12 @@ const metadataByLocale: Record<string, Metadata> = {
     },
   },
   "zh-TW": {
-    title: "便宜拍賣網",
-    description: "世界最便宜拍賣網",
-    keywords: ["便宜", "拍賣", "購物"],
+    title: "拍賣網",
+    description: "二手拍賣網",
+    keywords: ["拍賣", "購物"],
     openGraph: {
-      title: "便宜拍賣網",
-      description: "世界最便宜拍賣網",
+      title: "拍賣網",
+      description: "二手拍賣網",
     },
   },
 };
@@ -50,14 +50,14 @@ export default async function RootLayout({
   const { locale } = await params;
   const dict = await getDictionary(locale, "index");
   return (
-    <LocaleProvider dict={dict}>
+    <LocaleProvider dict={dict} locale={locale}>
       <AuthProvider>
         <html lang={locale}>
           <body className="flex flex-col h-screen">
             <Header />
             <main>{children}</main>
             <footer>
-              <p>@ 2023 E-Shop. All Rights Reserved.</p>
+              <p>@ 2023-2024 E-Commerce. All Rights Reserved.</p>
             </footer>
             <Toaster position="top-center" />
           </body>

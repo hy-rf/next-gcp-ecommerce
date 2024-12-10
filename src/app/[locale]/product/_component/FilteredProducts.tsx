@@ -53,7 +53,7 @@ export default function FilteredProducts({
       window.removeEventListener("popstate", handlePopState);
     };
   }, []);
-  const dict = useContext(LocaleContext);
+  const { dict } = useContext(LocaleContext);
   useEffect(() => {
     document?.addEventListener("click", (e) => {
       const target = e.target as HTMLElement; // Typecasting e.target as HTMLElement

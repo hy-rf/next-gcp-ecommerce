@@ -49,6 +49,10 @@ export async function POST(req: NextRequest) {
           currencyCode: "USD",
           value: body.total.toString(),
         },
+        payee: {
+          // this is from info of seller
+          merchantId: "",
+        },
       },
     ],
   };

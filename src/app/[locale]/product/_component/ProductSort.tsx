@@ -13,7 +13,7 @@ export default function ProductSort({
   setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
   setShowSort: Dispatch<SetStateAction<boolean>>;
 }) {
-  const dict = useContext(LocaleContext);
+  const { dict } = useContext(LocaleContext);
   const [sortOption, setSortOption] = useState<string>(
     filterOption.sortOption || "sold-desc"
   );

@@ -2,8 +2,13 @@
 import Image from "next/image";
 import { Product } from "@/model";
 import AddToCartButton from "./AddToCartButton";
-
+import { useContext } from "react";
+import LocaleContext from "../../_component/LocaleContext";
+/**
+ * Product Item Card with localization
+ */
 export default function ProductItem({ product }: { product: Product }) {
+  const { locale } = useContext(LocaleContext);
   return (
     <div className="flex bg-white p-2 rounded-md shadow-product-card transition-shadow w-full gap-3">
       <div className="w-40 h-40 flex-shrink-0">

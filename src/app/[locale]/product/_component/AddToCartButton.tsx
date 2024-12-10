@@ -16,7 +16,7 @@ export default function AddToCartButton({
   showSpec: boolean;
   showQuantity: boolean;
 }) {
-  const dict = useContext(LocaleContext);
+  const { dict } = useContext(LocaleContext);
   const [quantity, setQuantity] = useState(1);
   const [selectedSpec, setSelectedSpec] = useState(
     product.specs ? product.specs[0] : null

@@ -2,7 +2,7 @@ import { Dictionary } from "@/model";
 
 const index: Dictionary = {
   title: "E-Commerce",
-  user_login: "Login",
+  header_link_login_inner_text: "Login",
   layout_title: "User",
   product_total_1: "Total: ",
   product_total_2: " products",
@@ -19,5 +19,10 @@ const index: Dictionary = {
   auth_message_login_success: "Login success",
   auth_message_login_error_wrong_password: "Wrong name or password",
   auth_message_login_error_oauth: "Oauth error",
+  header_link_product_inner_text: "Product",
+  header_link_user_inner_text: "User",
+  header_link_cart_inner_text: "Cart",
+  header_link_order_inner_text: "Order",
+  header_link_logout_inner_text: "Logout",
 };
 export default index;
