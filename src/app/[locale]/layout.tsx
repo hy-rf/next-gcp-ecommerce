@@ -4,6 +4,7 @@ import "./layout.css";
 import Header from "@/app/[locale]/_component/Header";
 import getDictionary from "@/dictionary/dictionary";
 import LocaleProvider from "./_component/LocaleProvider";
+import { Toaster } from "sonner";
 
 type Params = {
   locale: string;
@@ -56,6 +57,7 @@ export default async function RootLayout({
           <footer>
             <p>@ 2023 E-Shop. All Rights Reserved.</p>
           </footer>
+          <Toaster />
         </body>
       </html>
     </LocaleProvider>

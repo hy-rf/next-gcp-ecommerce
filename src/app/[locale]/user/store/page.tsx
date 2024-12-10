@@ -2,6 +2,7 @@ import Link from "next/link";
 import StoreList from "./_component/StoreList";
 
 export default async function Page() {
+  // Show seller dashboard if user owns a store
   return (
     <div className="flex flex-col gap-6 p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
       {/* Page Header */}
@@ -18,10 +19,10 @@ export default async function Page() {
           Create Store
         </Link>
         <Link
-          href="/user/store/product/new-product"
+          href="/user/store"
           className="px-4 py-2 text-blue-500 hover:text-blue-600 border border-blue-500 hover:border-blue-600 rounded-lg transition"
         >
-          New Product
+          Store Profile
         </Link>
       </nav>
 

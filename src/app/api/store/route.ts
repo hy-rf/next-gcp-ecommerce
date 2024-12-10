@@ -3,6 +3,9 @@ import database from "@/lib/database/database";
 import { Store, StoreSubmission } from "@/model";
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  // userId for getting stores owned by specific user
+  const userId = searchParams.get("userId");
   const db = database();
   // get store document with certain id
   const storeSnapshot = await db

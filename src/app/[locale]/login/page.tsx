@@ -2,8 +2,11 @@
 
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
+import { Toaster, toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const [isRegistering, setIsRegistering] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +33,8 @@ export default function Page() {
       setPassword("");
     }
     if (response.statusText == "Login Succeed") {
-      location.replace("/");
+      toast("Login Succeed");
+      router.replace("/");
     }
   }
   return (

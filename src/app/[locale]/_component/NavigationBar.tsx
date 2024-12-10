@@ -58,7 +58,7 @@ export default function NavigationBar({ loggedIn }: { loggedIn: boolean }) {
     };
   }, [lastScrollY]);
   async function handleAnimation() {
-    // if (window.innerWidth >= 768) return;
+    if (window.innerWidth >= 768) return;
     // Clear any existing timeout to avoid conflicts
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
