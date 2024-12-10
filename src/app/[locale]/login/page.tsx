@@ -23,7 +23,10 @@ export default function Page() {
     setParams({
       client_id:
         "981674263788-sfp6ddbl5pn1in3vmvgpbvre83bjigjm.apps.googleusercontent.com",
-      redirect_uri: `${process.env.NEXT_PUBLIC_URL}/user/login-callback`,
+      redirect_uri: document.location.href.replace(
+        /\/login$/,
+        "/user/login-callback"
+      ),
       response_type: "token",
       scope: "https://www.googleapis.com/auth/userinfo.profile",
       include_granted_scopes: "true",
