@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       password: body.password,
     });
     return new Response(null, {
-      status: 200,
+      status: 206,
       statusText: "Register succeed",
     });
   }

@@ -34,7 +34,7 @@ export default function Page() {
         password: password,
       }),
     });
-    if (response.statusText === "Register succeed") {
+    if (response.status === 206) {
       setIsRegistering(true);
       setPassword("");
       return;
@@ -45,7 +45,7 @@ export default function Page() {
       router.replace("/");
       return;
     }
-    if (response.statusText === "Wrong password") {
+    if (response.status === 401) {
       toast.error(dict.auth_message_login_error_wrong_password);
       setName("");
       setPassword("");
