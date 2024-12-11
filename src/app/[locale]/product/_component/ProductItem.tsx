@@ -12,7 +12,7 @@ export default function ProductItem({ product }: { product: Product }) {
     <div className="flex bg-white p-2 rounded-md shadow-product-card transition-shadow w-full gap-3">
       <div className="w-40 h-40 flex-shrink-0">
         <Image
-          src={product.imageUrl[0]}
+          src={`${product.imageUrl[0]}?ignoreCache=1`}
           alt={product.name}
           width={160}
           height={160}

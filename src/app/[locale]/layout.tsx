@@ -6,6 +6,9 @@ import getDictionary from "@/dictionary/dictionary";
 import LocaleProvider from "./_component/LocaleProvider";
 import { Toaster } from "sonner";
 import AuthProvider from "@/services/auth/AuthProvider";
+import { User } from "@/model";
+import fetchData from "@/lib/fetchData";
+import { cookies } from "next/headers";
 
 type Params = {
   locale: string;
@@ -49,9 +52,17 @@ export default async function RootLayout({
 }) {
   const { locale } = await params;
   const dict = await getDictionary(locale, "index");
+  let user: User | null;
+  try {
+    user = await fetchData<User>(`${process.env.URL}/api/user/`, {
+      headers: { Cookie: cookies().toString() },
+    });
+  } catch {
+    user = null;
+  }
   return (
     <LocaleProvider dict={dict} locale={locale}>
-      <AuthProvider>
+      <AuthProvider initialUser={user || null}>
         <html lang={locale}>
           <body className="flex flex-col h-screen">
             <Header />

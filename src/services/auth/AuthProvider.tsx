@@ -3,17 +3,16 @@ import { ReactNode, useEffect, useMemo, useState } from "react";
 import { AuthActionsContext, AuthContext } from "./AuthContext";
 import { User } from "@/model";
 import Cookies from "js-cookie";
-import fetchData from "@/lib/fetchData";
 
-export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+export default function AuthProvider({
+  initialUser,
+  children,
+}: {
+  initialUser: User | null;
+  children: ReactNode;
+}) {
+  const [user, setUser] = useState<User | null>(initialUser);
 
-  useEffect(() => {
-    const token = Cookies.get("loggedIn");
-    if (token) {
-      fetchData<User>("/api/user").then((user) => setUser(user));
-    }
-  }, []);
   const logOut = async () => {
     Cookies.remove("token");
     Cookies.remove("refresh");

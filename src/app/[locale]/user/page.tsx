@@ -1,11 +1,18 @@
 import fetchData from "@/lib/fetchData";
 import { cookies } from "next/headers";
 import { User } from "@/model";
+import { notFound } from "next/navigation";
 
 export default async function Page() {
-  const user: User = await fetchData<User>(`${process.env.URL}/api/user`, {
-    headers: { Cookie: (await cookies()).toString() },
-  });
+  const user: User | null = await fetchData<User>(
+    `${process.env.URL}/api/user`,
+    {
+      headers: { Cookie: cookies().toString() },
+    }
+  );
+  if (!user) {
+    return notFound();
+  }
   return (
     <div className="max-w-md mx-auto mt-1 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">User Details</h2>

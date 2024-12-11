@@ -1,7 +1,7 @@
 export default async function fetchData<T>(
   url: string,
   options?: RequestInit
-): Promise<T> {
+): Promise<T | null> {
   const response = await fetch(url, options);
   if (response.status === 401) {
     await fetch("/api/user/token");
@@ -9,7 +9,7 @@ export default async function fetchData<T>(
     return data.json();
   }
   if (!response.ok) {
-    throw new Error(`Failed to fetch data: ${response.statusText}`);
+    return null;
   }
   return response.json();
 }
