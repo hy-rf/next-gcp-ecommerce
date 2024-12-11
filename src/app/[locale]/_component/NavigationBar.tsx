@@ -111,20 +111,12 @@ export default function NavigationBar() {
           <nav
             className={`flex p-5 gap-4 flex-row w-full mt-[0] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 m-0`}
           >
-            <ul className="flex flex-col items-start gap-2 w-33 p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg">
-              <li
-                style={{
-                  transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                  transition: "0.5s",
-                  transitionDelay: isOpen
-                    ? `${0 * animationDelayUnit}ms`
-                    : `${5 * animationDelayUnit}ms`,
-                }}
-              >
+            <ul className="flex flex-col items-start gap-2 w-full p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg items-center">
+              <li>
                 <Link
                   onClick={() => handleAnimation()}
                   href={"/product?page=1&sort=sold-desc"}
-                  className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                  className="block px-3 py-2"
                   id="product-page-link"
                 >
                   {dict.header_link_product_inner_text}
@@ -132,78 +124,38 @@ export default function NavigationBar() {
               </li>
               {user && (
                 <>
-                  <li
-                    style={{
-                      transform: isOpen
-                        ? "translateX(0px)"
-                        : "translateX(-10px)",
-                      transition: "0.5s",
-                      transitionDelay: isOpen
-                        ? `${1 * animationDelayUnit}ms`
-                        : `${4 * animationDelayUnit}ms`,
-                    }}
-                  >
+                  <li>
                     <Link
                       onClick={() => handleAnimation()}
                       href={"/user"}
-                      className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                      className="block px-3 py-2"
                     >
                       {dict.header_link_user_inner_text}
                     </Link>
                   </li>
-                  <li
-                    style={{
-                      transform: isOpen
-                        ? "translateX(0px)"
-                        : "translateX(-10px)",
-                      transition: "0.5s",
-                      transitionDelay: isOpen
-                        ? `${2 * animationDelayUnit}ms`
-                        : `${3 * animationDelayUnit}ms`,
-                    }}
-                  >
+                  <li>
                     <Link
                       onClick={() => handleAnimation()}
                       href={"/cart"}
-                      className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                      className="block px-3 py-2"
                     >
                       {dict.header_link_cart_inner_text}
                     </Link>
                   </li>
-                  <li
-                    style={{
-                      transform: isOpen
-                        ? "translateX(0px)"
-                        : "translateX(-10px)",
-                      transition: "0.5s",
-                      transitionDelay: isOpen
-                        ? `${2 * animationDelayUnit}ms`
-                        : `${3 * animationDelayUnit}ms`,
-                    }}
-                  >
+                  <li>
                     <Link
                       onClick={() => handleAnimation()}
                       href={"/order"}
-                      className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                      className="block px-3 py-2"
                     >
                       {dict.header_link_order_inner_text}
                     </Link>
                   </li>
-                  <li
-                    style={{
-                      transform: isOpen
-                        ? "translateX(0px)"
-                        : "translateX(-10px)",
-                      transition: "0.5s",
-                      transitionDelay: isOpen
-                        ? `${3 * animationDelayUnit}ms`
-                        : `${2 * animationDelayUnit}ms`,
-                    }}
-                  >
+                  <li>
                     <Link
                       onClick={() => handleAnimation()}
                       href={"/user/logout"}
-                      className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                      className="block px-3 py-2"
                     >
                       {dict.header_link_logout_inner_text}
                     </Link>
@@ -211,34 +163,19 @@ export default function NavigationBar() {
                 </>
               )}
               {!user && (
-                <li
-                  style={{
-                    transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                    transition: "0.5s",
-                    transitionDelay: isOpen
-                      ? `${0 * animationDelayUnit}ms`
-                      : `${1 * animationDelayUnit}ms`,
-                  }}
-                >
+                <li>
                   <Link
                     onClick={() => handleAnimation()}
                     href={"/login"}
-                    className="block px-3 py-2 rounded-lg hover:bg-gray-700 hover:text-white transition"
+                    className="block px-3 py-2"
                   >
                     {dict.header_link_login_inner_text}
                   </Link>
                 </li>
               )}
-              <div
-                className="flex gap-3 text-white mt-4"
-                style={{
-                  transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
-                  transition: "0.5s",
-                  transitionDelay: "0.1s",
-                }}
-              >
+              <div className="flex gap-3 text-white mt-4">
                 <button
-                  className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
+                  className="px-3 py-2"
                   onClick={() =>
                     fetchData<null>("/api/user/locale?newLocale=en-US", {
                       method: "put",
@@ -248,7 +185,7 @@ export default function NavigationBar() {
                   EN
                 </button>
                 <button
-                  className="px-3 py-2 rounded-lg bg-gray-600 shadow-lg transition"
+                  className="px-3 py-2"
                   onClick={() =>
                     fetchData<null>("/api/user/locale?newLocale=zh-TW", {
                       method: "put",
@@ -261,9 +198,9 @@ export default function NavigationBar() {
             </ul>
 
             {/* Cart Section */}
-            <div className="flex grow flex-col items-end p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg mr-4">
+            {/* <div className="flex grow flex-col items-end p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg mr-4">
               <CartItemList onClickingLinksInCartItemList={handleAnimation} />
-            </div>
+            </div> */}
           </nav>
         </div>
       )}
