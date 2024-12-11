@@ -145,7 +145,11 @@ export default function NavigationBar() {
           >
             <ul className="flex flex-col w-full items-start gap-2 p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg items-center">
               {links.map((el) => {
-                if ((!el.needAuth && !user) || (el.needAuth && user)) {
+                if (
+                  el.label == "Product" ||
+                  (!el.needAuth && !user) ||
+                  (el.needAuth && user)
+                ) {
                   return (
                     <li key={el.label}>
                       <Link

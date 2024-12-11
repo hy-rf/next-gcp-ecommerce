@@ -34,13 +34,15 @@ export async function POST(req: NextRequest) {
       status: 401,
     });
   }
+
   const body: CartItem = await req.json();
+  console.log(body);
   const db = database();
   const cartItemRefOfSameUserIdAndSpec = db
     .collection("CartItem")
     .where("userId", "==", decoded.userId)
-    .where("productId", "==", body.productId)
-    .where("spec", "==", body.spec);
+    .where("productId", "==", body.productId);
+
   if (cartItemRefOfSameUserIdAndSpec.count())
     if ((await cartItemRefOfSameUserIdAndSpec.count().get()).data().count > 0) {
       return new Response(
@@ -64,7 +66,6 @@ export async function POST(req: NextRequest) {
   const newCartItemId = await db.collection("CartItem").add({
     ...body,
     userId: decoded.userId,
-    imageUrl: product.imageUrl[0],
   });
   productRef.update({
     stock: product.stock - body.quantity,

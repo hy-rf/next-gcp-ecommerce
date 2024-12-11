@@ -3,7 +3,7 @@ import { Product } from "@/model";
 
 import AddToCartButton from "../_component/AddToCartButton";
 import type { Metadata } from "next";
-import ZoomImage from "./_component/ZoomImage";
+import Image from "next/image";
 
 /**
  * This component is a Next.js page component.
@@ -37,7 +37,7 @@ export async function generateMetadata({
       url: `${process.env.URL}/product/${product.id}`,
       images: [
         {
-          url: product.imageUrl[0],
+          url: `${process.env.NEXT_PUBLIC_IMAGE_URL_PREFIX}${product.id}-0?ignoreCache=1`,
           width: 800,
           height: 600,
           alt: product.name,
@@ -72,11 +72,13 @@ export default async function Page({
           <p className="text-sm text-gray-500">In Stock: {product.stock}</p>
 
           {/* Product Images */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {product.imageUrl.map((ele, index) => (
-              <ZoomImage key={index} index={index} ele={ele} />
-            ))}
-          </div>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL_PREFIX}${product.id}-0?ignoreCache=1`}
+            alt={product.name}
+            width={160}
+            height={160}
+            className="object-cover rounded-md"
+          />
 
           {/* Product Category and Subcategory */}
           <div className="space-y-2">

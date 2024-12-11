@@ -4,7 +4,7 @@ export default async function uploadBase64Image(
   base64String: string,
   destination: string
 ) {
-  const bucket = storage().bucket("mybucket3rv");
+  const bucket = storage().bucket("3596b15827ad");
   const match = base64String.match(/^data:(.+);base64,(.+)$/);
   if (!match) {
     throw new Error("Invalid base64 string");

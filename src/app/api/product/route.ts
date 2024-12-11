@@ -230,7 +230,7 @@ export async function POST(req: NextRequest) {
         await uploadBase64Image(image, destination);
 
         // Get public URL
-        const publicUrl = `https://storage.googleapis.com/mybucket3rv/${destination}`;
+        const publicUrl = `https://storage.googleapis.com/3596b15827ad/${destination}`;
         urls.push(publicUrl);
         index++;
       } catch (error) {
