@@ -135,7 +135,7 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
           {/* Placeholder for Product Image */}
           <CardMedia
             component="img"
-            image={`${process.env.NEXT_PUBLIC_IMAGE_URL_PREFIX}${item.productId}-0`} // Placeholder image
+            image={`${"https://storage.googleapis.com/3596b15827ad/product/"}${item.productId}-0`} // Placeholder image
             alt="Product Placeholder"
             sx={{
               width: "100px",

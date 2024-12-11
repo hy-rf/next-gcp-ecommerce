@@ -37,7 +37,7 @@ export async function generateMetadata({
       url: `${process.env.URL}/product/${product.id}`,
       images: [
         {
-          url: `${process.env.NEXT_PUBLIC_IMAGE_URL_PREFIX}${product.id}-0?ignoreCache=1`,
+          url: `${"https://storage.googleapis.com/3596b15827ad/product/"}${product.id}-0?ignoreCache=1`,
           width: 800,
           height: 600,
           alt: product.name,
@@ -73,7 +73,7 @@ export default async function Page({
 
           {/* Product Images */}
           <Image
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL_PREFIX}${product.id}-0?ignoreCache=1`}
+            src={`${"https://storage.googleapis.com/3596b15827ad/product/"}${product.id}-0?ignoreCache=1`}
             alt={product.name}
             width={160}
             height={160}
