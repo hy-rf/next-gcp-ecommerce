@@ -10,6 +10,11 @@ export async function GET(req: NextRequest) {
     // Respond all categories if no id specified
     const db = database();
     const categorySnapshot = (await db.collection("Category").get()).docs;
+    categorySnapshot.forEach((el) => {
+      console.log("jjj");
+
+      console.log("kkk", el.data());
+    });
     return Response.json(
       categorySnapshot.map((ele) => {
         return {

@@ -72,7 +72,7 @@ export async function middleware(request: NextRequest) {
   // final result is setting locale cookie and redirect
   //(await cookies()).set("locale", currentLocale);
   request.cookies.set("locale", currentLocale);
-  return NextResponse.rewrite(request.nextUrl);
+  return NextResponse.redirect(request.nextUrl);
 }
 
 export const config = {

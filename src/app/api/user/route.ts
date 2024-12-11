@@ -8,7 +8,9 @@ import jwt from "jsonwebtoken";
 export async function GET() {
   const tokenInRequestCookie = cookies().get("token");
   if (!tokenInRequestCookie) {
-    return Response.error();
+    return new Response(null, {
+      status: 400,
+    });
   }
   const token = tokenInRequestCookie.value;
   const decoded: tokenPayload = verify(

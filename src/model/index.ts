@@ -72,7 +72,9 @@ export interface Product {
   specs?: string[];
   createdDate?: Date;
   condition?: number;
-  "zh-TW"?: { name: string; description: string; specs?: string[] };
+  [key: `name-${string}`]: string;
+  [key: `description-${string}`]: string;
+  [key: `specs-${string}`]: string;
 }
 
 export interface Review {
@@ -86,12 +88,14 @@ export interface Review {
 export interface Category {
   id?: string;
   name: string;
+  [key: `name-${string}`]: string;
 }
 
 export interface SubCategory {
   id?: string;
   name: string;
   categoryId: string;
+  [key: `name-${string}`]: string;
 }
 
 export interface CartItem {

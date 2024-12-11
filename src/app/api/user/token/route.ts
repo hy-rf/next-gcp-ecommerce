@@ -9,7 +9,9 @@ export async function GET() {
   // }
   const refreshToken = await getRefreshTokenPayload();
   if (!refreshToken) {
-    return Response.error();
+    return new Response(null, {
+      status: 400,
+    });
   }
   const newToken = jwt.sign(
     { userId: refreshToken.userId },
@@ -28,7 +30,7 @@ export async function GET() {
   const cookieStore = await cookies();
   cookieStore.set("token", newToken);
   cookieStore.set("refresh", newRefreshToken);
-  return Response.json({
-    code: 200,
+  return new Response(null, {
+    status: 200,
   });
 }
