@@ -34,7 +34,6 @@ export async function POST(req: NextRequest) {
       prefer: "return=minimal",
     };
     const res = await ordersController.ordersCapture(collect);
-    console.log(res);
 
     const bodyres = res.body as string;
     return Response.json(JSON.parse(bodyres));
@@ -50,8 +49,7 @@ export async function POST(req: NextRequest) {
           value: body.total.toString(),
         },
         payee: {
-          // this is from info of seller
-          merchantId: "",
+          emailAddress: "sb-pywkw34654204@business.example.com",
         },
       },
     ],

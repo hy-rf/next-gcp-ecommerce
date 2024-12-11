@@ -15,8 +15,10 @@ import {
   CardMedia,
 } from "@mui/material";
 import fetchData from "@/lib/fetchData";
+import { useRouter } from "next/navigation";
 
 export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
+  const router = useRouter();
   const [cart, setCart] = useState<CartItem[]>(cartItems);
   const [selectedCartItem, setSelectedCartItem] = useState<
     Map<number, boolean>
@@ -46,7 +48,10 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
     const res = await fetch("/api/order", {
       method: "POST",
       body: JSON.stringify(postBody),
-    }).then((res) => res.json());
+    });
+    if (res.status === 200) {
+      router.replace(`/order-success?id=${await res.text()}`);
+    }
     console.log(res);
   };
 

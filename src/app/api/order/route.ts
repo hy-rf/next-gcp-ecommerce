@@ -62,9 +62,5 @@ export async function POST(req: NextRequest) {
     db.collection("CartItem").doc(ele.id!).delete();
   });
   const orderRef = await db.collection("Order").add(newOrder);
-  const res: R = {
-    success: true,
-    message: orderRef.id,
-  };
-  return Response.json(res);
+  return new Response(orderRef.id, { status: 200 });
 }

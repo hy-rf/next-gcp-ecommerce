@@ -29,6 +29,9 @@ function PaypalPayment({ order }: { order: Order }) {
 
   return (
     <div>
+      <h5>Test account</h5>
+      <p>Email:sb-vl4gr34366980@personal.example.com</p>
+      <p>Password:EFKTh#7a</p>
       <PayPalScriptProvider options={initialOptions}>
         <PayPalButtons
           style={{
