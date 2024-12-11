@@ -73,6 +73,38 @@ export default function NavigationBar() {
     timeoutRef.current = setTimeout(() => setHide(true), 500); // Hide the menu after 500ms
   }
   const animationDelayUnit = 35;
+  const links = [
+    {
+      label: dict.header_link_product_inner_text,
+      href: "/product?page=1&sort=sold-desc",
+      needAuth: false,
+    },
+    {
+      label: dict.header_link_user_inner_text,
+      href: "/user",
+      needAuth: true,
+    },
+    {
+      label: dict.header_link_cart_inner_text,
+      href: "/cart",
+      needAuth: true,
+    },
+    {
+      label: dict.header_link_order_inner_text,
+      href: "/order",
+      needAuth: true,
+    },
+    {
+      label: dict.header_link_login_inner_text,
+      href: "/login",
+      needAuth: false,
+    },
+    {
+      label: dict.header_link_logout_inner_text,
+      href: "/user/logout",
+      needAuth: true,
+    },
+  ];
   return (
     <header
       className={`flex bg-[rgba(128,128,128,0.9)] transform duration-500`}
@@ -101,7 +133,7 @@ export default function NavigationBar() {
         <div
           className={`${
             isOpen ? "opacity-100" : "opacity-0"
-          } bg-black/30 top-[70px] left-0 w-[100dvw] h-[100dvh] fixed ease-in-out duration-300 md:hidden`}
+          } bg-black/30 top-[70px] left-0 w-full h-[100dvh] fixed ease-in-out duration-300 md:hidden`}
           style={{
             WebkitBackdropFilter: "blur(1px)",
             backdropFilter: "blur(1px)",
@@ -109,70 +141,26 @@ export default function NavigationBar() {
           }}
         >
           <nav
-            className={`flex p-5 gap-4 flex-row w-full mt-[0] text-center bg-[#808080d0] fixed left-0 w-[100dvw] text-white align-middle leading-4 m-0`}
+            className={`flex p-5 gap-4 flex-row text-center bg-[#808080d0] fixed left-0 w-full text-white align-middle leading-4`}
           >
-            <ul className="flex flex-col items-start gap-2 w-full p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg items-center">
-              <li>
-                <Link
-                  onClick={() => handleAnimation()}
-                  href={"/product?page=1&sort=sold-desc"}
-                  className="block px-3 py-2"
-                  id="product-page-link"
-                >
-                  {dict.header_link_product_inner_text}
-                </Link>
-              </li>
-              {user && (
-                <>
-                  <li>
-                    <Link
-                      onClick={() => handleAnimation()}
-                      href={"/user"}
-                      className="block px-3 py-2"
-                    >
-                      {dict.header_link_user_inner_text}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      onClick={() => handleAnimation()}
-                      href={"/cart"}
-                      className="block px-3 py-2"
-                    >
-                      {dict.header_link_cart_inner_text}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      onClick={() => handleAnimation()}
-                      href={"/order"}
-                      className="block px-3 py-2"
-                    >
-                      {dict.header_link_order_inner_text}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      onClick={() => handleAnimation()}
-                      href={"/user/logout"}
-                      className="block px-3 py-2"
-                    >
-                      {dict.header_link_logout_inner_text}
-                    </Link>
-                  </li>
-                </>
-              )}
-              {!user && (
-                <li>
-                  <Link
-                    onClick={() => handleAnimation()}
-                    href={"/login"}
-                    className="block px-3 py-2"
-                  >
-                    {dict.header_link_login_inner_text}
-                  </Link>
-                </li>
-              )}
+            <ul className="flex flex-col w-full items-start gap-2 p-4 bg-gray-600 bg-opacity-80 rounded-lg shadow-lg items-center">
+              {links.map((el) => {
+                if ((!el.needAuth && !user) || (el.needAuth && user)) {
+                  return (
+                    <li key={el.label}>
+                      <Link
+                        onClick={() => handleAnimation()}
+                        href={el.href}
+                        className="block px-3 py-2"
+                        id="product-page-link"
+                      >
+                        {el.label}
+                      </Link>
+                    </li>
+                  );
+                }
+              })}
+
               <div className="flex gap-3 text-white mt-4">
                 <button
                   className="px-3 py-2"
