@@ -4,11 +4,11 @@ import { cookies } from "next/headers";
 import StoreSubmissionItem from "./_component/StoreSubmissionItem";
 
 export default async function Page() {
-  const storeSubmissions: StoreSubmission[] = await fetchData<
+  const storeSubmissions: StoreSubmission[] = (await fetchData<
     StoreSubmission[]
   >(`${process.env.URL}/api/store-submission`, {
     headers: { Cookie: (await cookies()).toString() },
-  });
+  })) as StoreSubmission[];
   return (
     <>
       <h3>Store Submissions</h3>

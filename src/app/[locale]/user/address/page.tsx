@@ -3,9 +3,9 @@ import AddAddressForm from "./_component/AddAddressForm";
 import fetchData from "@/lib/fetchData";
 
 export default async function Page() {
-  const addresses: Address[] = await fetchData<Address[]>(
+  const addresses: Address[] = (await fetchData<Address[]>(
     `${process.env.URL}/api/user/address`
-  );
+  )) as Address[];
   return (
     <div>
       <div>

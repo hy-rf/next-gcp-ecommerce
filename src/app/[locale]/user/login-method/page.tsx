@@ -2,12 +2,12 @@ import fetchData from "@/lib/fetchData";
 import { cookies } from "next/headers";
 
 export default async function Page() {
-  const loginMethods: string[] = await fetchData<string[]>(
+  const loginMethods: string[] = (await fetchData<string[]>(
     `${process.env.URL}/api/user/login-method`,
     {
       headers: { Cookie: (await cookies()).toString() },
     }
-  );
+  )) as string[];
   const listStyles = {
     container: {
       maxWidth: "400px",

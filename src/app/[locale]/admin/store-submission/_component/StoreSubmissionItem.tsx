@@ -12,7 +12,6 @@ export default function StoreSubmissionItem({ ele }: { ele: StoreSubmission }) {
       }),
     });
     console.log(res);
-    console.log("id: ", res.id);
   }
   return (
     <div className="max-w-lg mx-auto p-4 bg-white rounded-lg shadow-md space-y-4">

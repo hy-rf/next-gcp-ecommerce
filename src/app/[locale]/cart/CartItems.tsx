@@ -65,7 +65,7 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
     (async () => {
       try {
         const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
-        setCart(cartItems);
+        setCart(cartItems!);
       } catch {
         console.log("No cart item or not log in");
       }
@@ -86,7 +86,7 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
     (async () => {
       try {
         const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
-        setCart(cartItems);
+        setCart(cartItems!);
       } catch {
         console.log("No cart item or not log in");
       }

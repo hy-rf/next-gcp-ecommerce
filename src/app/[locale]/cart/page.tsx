@@ -7,7 +7,7 @@ import CartItemList from "./CartItems";
 export default async function Page() {
   /* eslint-disable prefer-const */
 
-  let cartItems: CartItem[];
+  let cartItems: CartItem[] | null;
   cartItems = await fetchData<CartItem[]>(
     `${process.env.URL}/api/v2/cart-item`,
     {

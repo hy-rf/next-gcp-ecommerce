@@ -51,9 +51,9 @@ export default async function Page({
   const products = response.products as Product[];
   const maxPages = response.pages as number;
   const total = response.total as number;
-  const categories = await fetchData<Category[]>(
+  const categories = (await fetchData<Category[]>(
     `${process.env.URL}/api/category/`
-  );
+  )) as Category[];
   return (
     <div className="relative">
       <h2 className="text-2xl font-semibold text-gray-800">{filter}</h2>

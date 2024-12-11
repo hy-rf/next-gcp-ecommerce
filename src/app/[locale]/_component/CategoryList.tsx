@@ -3,9 +3,9 @@ import { Category } from "@/model";
 import Link from "next/link";
 
 export default async function CategoryList() {
-  const categories: Category[] = await fetchData<Category[]>(
+  const categories: Category[] = (await fetchData<Category[]>(
     `${process.env.URL}/api/category`
-  );
+  )) as Category[];
   return (
     <div className="p-4">
       <div className="flex flex-row flex-wrap gap-1">

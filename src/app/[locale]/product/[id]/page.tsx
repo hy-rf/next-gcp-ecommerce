@@ -11,9 +11,9 @@ import ZoomImage from "./_component/ZoomImage";
  */
 
 async function getProduct(id: string) {
-  const product: Product = await fetchData<Product>(
+  const product: Product = (await fetchData<Product>(
     `${process.env.URL}/api/product/${id}`
-  );
+  )) as Product;
   return product;
 }
 

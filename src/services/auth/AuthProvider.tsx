@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import { AuthActionsContext, AuthContext } from "./AuthContext";
 import { User } from "@/model";
 import Cookies from "js-cookie";

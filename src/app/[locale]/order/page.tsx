@@ -4,12 +4,12 @@ import { cookies } from "next/headers";
 import PaypalPayment from "./PaypalPayment";
 
 export default async function Page() {
-  const orders: Order[] = await fetchData<Order[]>(
+  const orders: Order[] = (await fetchData<Order[]>(
     `${process.env.URL}/api/order`,
     {
       headers: { Cookie: (await cookies()).toString() },
     }
-  );
+  )) as Order[];
   return (
     <>
       <h2>Orders list</h2>
