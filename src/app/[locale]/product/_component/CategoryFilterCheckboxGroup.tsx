@@ -1,7 +1,8 @@
 "use client";
 
 import { Category } from "@/model";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
+import LocaleContext from "../../_component/LocaleContext";
 
 export default function CategoryFilterCheckboxGroup({
   selectedCategories,
@@ -12,6 +13,7 @@ export default function CategoryFilterCheckboxGroup({
   setSelectedCategories: Dispatch<SetStateAction<string[]>>;
   categories: Category[];
 }) {
+  const { locale } = useContext(LocaleContext);
   const handleCheckboxChange = (value: string) => {
     setSelectedCategories(
       (prev) =>
@@ -32,7 +34,11 @@ export default function CategoryFilterCheckboxGroup({
               checked={selectedCategories.includes(option.id!)}
               onChange={() => handleCheckboxChange(option.id!)}
             />
-            <p className="leading-loose">{option.name}</p>
+            <p className="leading-loose">
+              {locale === "en-US"
+                ? option.name
+                : (option[`name-${locale}`] as string)}
+            </p>
           </label>
         </div>
       ))}

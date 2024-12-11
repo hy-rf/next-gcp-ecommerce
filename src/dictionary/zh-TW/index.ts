@@ -24,5 +24,8 @@ const index: Dictionary = {
   header_link_cart_inner_text: "購物車",
   header_link_order_inner_text: "訂單",
   header_link_logout_inner_text: "登出",
+  product_filter_clear_button_text: "清除分類",
+  product_filter_apply_button_text: "套用分類",
+  product_filter_price_label_text: "價格",
 };
 export default index;

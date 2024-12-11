@@ -24,5 +24,8 @@ const index: Dictionary = {
   header_link_cart_inner_text: "Cart",
   header_link_order_inner_text: "Order",
   header_link_logout_inner_text: "Logout",
+  product_filter_clear_button_text: "Clear",
+  product_filter_apply_button_text: "Apply filter",
+  product_filter_price_label_text: "Price",
 };
 export default index;

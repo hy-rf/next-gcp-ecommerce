@@ -9,22 +9,7 @@ import { useRef } from "react";
 import LocaleContext from "./LocaleContext";
 import fetchData from "@/lib/fetchData";
 import { AuthContext } from "@/services/auth/AuthContext";
-function throttle<T extends (...args: unknown[]) => void>(
-  func: T,
-  limit: number
-): (...args: Parameters<T>) => void {
-  let inThrottle = false;
-
-  return (...args: Parameters<T>) => {
-    if (!inThrottle) {
-      func(...args);
-      inThrottle = true;
-      setTimeout(() => {
-        inThrottle = false;
-      }, limit);
-    }
-  };
-}
+import Throttle from "@/lib/Throttle";
 
 export default function NavigationBar() {
   const { user } = useContext(AuthContext);
@@ -40,7 +25,7 @@ export default function NavigationBar() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const handleScroll = throttle(() => {
+    const handleScroll = Throttle(() => {
       const currentScrollY = window.scrollY;
 
       // this if is for handling bumping of safari

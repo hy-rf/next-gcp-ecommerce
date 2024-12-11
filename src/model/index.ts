@@ -16,6 +16,9 @@ export interface Dictionary {
   product_sort_desc: string;
   product_sort_asc: string;
   product_sort_apply: string;
+  product_filter_price_label_text: string;
+  product_filter_clear_button_text: string;
+  product_filter_apply_button_text: string;
   all_product_link: string;
   product_add_to_cart_toast_message_not_logged_in: string;
   auth_message_login_success: string;

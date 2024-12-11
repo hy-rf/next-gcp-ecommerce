@@ -3,8 +3,15 @@
     add local state for this component
  */
 import { Category, FilterOptions } from "@/model";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import CategoryFilterCheckboxGroup from "./CategoryFilterCheckboxGroup";
+import LocaleContext from "../../_component/LocaleContext";
 
 export default function ProductFilter({
   filterOption,
@@ -17,6 +24,7 @@ export default function ProductFilter({
   setShowFilter: Dispatch<SetStateAction<boolean>>;
   categories: Category[];
 }) {
+  const { dict } = useContext(LocaleContext);
   const [localOption, setLocalOption] = useState<FilterOptions>(filterOption);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     filterOption.categoryId.split(",")
@@ -34,7 +42,9 @@ export default function ProductFilter({
     <>
       {/* Filter options */}
       <div className="flex items-center gap-2 m-2">
-        <label htmlFor="price-range">Price</label>
+        <label htmlFor="price-range" className="w-8">
+          {dict.product_filter_price_label_text}
+        </label>
         <input
           onChange={(e) =>
             setLocalOption((old) => {
@@ -72,10 +82,10 @@ export default function ProductFilter({
           setSelectedCategories={setSelectedCategories}
         />
         <button
-          className="rounded-md border border-[rgba(128, 128, 128, 0.3)]"
+          className="rounded-md border border-[rgba(128, 128, 128, 0.3)] px-6"
           onClick={() => setSelectedCategories([])}
         >
-          Clear Categories
+          {dict.product_filter_clear_button_text}
         </button>
       </div>
 
@@ -91,7 +101,7 @@ export default function ProductFilter({
           setShowFilter(false);
         }}
       >
-        Apply filter
+        {dict.product_filter_apply_button_text}
       </button>
     </>
   );
