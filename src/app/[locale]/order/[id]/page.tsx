@@ -1,6 +1,5 @@
 import { Order } from "@/model";
 import PaypalPayment from "../PaypalPayment";
-import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
