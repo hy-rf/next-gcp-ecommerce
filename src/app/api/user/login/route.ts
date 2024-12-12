@@ -22,7 +22,8 @@ export async function POST(req: NextRequest) {
     .where("providerUserId", "==", googleUserId)
     .limit(1)
     .get();
-  if (!userLoginMethodSnapshot.empty) {
+  if (userLoginMethodSnapshot.docs.length > 0) {
+    // userLoginMethodSnapshot.empty will be false even theres 0 entry in result
     userId = userLoginMethodSnapshot.docs[0].data().userId;
     db.collection("User").doc(userId).update({
       lastLogin: new Date().toISOString(),
