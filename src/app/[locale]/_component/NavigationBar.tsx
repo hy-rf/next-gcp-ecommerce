@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import "./NavigationBar.css";
-import CartItemList from "@/app/[locale]/_component/CartItemList";
 import { useRef } from "react";
 import LocaleContext from "./LocaleContext";
 import fetchData from "@/lib/fetchData";
@@ -279,9 +278,9 @@ export default function NavigationBar() {
             {dict.header_link_login_inner_text}
           </Link>
         )}
-        <div className="hidden md:hidden">
+        {/* <div className="hidden md:hidden">
           <CartItemList onClickingLinksInCartItemList={handleAnimation} />
-        </div>
+        </div> */}
         <div
           className="md:items-center hidden md:flex"
           onMouseEnter={() => setShowLocaleOptions(true)}

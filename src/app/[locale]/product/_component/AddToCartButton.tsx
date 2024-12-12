@@ -4,8 +4,8 @@ import { Product } from "@/model";
 import { UpdateCartItemBody } from "@/model/dto";
 import { useContext, useState } from "react";
 import LocaleContext from "../../_component/LocaleContext";
-import Cookies from "js-cookie";
 import { toast } from "sonner";
+import { AuthContext } from "@/services/auth/AuthContext";
 
 export default function AddToCartButton({
   product,
@@ -17,12 +17,13 @@ export default function AddToCartButton({
   showQuantity: boolean;
 }) {
   const { dict } = useContext(LocaleContext);
+  const { user } = useContext(AuthContext);
   const [quantity, setQuantity] = useState(1);
   const [selectedSpec, setSelectedSpec] = useState(
     product.specs ? product.specs[0] : null
   );
   async function handleAddToCart(product: Product, quantity: number) {
-    if (!Cookies.get("token")) {
+    if (!user) {
       toast.error(dict.product_add_to_cart_toast_message_not_logged_in);
       return;
     }
@@ -37,6 +38,10 @@ export default function AddToCartButton({
       method: "post",
       body: JSON.stringify(newCart),
     });
+    if (response.status === 410) {
+      toast.error("No stock");
+      return;
+    }
     if (response.status === 409) {
       // if conflict
       const body: UpdateCartItemBody = {
@@ -50,10 +55,11 @@ export default function AddToCartButton({
         method: "put",
         body: JSON.stringify(body),
       });
-      alert("Add to Cart Success!");
-      console.log(addQuantityResponse.status);
-      return;
+      if (addQuantityResponse.status === 410) {
+        toast.error(await addQuantityResponse.text());
+      }
     }
+    toast.success("Added to cart!");
     return;
   }
   return (

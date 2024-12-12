@@ -44,7 +44,11 @@ export async function POST(req: NextRequest) {
     .where("productId", "==", body.productId);
 
   if (cartItemRefOfSameUserIdAndSpec.count())
-    if ((await cartItemRefOfSameUserIdAndSpec.count().get()).data().count > 0) {
+    if (
+      (await cartItemRefOfSameUserIdAndSpec.count().get()).data().count > 0 &&
+      ((await cartItemRefOfSameUserIdAndSpec.get()).docs[0].data() as CartItem)
+        .spec === body.spec
+    ) {
       return new Response(
         JSON.stringify({
           cartItemId: (
@@ -67,6 +71,10 @@ export async function POST(req: NextRequest) {
     ...body,
     userId: decoded.userId,
   });
+  if (product.stock < body.quantity)
+    return new Response(null, {
+      status: 410,
+    });
   productRef.update({
     stock: product.stock - body.quantity,
   });
@@ -90,10 +98,7 @@ export async function PUT(req: NextRequest) {
     return true;
   }
   if (!(await getIsStockEnough()))
-    return Response.json({
-      code: 400,
-      message: "No stock",
-    });
+    return new Response("No stock", { status: 410, statusText: "GONE" });
   const product: Product = (await productRef.get()).data() as Product;
   productRef.update({
     stock:

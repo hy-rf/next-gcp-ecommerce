@@ -2,7 +2,7 @@ import fetchData from "@/lib/fetchData";
 import { CartItem } from "@/model";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import CartItemList from "./CartItems";
+import CartItems from "./CartItems";
 
 export default async function Page() {
   /* eslint-disable prefer-const */
@@ -11,7 +11,7 @@ export default async function Page() {
   cartItems = await fetchData<CartItem[]>(
     `${process.env.URL}/api/v2/cart-item`,
     {
-      headers: { Cookie: (await cookies()).toString() },
+      headers: { Cookie: cookies().toString() },
     }
   );
 
@@ -35,7 +35,7 @@ export default async function Page() {
         Your Cart
       </h1>
       <div className="grid gap-6 grid-cols-1">
-        <CartItemList cartItems={cartItems} />
+        <CartItems cartItems={cartItems} />
       </div>
     </div>
   );

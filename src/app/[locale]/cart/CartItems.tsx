@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import fetchData from "@/lib/fetchData";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
   const router = useRouter();
@@ -42,6 +43,10 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
 
   const handlePlaceOrder = async () => {
     const selectedItems = getSelectedItems();
+    if (selectedItems.length < 1) {
+      toast.error("No selected cart items");
+      return;
+    }
     const postBody: APIOrderPostBody = {
       cartItems: selectedItems,
     };
@@ -65,8 +70,12 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
     const res = await fetch("/api/v2/cart-item", {
       method: "put",
       body: JSON.stringify(body),
-    }).then((res) => res.json());
-    console.log(res);
+    });
+    if (res.status === 410) {
+      toast.error("No stock");
+    } else {
+      toast.success("Add quantity success");
+    }
     (async () => {
       try {
         const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
@@ -86,8 +95,8 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
     const res = await fetch("/api/v2/cart-item", {
       method: "put",
       body: JSON.stringify(body),
-    }).then((res) => res.json());
-    console.log(res);
+    });
+    if (res.status === 200) toast.success("Decrease cart item success");
     (async () => {
       try {
         const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
@@ -104,12 +113,18 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
         id: cartItem.id,
       }),
     });
-    if (res.status === 200) {
-      alert("Delete Success!");
-    } else if (res.status === 401) {
-      alert("Unauthorized");
-    } else if (res.status === 403) {
-      alert("Forbidden");
+    switch (res.status) {
+      case 200:
+        toast.success("Delete Success!");
+        break;
+      case 401:
+        toast.error("Unauthorized");
+        break;
+      case 403:
+        toast.error("Forbidden");
+        break;
+      default:
+        break;
     }
     setCart((old) => old.filter((el) => el.id !== cartItem.id));
   }
