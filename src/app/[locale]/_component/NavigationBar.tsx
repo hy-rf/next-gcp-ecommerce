@@ -155,7 +155,11 @@ export default function NavigationBar() {
                         onClick={() => handleAnimation()}
                         href={el.href}
                         className="block px-3 py-2"
-                        id="product-page-link"
+                        id={
+                          el.href === "/product?page=1&sort=sold-desc"
+                            ? "product-page-link"
+                            : ""
+                        }
                       >
                         {el.label}
                       </Link>
