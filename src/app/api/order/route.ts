@@ -7,7 +7,7 @@ import { NextRequest } from "next/server";
 export async function GET() {
   const decoded = await getTokenPayload();
   if (!decoded) {
-    return Response.error();
+    return new Response(null, { status: 501 });
   }
   const db = database();
   const userRef = decoded.userId;

@@ -6,13 +6,11 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import LocaleContext from "../_component/LocaleContext";
 import fetchData from "@/lib/fetchData";
-import { CartItem, User } from "@/model";
+import { User } from "@/model";
 import { AuthActionsContext } from "@/services/auth/AuthContext";
-import { CartActionContext } from "@/services/cart/CartProvider";
 
 export default function Page() {
   const { setUser } = useContext(AuthActionsContext);
-  const { setCartItems } = useContext(CartActionContext);
   const router = useRouter();
   const { dict } = useContext(LocaleContext);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -52,10 +50,6 @@ export default function Page() {
       toast.success(dict.auth_message_login_success);
       // this should be moved to context provider
       await fetchData<User>("/api/user").then((user) => setUser(user!));
-      // and this is not good way of getting user related data at login
-      await fetchData<CartItem[]>("/api/user").then((cartItems) =>
-        setCartItems(cartItems!)
-      );
       router.replace("/");
       return;
     }

@@ -1,6 +1,6 @@
 // utils/authUtil.ts
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
 import { tokenPayload } from "@/model";
 
 export default async function getTokenPayload(): Promise<tokenPayload | null> {
@@ -11,7 +11,10 @@ export default async function getTokenPayload(): Promise<tokenPayload | null> {
   const token = tokenInRequestCookie.value;
   try {
     return jwt.verify(token, process.env.JWT_SECRET!) as tokenPayload;
-  } catch {
+  } catch (err) {
+    if (err instanceof TokenExpiredError) {
+      console.log("TokenExpiredError");
+    }
     return null;
   }
 }

@@ -7,9 +7,12 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useContext,
+  useEffect,
   useState,
 } from "react";
 import { toast } from "sonner";
+import { AuthContext } from "../auth/AuthContext";
 
 export enum ChangeCartItemMode {
   Plus,
@@ -40,7 +43,17 @@ export default function CartProvider({
   initialCart: CartItem[];
   children: ReactNode;
 }) {
+  const { user } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState(initialCart);
+  useEffect(() => {
+    if (user) {
+      fetchData<CartItem[]>("/api/v2/cart-item").then((res) =>
+        setCartItems(res || [])
+      );
+    } else {
+      setCartItems([]);
+    }
+  }, [user]);
   // if user logged in save into user cart db else guest cart db
   const addCartItem = async (newCart: CartItem) => {
     const quantity = 1;

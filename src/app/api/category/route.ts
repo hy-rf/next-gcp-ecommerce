@@ -22,5 +22,8 @@ export async function GET(req: NextRequest) {
   // Respond category which id is specified id
   const db = database();
   const categorySnapshot = await db.collection("Category").doc(id).get();
+  if (!categorySnapshot.exists) {
+    return new Response(null, { status: 404 });
+  }
   return Response.json(categorySnapshot.data());
 }
