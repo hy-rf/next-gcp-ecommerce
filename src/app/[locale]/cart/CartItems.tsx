@@ -1,9 +1,9 @@
 "use client";
 
 import { CartItem } from "@/model";
-import { APIOrderPostBody, UpdateCartItemBody } from "@/model/dto";
+import { APIOrderPostBody } from "@/model/dto";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -14,13 +14,18 @@ import {
   Button,
   CardMedia,
 } from "@mui/material";
-import fetchData from "@/lib/fetchData";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import {
+  CartActionContext,
+  CartContext,
+  ChangeCartItemMode,
+} from "@/services/cart/CartProvider";
 
-export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
+export default function CartItems() {
+  const cartItems: CartItem[] = useContext(CartContext);
+  const { changeCartItem, deleteCartItem } = useContext(CartActionContext);
   const router = useRouter();
-  const [cart, setCart] = useState<CartItem[]>(cartItems);
   const [selectedCartItem, setSelectedCartItem] = useState<
     Map<number, boolean>
   >(new Map(cartItems.map((_, index) => [index, true])));
@@ -60,80 +65,11 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
     console.log(res);
   };
 
-  async function handlePlusCartItem(cartItem: CartItem) {
-    const body: UpdateCartItemBody = {
-      id: cartItem.id!,
-      productId: cartItem.productId,
-      number: 1,
-      mode: "plus",
-    };
-    const res = await fetch("/api/v2/cart-item", {
-      method: "put",
-      body: JSON.stringify(body),
-    });
-    if (res.status === 410) {
-      toast.error("No stock");
-    } else {
-      toast.success("Add quantity success");
-    }
-    (async () => {
-      try {
-        const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
-        setCart(cartItems!);
-      } catch {
-        console.log("No cart item or not log in");
-      }
-    })();
-  }
-  async function handleMinusCartItem(cartItem: CartItem) {
-    const body: UpdateCartItemBody = {
-      id: cartItem.id!,
-      productId: cartItem.productId,
-      number: 1,
-      mode: "minus",
-    };
-    const res = await fetch("/api/v2/cart-item", {
-      method: "put",
-      body: JSON.stringify(body),
-    });
-    if (res.status === 200) toast.success("Decrease cart item success");
-    (async () => {
-      try {
-        const cartItems = await fetchData<CartItem[]>("/api/v2/cart-item");
-        setCart(cartItems!);
-      } catch {
-        console.log("No cart item or not log in");
-      }
-    })();
-  }
-  async function handleDeleteCartItem(cartItem: CartItem) {
-    const res = await fetch("/api/v2/cart-item", {
-      method: "delete",
-      body: JSON.stringify({
-        id: cartItem.id,
-      }),
-    });
-    switch (res.status) {
-      case 200:
-        toast.success("Delete Success!");
-        break;
-      case 401:
-        toast.error("Unauthorized");
-        break;
-      case 403:
-        toast.error("Forbidden");
-        break;
-      default:
-        break;
-    }
-    setCart((old) => old.filter((el) => el.id !== cartItem.id));
-  }
-
   return (
     <Box
       sx={{ padding: "20px", display: "flex", flexDirection: "column", gap: 2 }}
     >
-      {cart.map((item, index) => (
+      {cartItems.map((item, index) => (
         <Card
           key={item.id}
           sx={{
@@ -196,7 +132,7 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
               }}
             >
               <Button
-                onClick={() => handleMinusCartItem(item)}
+                onClick={() => changeCartItem(item, ChangeCartItemMode.Minus)}
                 variant="outlined"
                 size="small"
                 sx={{
@@ -223,7 +159,7 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
                 {item.quantity}
               </Typography>
               <Button
-                onClick={() => handlePlusCartItem(item)}
+                onClick={() => changeCartItem(item, ChangeCartItemMode.Plus)}
                 variant="outlined"
                 size="small"
                 sx={{
@@ -237,7 +173,7 @@ export default function CartItems({ cartItems }: { cartItems: CartItem[] }) {
                 +
               </Button>
               <Button
-                onClick={() => handleDeleteCartItem(item)}
+                onClick={() => deleteCartItem(item)}
                 variant="outlined"
                 size="small"
                 sx={{

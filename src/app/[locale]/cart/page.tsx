@@ -35,7 +35,7 @@ export default async function Page() {
         Your Cart
       </h1>
       <div className="grid gap-6 grid-cols-1">
-        <CartItems cartItems={cartItems} />
+        <CartItems />
       </div>
     </div>
   );

@@ -6,9 +6,10 @@ import getDictionary from "@/dictionary/dictionary";
 import LocaleProvider from "./_component/LocaleProvider";
 import { Toaster } from "sonner";
 import AuthProvider from "@/services/auth/AuthProvider";
-import { User } from "@/model";
+import { CartItem, User } from "@/model";
 import fetchData from "@/lib/fetchData";
 import { cookies } from "next/headers";
+import CartProvider from "@/services/cart/CartProvider";
 
 type Params = {
   locale: string;
@@ -60,19 +61,27 @@ export default async function RootLayout({
   } catch {
     user = null;
   }
+  let cart: CartItem[] = [];
+  if (user) {
+    cart = (await fetchData<CartItem[]>(`${process.env.URL}/api/v2/cart-item`, {
+      headers: { Cookie: cookies().toString() },
+    })) as CartItem[];
+  }
   return (
     <LocaleProvider dict={dict} locale={locale}>
       <AuthProvider initialUser={user || null}>
-        <html lang={locale}>
-          <body className="flex flex-col h-screen">
-            <Header />
-            <main>{children}</main>
-            <footer>
-              <p>@ 2023-2024 E-Commerce. All Rights Reserved.</p>
-            </footer>
-            <Toaster position="top-center" />
-          </body>
-        </html>
+        <CartProvider initialCart={cart}>
+          <html lang={locale}>
+            <body className="flex flex-col h-screen">
+              <Header />
+              <main>{children}</main>
+              <footer>
+                <p>@ 2023-2024 E-Commerce. All Rights Reserved.</p>
+              </footer>
+              <Toaster position="top-center" />
+            </body>
+          </html>
+        </CartProvider>
       </AuthProvider>
     </LocaleProvider>
   );

@@ -1,11 +1,11 @@
 "use client";
 
-import { Product } from "@/model";
-import { UpdateCartItemBody } from "@/model/dto";
+import { CartItem, Product } from "@/model";
 import { useContext, useState } from "react";
 import LocaleContext from "../../_component/LocaleContext";
 import { toast } from "sonner";
 import { AuthContext } from "@/services/auth/AuthContext";
+import { CartActionContext } from "@/services/cart/CartProvider";
 
 export default function AddToCartButton({
   product,
@@ -16,6 +16,8 @@ export default function AddToCartButton({
   showSpec: boolean;
   showQuantity: boolean;
 }) {
+  const { addCartItem } = useContext(CartActionContext);
+
   const { dict } = useContext(LocaleContext);
   const { user } = useContext(AuthContext);
   const [quantity, setQuantity] = useState(1);
@@ -23,43 +25,19 @@ export default function AddToCartButton({
     product.specs ? product.specs[0] : null
   );
   async function handleAddToCart(product: Product, quantity: number) {
+    // where to place check user for front end
     if (!user) {
       toast.error(dict.product_add_to_cart_toast_message_not_logged_in);
       return;
     }
-    const newCart = {
-      productId: product.id,
+    const newCart: CartItem = {
+      productId: product.id!,
       name: product.name,
       quantity: quantity,
       price: product.price,
-      spec: selectedSpec,
+      spec: selectedSpec || undefined,
     };
-    const response = await fetch("/api/v2/cart-item", {
-      method: "post",
-      body: JSON.stringify(newCart),
-    });
-    if (response.status === 410) {
-      toast.error("No stock");
-      return;
-    }
-    if (response.status === 409) {
-      // if conflict
-      const body: UpdateCartItemBody = {
-        id: (await response.json()).cartItemId,
-        productId: product.id!,
-        number: quantity,
-        mode: "plus",
-      };
-      // if same product and spec was added to cart, call put api
-      const addQuantityResponse = await fetch("/api/v2/cart-item", {
-        method: "put",
-        body: JSON.stringify(body),
-      });
-      if (addQuantityResponse.status === 410) {
-        toast.error(await addQuantityResponse.text());
-      }
-    }
-    toast.success("Added to cart!");
+    await addCartItem(newCart);
     return;
   }
   return (

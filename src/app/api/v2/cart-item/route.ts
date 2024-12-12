@@ -139,20 +139,15 @@ export async function DELETE(req: NextRequest) {
       return new Response(null, {
         status: 403,
       });
-    const productRef = db.collection("Product").doc(body.productId);
-    await productRef.update({
-      quantity:
-        ((await productRef.get()).data() as Product).stock +
-        ((await cartItemToDelete.get()).data() as CartItem).quantity,
+    // const productRef = db.collection("Product").doc(body.productId);
+    // await productRef.update({
+    //   quantity:
+    //     ((await productRef.get()).data() as Product).stock +
+    //     ((await cartItemToDelete.get()).data() as CartItem).quantity,
+    // });
+    await cartItemToDelete.delete();
+    return new Response(null, {
+      status: 200,
     });
-    const result = await cartItemToDelete.delete();
-    return new Response(
-      JSON.stringify({
-        time: result.writeTime.toDate(),
-      }),
-      {
-        status: 200,
-      }
-    );
   })();
 }
