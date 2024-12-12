@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Product } from "@/model";
 import AddToCartButton from "./AddToCartButton";
+import Link from "next/link";
 // import { useContext } from "react";
 // import LocaleContext from "../../_component/LocaleContext";
 /**
@@ -20,7 +21,7 @@ export default function ProductItem({ product }: { product: Product }) {
         />
       </div>
       <div className="flex flex-col w-full">
-        <a href={`/product/${product.id}`}>
+        <Link href={`/product/${product.id}`}>
           <h3
             className="text-lg font-semibold overflow-hidden text-gray-800 text-ellipsis"
             style={{
@@ -32,7 +33,7 @@ export default function ProductItem({ product }: { product: Product }) {
           >
             {product.name}
           </h3>
-        </a>
+        </Link>
         <p
           className="text-sm text-gray-600 overflow-hidden text-ellipsis"
           style={{
