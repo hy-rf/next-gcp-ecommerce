@@ -2,7 +2,13 @@
 import fetchData from "@/lib/fetchData";
 import { CartItem } from "@/model";
 import { UpdateCartItemBody } from "@/model/dto";
-import { createContext, ReactNode, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 import { toast } from "sonner";
 
 export enum ChangeCartItemMode {
@@ -13,6 +19,7 @@ export enum ChangeCartItemMode {
 export const CartContext = createContext<CartItem[]>([]);
 
 export const CartActionContext = createContext<{
+  setCartItems: Dispatch<SetStateAction<CartItem[]>>;
   addCartItem: (newCart: CartItem) => Promise<void>;
   changeCartItem: (
     cartItem: CartItem,
@@ -20,6 +27,7 @@ export const CartActionContext = createContext<{
   ) => Promise<void>;
   deleteCartItem: (cartItem: CartItem) => Promise<void>;
 }>({
+  setCartItems: async () => {},
   addCartItem: async () => {},
   changeCartItem: async () => {},
   deleteCartItem: async () => {},
@@ -150,6 +158,7 @@ export default function CartProvider({
     <CartContext.Provider value={cartItems}>
       <CartActionContext.Provider
         value={{
+          setCartItems,
           addCartItem,
           changeCartItem,
           deleteCartItem,

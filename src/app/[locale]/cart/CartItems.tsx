@@ -21,6 +21,7 @@ import {
   CartContext,
   ChangeCartItemMode,
 } from "@/services/cart/CartProvider";
+import Addresses from "./Addresses";
 
 export default function CartItems() {
   const cartItems: CartItem[] = useContext(CartContext);
@@ -205,22 +206,27 @@ export default function CartItems() {
         </Card>
       ))}
 
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        onClick={handlePlaceOrder}
-        sx={{
-          alignSelf: "center",
-          mt: 3,
-          px: 5,
-          borderRadius: "12px",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-          textTransform: "none",
-        }}
-      >
-        Checkout
-      </Button>
+      {cartItems.length > 0 && (
+        <>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handlePlaceOrder}
+            sx={{
+              alignSelf: "center",
+              mt: 3,
+              px: 5,
+              borderRadius: "12px",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+              textTransform: "none",
+            }}
+          >
+            Checkout
+          </Button>
+          <Addresses />
+        </>
+      )}
     </Box>
   );
 }

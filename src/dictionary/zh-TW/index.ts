@@ -27,5 +27,6 @@ const index: Dictionary = {
   product_filter_clear_button_text: "清除分類",
   product_filter_apply_button_text: "套用分類",
   product_filter_price_label_text: "價格",
+  auth_login_title: "登入/註冊",
 };
 export default index;

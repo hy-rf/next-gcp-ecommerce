@@ -25,6 +25,7 @@ export interface Dictionary {
   auth_message_logout_success: string;
   auth_message_login_error_wrong_password: string;
   auth_message_login_error_oauth: string;
+  auth_login_title: string;
 }
 
 export interface User {
