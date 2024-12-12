@@ -17,6 +17,7 @@ export const theme = {
     boxShadow: {
       "product-card": "0px 1px 2px 0px rgba(0, 0, 0, 0.2)",
       "category-card": "0px 1px 2px 0px rgba(0, 0, 0, 0.2)",
+      "organizer-card": "2px 0px 1px 0px rgba(0, 0, 0, 0.2)",
     },
   },
 };

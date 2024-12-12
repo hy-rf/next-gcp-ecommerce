@@ -72,7 +72,7 @@ export default function Organizer({
       </div>
       <div
         id="desktop-filter"
-        className="md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40 md:backdrop-blur-sm md:border md:shadow-sm md:px-1"
+        className="md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40 md:backdrop-blur-sm md:border-r-0 md:shadow-organizer-card md:px-1"
       >
         {showFilter && (
           <div className="fixed bottom-28 rounded-lg flex flex-col right-6 p-4 shadow-md items-center backdrop-blur-sm md:flex md:static bg-header-gray md:bg-transparent md:shadow-none">

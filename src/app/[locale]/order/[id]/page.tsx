@@ -1,11 +1,15 @@
 import { Order } from "@/model";
 import PaypalPayment from "../PaypalPayment";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = params;
-  const order: Order = await fetch(`${process.env.URL}/api/order/${id}`).then(
-    (res) => res.json()
-  );
+
+  const orderResponse = await fetch(`${process.env.URL}/api/order/${id}`);
+  if (orderResponse.status !== 200) {
+    return <p>Not Found</p>;
+  }
+  const order: Order = (await orderResponse.json()) as Order;
   const paid = false;
   return (
     <>

@@ -4,6 +4,7 @@ import Organizer from "@/app/[locale]/product/_component/Organizer";
 import { Category, FilterOptions, Product } from "@/model";
 import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
+import Image from "next/image";
 import LocaleContext from "../../_component/LocaleContext";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -117,7 +118,7 @@ export default function FilteredProducts({
   }, [options]);
   return (
     <>
-      <div className="flex">
+      <div className="flex h-full">
         {false && (
           <div className="bg-white p-6 rounded-lg shadow-md w-full ">
             <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
@@ -168,7 +169,7 @@ export default function FilteredProducts({
           setFilterOption={setOptions}
           categories={categories}
         />
-        <div>
+        <div className="flex flex-col">
           <p className="text-center">
             {dict.product_total_1}
             {total}
@@ -184,7 +185,7 @@ export default function FilteredProducts({
               <ProductItem product={ele} key={ele.id} />
             ))}
           </div>
-          <div>
+          <div className="text-center relative bottom-0 mt-auto">
             {options.page > 1 && (
               <button
                 className="z-[100]"
@@ -198,7 +199,12 @@ export default function FilteredProducts({
                   });
                 }}
               >
-                Previous page
+                <Image
+                  src={"/previous-page.svg"}
+                  alt={"previous-page"}
+                  width={32}
+                  height={32}
+                ></Image>
               </button>
             )}
             {options.page < maxPages && (
@@ -214,7 +220,12 @@ export default function FilteredProducts({
                   });
                 }}
               >
-                Next page
+                <Image
+                  src={"/next-page.svg"}
+                  alt={"next-page"}
+                  width={32}
+                  height={32}
+                ></Image>
               </button>
             )}
           </div>

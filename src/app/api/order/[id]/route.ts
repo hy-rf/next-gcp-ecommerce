@@ -14,6 +14,9 @@ export async function GET(
   const { id } = await params;
   const db = database();
   const orderRef = await db.collection("Order").doc(id).get();
+  if (!orderRef.exists) {
+    return new Response(null, { status: 404 });
+  }
   return new Response(
     JSON.stringify({
       id: orderRef.id,

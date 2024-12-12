@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Page({
   searchParams,
 }: {
@@ -7,6 +9,7 @@ export default function Page({
     <>
       <h3>Order success!</h3>
       <p>your order: {searchParams.id}</p>
+      <Link href={`/order/${searchParams.id}`}>To Order Details</Link>
     </>
   );
 }
