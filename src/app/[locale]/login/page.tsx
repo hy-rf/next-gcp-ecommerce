@@ -10,7 +10,7 @@ import { User } from "@/model";
 import { AuthActionsContext } from "@/services/auth/AuthContext";
 
 export default function Page() {
-  const { setUser } = useContext(AuthActionsContext);
+  const { setUser, firebaseGoogleLogin } = useContext(AuthActionsContext);
   const router = useRouter();
   const { dict } = useContext(LocaleContext);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -120,6 +120,12 @@ export default function Page() {
                 Google
               </a>
             </div>
+            <button
+              className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300"
+              onClick={firebaseGoogleLogin}
+            >
+              Firebase Google Login
+            </button>
             <div className="px-4 py-2 border border-gray-500 rounded-md bg-gray-300 text-gray-800 hover:bg-gray-400 hover:text-white duration-300">
               <a href="">Facebook</a>
             </div>

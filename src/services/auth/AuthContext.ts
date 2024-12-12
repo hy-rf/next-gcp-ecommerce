@@ -1,8 +1,9 @@
 import { User } from "@/model";
+import { User as FirebaseUser } from "firebase/auth";
 import { createContext } from "react";
 
 export const AuthContext = createContext<{
-  user: User | null;
+  user: User | FirebaseUser | null;
   isLoaded: boolean;
 }>({
   user: null,
@@ -10,9 +11,11 @@ export const AuthContext = createContext<{
 });
 
 export const AuthActionsContext = createContext<{
-  setUser: (user: User) => void;
+  setUser: (user: User | FirebaseUser) => void;
   logOut: () => Promise<void>;
+  firebaseGoogleLogin: () => Promise<void>;
 }>({
   setUser: () => {},
   logOut: async () => {},
+  firebaseGoogleLogin: async () => {},
 });
