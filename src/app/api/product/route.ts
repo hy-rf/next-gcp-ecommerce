@@ -5,6 +5,7 @@ import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import uploadBase64Image from "@/lib/uploadBase64Image";
 import { Query } from "@google-cloud/firestore";
+import { z } from "zod";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -92,27 +93,31 @@ export async function GET(req: NextRequest) {
   return Response.json({ pages: pages, products: products, total: total });
 }
 
-interface PostBody {
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  imageList: string[];
-  category: string;
-  subCategory: string;
-  createdShopId: string;
-  specs?: string[];
-  sold?: number;
-  condition?: number;
-}
+const PostBodySchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  price: z.number().min(0),
+  stock: z.number().min(0),
+  imageList: z.array(z.string()),
+  category: z.string(),
+  subCategory: z.string(),
+  createdShopId: z.string(),
+  specs: z.array(z.string()).optional(),
+  sold: z.number().min(0).optional(),
+  condition: z.number().min(0).optional(),
+});
+
+// Infer TypeScript type directly from schema
+type PostBody = z.infer<typeof PostBodySchema>;
 
 export async function POST(req: NextRequest) {
   const tokenInRequestCookie = (await cookies()).get("token");
   if (!tokenInRequestCookie) {
-    return Response.error();
+    return new Response(null, { status: 501 });
   }
   const token = tokenInRequestCookie.value;
-  const body: PostBody = await req.json();
+  let body: PostBody = await req.json();
+  body = PostBodySchema.parse(body);
   // Remove all leading and trailing spaces for all text inputs
   body.name = body.name.trim();
   body.description = body.description.trim();
@@ -120,43 +125,50 @@ export async function POST(req: NextRequest) {
   body.subCategory = body.subCategory.trim();
   body.specs = body.specs?.map((spec) => spec.trim());
 
+  const invalids = [];
   if (body.name === "") {
-    return Response.error();
+    invalids.push("Name Invalid");
   }
   if (body.description === "") {
-    return Response.error();
+    invalids.push("Description Invalid");
   }
   if (Number.isNaN(body.price)) {
-    return Response.error();
+    invalids.push("Price Invalid");
   }
-  if (body.stock.toString() === "") {
-    return Response.error();
+  if (Number.isNaN(body.stock)) {
+    invalids.push("Stock Invalid");
   }
-  if (body.imageList.length === 0) {
-    return Response.error();
+  if (!body.hasOwnProperty("imageList")) {
+    invalids.push("ImageList Invalid");
+  }
+  if (body.hasOwnProperty("imageList") && body.imageList.length === 0) {
+    invalids.push("ImageList Invalid");
   }
   if (body.category === "") {
-    return Response.error();
+    invalids.push("Category Invalid");
   }
   if (body.subCategory === "") {
-    return Response.error();
+    invalids.push("SubCategory Invalid");
   }
   if (body.createdShopId === "") {
-    return Response.error();
+    invalids.push("CreatedShopId Invalid");
   }
   if (body.imageList.length > 5) {
-    return Response.error();
+    invalids.push("ImageList Too Long");
   }
   if (
     body.specs &&
     (body.specs.some((ele) => ele === "") ||
       new Set(body.specs).size !== body.specs.length)
   ) {
-    return Response.json({
-      code: 400,
-      message: "Duplicated specs",
+    invalids.push("Specs Invalid");
+  }
+  if (invalids.length > 0) {
+    return new Response(JSON.stringify(invalids), {
+      status: 400,
     });
   }
+
   const db = database();
   const userId: string = (() => {
     const payload: tokenPayload = jwt.verify(
