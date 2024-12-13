@@ -9,6 +9,8 @@ import { z } from "zod";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
+  console.log(searchParams);
+
   const storeId = searchParams.get("storeId");
   const categoryId = searchParams.get("categoryId");
   const subCategoryId = searchParams.get("subCategoryId");
@@ -24,11 +26,12 @@ export async function GET(req: NextRequest) {
   }
   let productQuery: Query = db.collection("Product");
   if (storeId) {
-    productQuery = productQuery.where(
-      "createdShopId",
-      "in",
-      storeId.split(",")
-    );
+    productQuery = productQuery.where("createdShopId", "==", storeId);
+    // productQuery = productQuery.where(
+    //   "createdShopId",
+    //   "in",
+    //   storeId.split(",")
+    // );
   }
   if (categoryId) {
     productQuery = productQuery.where(
