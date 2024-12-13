@@ -4,10 +4,10 @@ import Organizer from "@/app/[locale]/product/_component/Organizer";
 import { Category, FilterOptions, Product } from "@/model";
 import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
-import Image from "next/image";
 import LocaleContext from "../../_component/LocaleContext";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Pagination } from "@mui/material";
 /**
  * Content of filtered products
  * There is no need of token to fetch products
@@ -164,19 +164,20 @@ export default function FilteredProducts({
             </div>
           </div>
         )}
+
         <Organizer
           filterOption={options}
           setFilterOption={setOptions}
           categories={categories}
         />
-        <div className="flex flex-col">
-          <p className="text-center">
+        <div className="flex flex-col w-full">
+          <p className="text-center h-8">
             {dict.product_total_1}
             {total}
             {dict.product_total_2}
           </p>
           <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4"
+            className="grid items-stretch grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4"
             style={{
               opacity: isLoading ? "0.5" : "1",
             }}
@@ -185,49 +186,35 @@ export default function FilteredProducts({
               <ProductItem product={ele} key={ele.id} />
             ))}
           </div>
-          <div className="text-center relative bottom-0 mt-auto">
-            {options.page > 1 && (
-              <button
-                className="z-[100]"
-                onClick={() => {
-                  const currentPage: number = options.page;
-                  setOptions((old) => {
-                    return {
-                      ...old,
-                      page: parseInt(currentPage.toString()) - 1,
-                    };
-                  });
-                }}
-              >
-                <Image
-                  src={"/previous-page.svg"}
-                  alt={"previous-page"}
-                  width={32}
-                  height={32}
-                ></Image>
-              </button>
-            )}
-            {options.page < maxPages && (
-              <button
-                className="z-[100]"
-                onClick={() => {
-                  const currentPage: number = options.page;
-                  setOptions((old) => {
-                    return {
-                      ...old,
-                      page: parseInt(currentPage.toString()) + 1,
-                    };
-                  });
-                }}
-              >
-                <Image
-                  src={"/next-page.svg"}
-                  alt={"next-page"}
-                  width={32}
-                  height={32}
-                ></Image>
-              </button>
-            )}
+          <div className="pagination text-center relative bottom-0 mt-auto mx-auto">
+            <Pagination
+              page={parseInt(options.page.toString())}
+              count={maxPages}
+              showFirstButton
+              showLastButton
+              onChange={(_: React.ChangeEvent<unknown>, page: number) => {
+                setOptions((old) => {
+                  return {
+                    ...old,
+                    page: page,
+                  };
+                });
+              }}
+              sx={{
+                "& .MuiPaginationItem-root": {
+                  fontSize: "1rem", // Default size
+                },
+                "@media (max-width: 767px)": {
+                  "& .MuiPaginationItem-root": {
+                    fontSize: "1.5rem", // Larger font size for smaller screens
+                    padding: "8px 16px", // Larger padding for smaller screens
+                    marginBottom: "1rem !important",
+                  },
+                },
+              }}
+            />
+            <br />
+            <br />
           </div>
         </div>
       </div>
