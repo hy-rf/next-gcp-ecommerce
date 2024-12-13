@@ -72,10 +72,10 @@ export default function Organizer({
       </div>
       <div
         id="desktop-filter"
-        className="md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40 md:backdrop-blur-sm md:border-r-0 md:shadow-organizer-card md:px-1"
+        className="fixed w-full md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40 md:backdrop-blur-sm md:border-r-0 md:shadow-organizer-card md:px-1"
       >
         {showFilter && (
-          <div className="fixed bottom-28 w-full rounded-lg flex flex-col right-6 p-4 shadow-md items-center backdrop-blur-sm md:flex md:static bg-header-gray md:bg-transparent md:shadow-none">
+          <div className="fixed w-full bottom-28  rounded-lg flex flex-col p-4 shadow-md items-center backdrop-blur-sm md:flex md:static bg-header-gray md:bg-transparent md:shadow-none">
             <ProductFilter
               categories={categories}
               filterOption={filterOption}
@@ -85,7 +85,7 @@ export default function Organizer({
           </div>
         )}
         {showSort && (
-          <div className="fixed bottom-28 rounded-lg flex flex-col p-4 left-6 shadow-md backdrop-blur-sm md:static md:flex bg-header-gray md:bg-transparent md:shadow-none">
+          <div className="fixed w-full bottom-28 rounded-lg flex flex-col p-4 shadow-md backdrop-blur-sm md:static md:flex bg-header-gray md:bg-transparent md:shadow-none">
             <ProductSort
               filterOption={filterOption}
               setFilterOption={setFilterOption}

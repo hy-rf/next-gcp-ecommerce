@@ -20,7 +20,7 @@ export default function ProductItem({ product }: { product: Product }) {
           className="w-full h-full object-cover rounded-md"
         />
       </div>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full break-all">
         <Link href={`/product/${product.id}`}>
           <h3
             className="text-lg font-semibold overflow-hidden text-gray-800 text-ellipsis"
