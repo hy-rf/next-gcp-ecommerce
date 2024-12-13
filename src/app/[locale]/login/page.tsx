@@ -25,7 +25,7 @@ export default function Page() {
         "981674263788-sfp6ddbl5pn1in3vmvgpbvre83bjigjm.apps.googleusercontent.com",
       redirect_uri: document.location.href.replace(
         /\/login$/,
-        "/user/login-callback"
+        "/login-callback"
       ),
       response_type: "token",
       scope: "https://www.googleapis.com/auth/userinfo.profile",
