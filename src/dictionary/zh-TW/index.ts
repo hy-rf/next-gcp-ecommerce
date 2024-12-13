@@ -28,5 +28,6 @@ const index: Dictionary = {
   product_filter_apply_button_text: "套用分類",
   product_filter_price_label_text: "價格",
   auth_login_title: "登入/註冊",
+  cart_checkout_button_inner_text: "下訂單",
 };
 export default index;

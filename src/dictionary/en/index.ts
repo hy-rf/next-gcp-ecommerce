@@ -28,5 +28,6 @@ const index: Dictionary = {
   product_filter_apply_button_text: "Apply filter",
   product_filter_price_label_text: "Price",
   auth_login_title: "LOGIN/REGISTER",
+  cart_checkout_button_inner_text: "Checkout",
 };
 export default index;

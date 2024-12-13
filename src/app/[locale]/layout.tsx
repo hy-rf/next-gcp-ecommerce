@@ -10,6 +10,7 @@ import { CartItem, User } from "@/model";
 import fetchData from "@/lib/fetchData";
 import { cookies } from "next/headers";
 import CartProvider from "@/services/cart/CartProvider";
+import NextTopLoader from "nextjs-toploader";
 
 type Params = {
   locale: string;
@@ -74,6 +75,20 @@ export default async function RootLayout({
           <html lang={locale}>
             <body className="flex flex-col h-screen">
               <Header />
+              <NextTopLoader
+                color="#FFFFFF"
+                initialPosition={0.08}
+                crawlSpeed={200}
+                height={3}
+                crawl={true}
+                showSpinner={false}
+                easing="ease"
+                speed={200}
+                shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+                template='<div class="bar" role="bar"><div class="peg"></div></div>'
+                zIndex={1600}
+                showAtBottom={false}
+              />
               <main>{children}</main>
               <footer>
                 <p>@ 2023-2024 E-Commerce. All Rights Reserved.</p>

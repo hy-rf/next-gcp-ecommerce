@@ -1,3 +1,4 @@
+// Naming rule: <page>_<function>_<what-function>_<text-kind>
 export interface Dictionary {
   title: string;
   layout_title: string;
@@ -26,6 +27,7 @@ export interface Dictionary {
   auth_message_login_error_wrong_password: string;
   auth_message_login_error_oauth: string;
   auth_login_title: string;
+  cart_checkout_button_inner_text: string;
 }
 
 export interface User {
