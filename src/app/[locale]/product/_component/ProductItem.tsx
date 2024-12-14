@@ -18,6 +18,7 @@ export default function ProductItem({ product }: { product: Product }) {
           width={160}
           height={160}
           className="w-full h-full object-cover rounded-md"
+          loading="eager"
         />
       </div>
       <div className="flex flex-col w-full break-all">
