@@ -52,6 +52,8 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<Params>;
 }) {
+  console.log(process.env.CE);
+
   const { locale } = await params;
   const dict = await getDictionary(locale, "index");
   let user: User | null;
