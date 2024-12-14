@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
   )
     return;
   // Validate permission of admin
-  if (pathname.startsWith("/api/admin") || pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
     const cookie = cookies();
     const token = cookie.get("token");
     console.log(token);
