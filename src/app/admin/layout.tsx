@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-
+import "./layout.css";
 export default async function RootLayout({
   children,
 }: {
@@ -7,10 +7,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <p>this is admin page</p>
-        {children}
-      </body>
+      <body className="z-40">{children}</body>
     </html>
   );
 }
