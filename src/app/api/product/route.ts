@@ -9,8 +9,6 @@ import { z } from "zod";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  console.log(searchParams);
-
   const storeId = searchParams.get("storeId");
   const categoryId = searchParams.get("categoryId");
   const subCategoryId = searchParams.get("subCategoryId");

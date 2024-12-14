@@ -113,6 +113,7 @@ export default function NavigationBar() {
     >
       {/*Mobile*/}
       <div
+        className="md:hidden"
         style={{
           borderRadius: "100px / 75px",
           overflow: "hidden",
@@ -208,8 +209,24 @@ export default function NavigationBar() {
 
       {/* Desktop */}
       <nav
-        className={`hidden text-white md:leading-header-line md:text-center md:static md:flex md:flex-row md:gap-4 md:ml-auto md:mr-0 md:mt-0 md:w-auto md:h-auto md:z-auto md:p-0 md:bg-transparent md:opacity-100`}
+        className={`hidden text-white md:leading-header-line md:text-center md:flex md:flex-row md:gap-4 md:mt-0 md:w-full md:h-auto md:z-auto md:p-0 md:bg-transparent md:opacity-100 md:mx-auto md:max-w-[1200px]`}
       >
+        <div
+          className="mr-auto"
+          style={{
+            borderRadius: "100px / 75px",
+            overflow: "hidden",
+          }}
+        >
+          <Link onClick={() => handleAnimation2()} href={"/"}>
+            <Image
+              src="/logo-lg.png"
+              width={92}
+              height={70}
+              alt="e-commerce"
+            ></Image>
+          </Link>
+        </div>
         <Link
           style={{
             transform: isOpen ? "translateX(0px)" : "translateX(-10px)",
@@ -286,13 +303,13 @@ export default function NavigationBar() {
           <CartItemList onClickingLinksInCartItemList={handleAnimation} />
         </div> */}
         <div
-          className="md:items-center hidden md:flex"
+          className="md:items-center hidden md:flex relative"
           onMouseEnter={() => setShowLocaleOptions(true)}
           onMouseLeave={() => setShowLocaleOptions(false)}
         >
           <Image src="/locale.svg" width={26} height={26} alt="locales"></Image>
           {showLocaleOptions && (
-            <div className="absolute top-[70px] right-[-5px] flex flex-col bg-white shadow-lg rounded-lg border text-black dark:bg-black dark:text-white  min-w-[6rem] overflow-hidden">
+            <div className="absolute top-[70px] -right-4 flex flex-col bg-white shadow-lg rounded-lg border text-black dark:bg-gray-600 dark:text-white min-w-[6rem] overflow-hidden">
               <button
                 className="p-1 hover:underline"
                 onClick={() =>

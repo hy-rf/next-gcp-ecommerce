@@ -73,7 +73,7 @@ export default async function RootLayout({
       <AuthProvider initialUser={user || null}>
         <CartProvider initialCart={cart}>
           <html lang={locale}>
-            <body className="flex flex-col h-screen">
+            <body className="flex flex-col h-screen bg-gray-50 items-center">
               <Header />
               <NextTopLoader
                 color="#FFFFFF"
@@ -89,7 +89,7 @@ export default async function RootLayout({
                 zIndex={1600}
                 showAtBottom={false}
               />
-              <main>{children}</main>
+              <main className="mx-auto max-w-[1200px]">{children}</main>
               <footer>
                 <p>@ 2023-2024 E-Commerce. All Rights Reserved.</p>
               </footer>

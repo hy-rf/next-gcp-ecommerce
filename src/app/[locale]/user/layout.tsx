@@ -13,12 +13,12 @@ export default async function UserLayout({
 }>) {
   const dict = await getDictionary((await params).locale, "index");
   return (
-    <div className="flex flex-col bg-gray-50 md:flex-row user-sidebar">
+    <div className="flex flex-col bg-gray-50 md:flex-row user-sidebar h-full">
       {/* Sidebar */}
       <Sidebar dict={dict} />
 
       {/* Main Content */}
-      <div className="flex-grow p-6">{children}</div>
+      <div className="flex-grow p-6 h-full">{children}</div>
     </div>
   );
 }

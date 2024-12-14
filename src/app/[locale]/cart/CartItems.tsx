@@ -67,7 +67,6 @@ export default function CartItems() {
     if (res.status === 200) {
       router.replace(`/order-success?id=${await res.text()}`);
     }
-    console.log(res);
   };
 
   return (

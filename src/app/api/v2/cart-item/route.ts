@@ -34,15 +34,12 @@ export async function POST(req: NextRequest) {
       status: 401,
     });
   }
-
   const body: CartItem = await req.json();
-  console.log(body);
   const db = database();
   const cartItemRefOfSameUserIdAndSpec = db
     .collection("CartItem")
     .where("userId", "==", decoded.userId)
     .where("productId", "==", body.productId);
-
   if (cartItemRefOfSameUserIdAndSpec.count())
     if (
       (await cartItemRefOfSameUserIdAndSpec.count().get()).data().count > 0 &&
