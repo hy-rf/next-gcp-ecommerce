@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start-dev": "next dev",
+    "dev": "rm -rf .next/cache && next dev",
     "warm-up": "wait-on http://localhost:3000 && node warm-up.js",
-    "dev": "concurrently --no-kill-others \"npm run start-dev\" \"npm run warm-up\"",
+    "dev-warmup": "concurrently --no-kill-others \"npm run start-dev\" \"npm run warm-up\"",
     "build": "rm -rf .next/cache && next build",
     "start": "next start",
     "lint": "next lint",

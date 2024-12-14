@@ -1,7 +1,7 @@
 "use client";
 
 import { CarouselItem } from "@/model";
-import Image from "next/image";
+//import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 export default function Hero() {
@@ -73,7 +73,7 @@ export default function Hero() {
                   height: `${heroHeight}px`,
                 }}
               >
-                <Image
+                <img
                   className="overflow-hidden min-w-full md:max-w-[1024px] md:min-w-[768px] md:max-h-[437px] pb-4"
                   src={item.imageUrl}
                   alt={item.title}
@@ -81,7 +81,6 @@ export default function Hero() {
                   height={0}
                   sizes="100%"
                   loading="eager"
-                  priority={true}
                 />
               </div>
             ))}
