@@ -22,7 +22,7 @@ export default function SubmitStoreForm() {
     await fetch("/api/store", {
       method: "post",
       body: JSON.stringify({
-        id: result.id,
+        id: result.message,
       }),
     });
   }
