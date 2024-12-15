@@ -6,6 +6,7 @@ import FileNameHint from "./_component/FileNameHint";
 import Image from "next/image";
 import Modal from "@/components/Modal";
 import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -101,7 +102,7 @@ export default function NewProduct() {
       specs.some((ele) => ele === "") ||
       new Set(specs).size !== specs.length
     ) {
-      alert("Invalid Input");
+      toast.error("Invalid Input");
       setShowConfirmModal(false);
       return;
     }
@@ -122,8 +123,12 @@ export default function NewProduct() {
       }),
     }).then((res) => res.json());
     if (res.code == 400) {
-      alert(res.message);
+      toast.error(res.message);
+      setIsFormSubmit(false);
+      setShowConfirmModal(false);
+      return;
     }
+    toast.success("Product Published");
     setIsFormSubmit(false);
     setShowConfirmModal(false);
   }, [category, description, image, name, price, specs, stock, subCategory]);
