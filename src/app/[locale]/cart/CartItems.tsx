@@ -112,7 +112,7 @@ export default function CartItems() {
                   margin: "8px",
                 }}
               />
-              <div className="flex flex-col md:flex-row">
+              <div className="flex flex-col md:flex-row w-full">
                 {/* Content Section */}
                 <CardContent sx={{ flex: 1 }}>
                   <Link href={`/product/${item.productId}`} passHref>
@@ -148,6 +148,7 @@ export default function CartItems() {
 
                 {/* Quantity Section with Plus and Minus Buttons */}
                 <CardActions
+                  className="ml-auto"
                   sx={{ flexDirection: "row", alignItems: "center" }}
                 >
                   <Box
