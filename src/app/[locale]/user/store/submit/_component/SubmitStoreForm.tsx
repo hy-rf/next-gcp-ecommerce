@@ -19,9 +19,12 @@ export default function SubmitStoreForm() {
     }).then((res) => res.json());
     setName("");
     setDescription("");
-    window.location.replace(
-      `${process.env.URL}/store-submission/${result.message}`,
-    );
+    await fetch("/api/store", {
+      method: "post",
+      body: JSON.stringify({
+        id: result.id,
+      }),
+    });
   }
   function handleChangeName(event: ChangeEvent<HTMLInputElement>): void {
     setName(event.target.value);

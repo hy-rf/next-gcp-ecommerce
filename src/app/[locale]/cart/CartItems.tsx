@@ -14,6 +14,7 @@ import {
   CardActions,
   Button,
   CardMedia,
+  Modal,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -34,6 +35,8 @@ export default function CartItems() {
   const [selectedCartItem, setSelectedCartItem] = useState<
     Map<number, boolean>
   >(new Map(cartItems.map((_, index) => [index, true])));
+  const [open, setOpen] = useState(false);
+  const [item, setItem] = useState<CartItem | null>(null);
 
   useEffect(() => {
     setSelectedCartItem(new Map(cartItems.map((_, index) => [index, true])));
@@ -71,10 +74,10 @@ export default function CartItems() {
 
   return (
     <>
-      <div id="checkout-wrapper" className="grid">
+      <div id="checkout-wrapper" className="grid gap-4">
         <Box
           sx={{
-            padding: "20px",
+            padding: "0px",
             display: "flex",
             flexDirection: "column",
             gap: 2,
@@ -83,9 +86,10 @@ export default function CartItems() {
         >
           {cartItems.map((item, index) => (
             <Card
+              className=""
               key={item.id}
               sx={{
-                maxWidth: "100%",
+                width: "100%",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -108,138 +112,145 @@ export default function CartItems() {
                   margin: "8px",
                 }}
               />
-
-              {/* Content Section */}
-              <CardContent sx={{ flex: 1 }}>
-                <Link href={`/product/${item.productId}`} passHref>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      fontWeight: 600,
-                      color: "primary.main",
-                      cursor: "pointer",
-                      textDecoration: "none",
-                      "&:hover": { textDecoration: "underline" },
-                    }}
-                  >
-                    {item.name}
-                  </Typography>
-                </Link>
-                <Typography color="textSecondary">
-                  Price: ${item.price}
-                </Typography>
-                {item.spec !== "" && (
+              <div className="flex flex-col md:flex-row">
+                {/* Content Section */}
+                <CardContent sx={{ flex: 1 }}>
+                  <Link href={`/product/${item.productId}`} passHref>
+                    <Typography
+                      className=" text-ellipsis"
+                      variant="h6"
+                      sx={{
+                        fontWeight: 600,
+                        color: "primary.main",
+                        cursor: "pointer",
+                        textDecoration: "none",
+                        "&:hover": { textDecoration: "underline" },
+                        lineClamp: 1,
+                        WebkitLineClamp: 1,
+                        wordBreak: "break-all",
+                        wordWrap: "break-word",
+                        maxHeight: "2rem",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {item.name}
+                    </Typography>
+                  </Link>
                   <Typography color="textSecondary">
-                    Specification: {item.spec}
+                    Price: ${item.price}
                   </Typography>
-                )}
-              </CardContent>
+                  {item.spec !== "" && (
+                    <Typography color="textSecondary">
+                      Specification: {item.spec}
+                    </Typography>
+                  )}
+                </CardContent>
 
-              {/* Quantity Section with Plus and Minus Buttons */}
-              <CardActions
-                sx={{ flexDirection: "column", alignItems: "center" }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    justifyContent: "center",
-                  }}
+                {/* Quantity Section with Plus and Minus Buttons */}
+                <CardActions
+                  sx={{ flexDirection: "row", alignItems: "center" }}
                 >
-                  <Button
-                    onClick={() =>
-                      changeCartItem(item, ChangeCartItemMode.Minus)
-                    }
-                    variant="outlined"
-                    size="small"
+                  <Box
                     sx={{
-                      minWidth: "32px",
-                      height: "32px",
-                      padding: 0,
-                      fontSize: "1.25rem",
-                      lineHeight: 1,
-                      borderColor: "#5a5a5a",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      justifyContent: "center",
                     }}
                   >
-                    <Image
-                      src={"/minus.svg"}
-                      alt={"minus"}
-                      width={32}
-                      height={32}
-                    ></Image>
-                  </Button>
-                  <Typography
-                    variant="body1"
+                    <Button
+                      onClick={() =>
+                        changeCartItem(item, ChangeCartItemMode.Minus)
+                      }
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        minWidth: "32px",
+                        height: "32px",
+                        padding: 0,
+                        fontSize: "1.25rem",
+                        lineHeight: 1,
+                        borderColor: "#5a5a5a",
+                      }}
+                    >
+                      <Image
+                        src={"/minus.svg"}
+                        alt={"minus"}
+                        width={32}
+                        height={32}
+                      ></Image>
+                    </Button>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        width: "40px",
+                        textAlign: "center",
+                        border: "1px solid #e0e0e0",
+                        borderRadius: "4px",
+                        padding: "2px 0",
+                        backgroundColor: "#f9f9f9",
+                      }}
+                    >
+                      {item.quantity}
+                    </Typography>
+                    <Button
+                      onClick={() =>
+                        changeCartItem(item, ChangeCartItemMode.Plus)
+                      }
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        minWidth: "32px",
+                        height: "32px",
+                        padding: 0,
+                        fontSize: "1.25rem",
+                        lineHeight: 1,
+                        borderColor: "#5a5a5a",
+                      }}
+                    >
+                      <Image
+                        src={"/plus.svg"}
+                        alt={"plus"}
+                        width={32}
+                        height={32}
+                      ></Image>
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setItem(item);
+                        setOpen(true);
+                      }}
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        minWidth: "32px",
+                        height: "32px",
+                        padding: 0,
+                        fontSize: "1.25rem",
+                        lineHeight: 1,
+                        color: "red",
+                        borderColor: "red",
+                      }}
+                    >
+                      <Image
+                        src={"/x.svg"}
+                        alt={"remove"}
+                        width={26}
+                        height={26}
+                      ></Image>
+                    </Button>
+                  </Box>
+                  <Checkbox
+                    checked={selectedCartItem.get(index) || false}
+                    onChange={() => toggleItemSelection(index)}
                     sx={{
-                      width: "40px",
-                      textAlign: "center",
-                      border: "1px solid #e0e0e0",
-                      borderRadius: "4px",
-                      padding: "2px 0",
-                      backgroundColor: "#f9f9f9",
+                      "&.Mui-checked": {
+                        color: "primary.main",
+                      },
                     }}
-                  >
-                    {item.quantity}
-                  </Typography>
-                  <Button
-                    onClick={() =>
-                      changeCartItem(item, ChangeCartItemMode.Plus)
-                    }
-                    variant="outlined"
-                    size="small"
-                    sx={{
-                      minWidth: "32px",
-                      height: "32px",
-                      padding: 0,
-                      fontSize: "1.25rem",
-                      lineHeight: 1,
-                      borderColor: "#5a5a5a",
-                    }}
-                  >
-                    <Image
-                      src={"/plus.svg"}
-                      alt={"plus"}
-                      width={32}
-                      height={32}
-                    ></Image>
-                  </Button>
-                  <Button
-                    onClick={() => deleteCartItem(item)}
-                    variant="outlined"
-                    size="small"
-                    sx={{
-                      minWidth: "32px",
-                      height: "32px",
-                      padding: 0,
-                      fontSize: "1.25rem",
-                      lineHeight: 1,
-                      color: "red",
-                      borderColor: "red",
-                    }}
-                  >
-                    <Image
-                      src={"/x.svg"}
-                      alt={"remove"}
-                      width={26}
-                      height={26}
-                    ></Image>
-                  </Button>
-                </Box>
-              </CardActions>
-
-              {/* Checkbox Section */}
-              <CardActions>
-                <Checkbox
-                  checked={selectedCartItem.get(index) || false}
-                  onChange={() => toggleItemSelection(index)}
-                  sx={{
-                    "&.Mui-checked": {
-                      color: "primary.main",
-                    },
-                  }}
-                />
-              </CardActions>
+                  />
+                </CardActions>
+              </div>
             </Card>
           ))}
         </Box>
@@ -286,6 +297,101 @@ export default function CartItems() {
             </Button>
           </>
         )}
+        <Modal
+          open={open}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
+          sx={{
+            backgroundColor: "rgba(0 0 0 / 0.3",
+            backdropFilter: "blur(1px)",
+            WebkitBackdropFilter: "blur(1px)",
+          }}
+        >
+          <Box
+            sx={{
+              width: 400,
+              margin: 0,
+              position: "absolute",
+              top: "50%",
+              left: "calc(50dvw - 200px)",
+              padding: 0,
+            }}
+          >
+            {item && (
+              <Card
+                key={item.id}
+                sx={{
+                  maxWidth: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  borderRadius: "12px",
+                  boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
+                  border: "1px solid #e0e0e0",
+                  overflow: "hidden",
+                }}
+              >
+                <p>Remove from cart?</p>
+                <Box
+                  sx={{
+                    maxWidth: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {/* Placeholder for Product Image */}
+                  <CardMedia
+                    component="img"
+                    image={`${"https://storage.googleapis.com/3596b15827ad/product/"}${item.productId}-0`} // Placeholder image
+                    alt="Product Placeholder"
+                    sx={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                      margin: "8px",
+                    }}
+                  />
+
+                  {/* Content Section */}
+                  <CardContent sx={{ flex: 1 }}>
+                    <Link href={`/product/${item.productId}`} passHref>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontWeight: 600,
+                          color: "primary.main",
+                          cursor: "pointer",
+                          textDecoration: "none",
+                          "&:hover": { textDecoration: "underline" },
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                    </Link>
+                    <Typography color="textSecondary">
+                      Price: ${item.price}
+                    </Typography>
+                    {item.spec !== "" && (
+                      <Typography color="textSecondary">
+                        Specification: {item.spec}
+                      </Typography>
+                    )}
+                  </CardContent>
+                  <Button onClick={() => setOpen(false)}>Cancel</Button>
+                  <Button
+                    className="text-red"
+                    onClick={() => deleteCartItem(item)}
+                  >
+                    OK
+                  </Button>
+                </Box>
+              </Card>
+            )}
+          </Box>
+        </Modal>
       </div>
     </>
   );
