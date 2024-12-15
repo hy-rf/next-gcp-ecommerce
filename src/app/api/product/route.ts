@@ -3,9 +3,9 @@ import { Category, Product, SubCategory, tokenPayload } from "@/model";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
-import uploadBase64Image from "@/lib/uploadBase64Image";
 import { Query } from "@google-cloud/firestore";
 import { z } from "zod";
+import { uploadBase64ImagesAndGetUrls } from "@/lib/database/storage";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -227,31 +227,6 @@ export async function POST(req: NextRequest) {
   }
 
   // upload images to cloud storage
-  const directory = "product";
-
-  async function uploadBase64ImagesAndGetUrls(
-    newProductId: string,
-    images: string[]
-  ): Promise<string[]> {
-    const urls: string[] = [];
-    let index = 0;
-    for (const image of images) {
-      const destination = `${directory}/${newProductId}-${index}`;
-
-      try {
-        // Create a reference to the file in the bucket
-        await uploadBase64Image(image, destination);
-
-        // Get public URL
-        const publicUrl = `https://storage.googleapis.com/3596b15827ad/${destination}`;
-        urls.push(publicUrl);
-        index++;
-      } catch (error) {
-        console.error(`Error uploading`, error);
-      }
-    }
-    return urls;
-  }
 
   const newProduct: Product = {
     name: body.name,
