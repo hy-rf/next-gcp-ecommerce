@@ -29,5 +29,11 @@ const index: Dictionary = {
   product_filter_price_label_text: "Price",
   auth_login_title: "LOGIN/REGISTER",
   cart_checkout_button_inner_text: "Checkout",
+  auth_register_accept_terms_of_services_text:
+    "By registering, you confirm that you accept and agree to our ",
+  auth_register_accept_terms_of_services_link_text: "Terms of Service",
+  auth_register_accept_terms_of_services_text_end: ".",
+  auth_login_input_username_label: "username",
+  auth_login_input_password_label: "password",
 };
 export default index;

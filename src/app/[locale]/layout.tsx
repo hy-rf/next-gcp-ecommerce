@@ -75,7 +75,7 @@ export default async function RootLayout({
       <AuthProvider initialUser={user || null}>
         <CartProvider initialCart={cart}>
           <html lang={locale}>
-            <body className="flex flex-col h-screen bg-gray-50 items-center">
+            <body className="flex flex-col h-screen bg-gray-200 items-center">
               <Header />
               <NextTopLoader
                 color="#FFFFFF"

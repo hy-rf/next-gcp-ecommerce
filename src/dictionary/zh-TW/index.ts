@@ -29,5 +29,10 @@ const index: Dictionary = {
   product_filter_price_label_text: "價格",
   auth_login_title: "登入/註冊",
   cart_checkout_button_inner_text: "下訂單",
+  auth_register_accept_terms_of_services_text: "通過註冊，您確認並同意我們的",
+  auth_register_accept_terms_of_services_link_text: "《服務條款》",
+  auth_register_accept_terms_of_services_text_end: "。",
+  auth_login_input_username_label: "帳號",
+  auth_login_input_password_label: "密碼",
 };
 export default index;

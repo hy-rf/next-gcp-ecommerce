@@ -26,7 +26,12 @@ export interface Dictionary {
   auth_message_logout_success: string;
   auth_message_login_error_wrong_password: string;
   auth_message_login_error_oauth: string;
+  auth_register_accept_terms_of_services_text: string;
+  auth_register_accept_terms_of_services_text_end: string;
+  auth_register_accept_terms_of_services_link_text: string;
   auth_login_title: string;
+  auth_login_input_username_label: string;
+  auth_login_input_password_label: string;
   cart_checkout_button_inner_text: string;
 }
 
