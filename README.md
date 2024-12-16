@@ -4,6 +4,10 @@
 
 ## Features
 
+### Localization
+
+### SEO
+
 ### Product filter/sort
 
 Customizable and expandable product filter/sort solution.
