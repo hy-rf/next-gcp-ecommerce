@@ -4,21 +4,28 @@ import { Store, StoreSubmission } from "@/model";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  // userId for getting stores owned by specific user
-  const userId = searchParams.get("userId");
-  console.log(userId);
-
+  const id = searchParams.get("id");
   const db = database();
-  // get store document with certain id
-  const storeSnapshot = await db
-    .collection("Store")
-    .doc(req.nextUrl.searchParams.get("id")!)
-    .get();
-
-  return Response.json({
-    id: storeSnapshot.id,
-    ...storeSnapshot.data(),
-  });
+  if (id) {
+    const storeSnapshot = await db
+      .collection("Store")
+      .doc(req.nextUrl.searchParams.get("id")!)
+      .get();
+    return Response.json({
+      id: storeSnapshot.id,
+      ...storeSnapshot.data(),
+    });
+  }
+  const storesSnapshot = db.collection("Store");
+  const stores = (await storesSnapshot.get()).docs;
+  return Response.json(
+    stores.map((el) => {
+      return {
+        id: el.id,
+        ...el.data(),
+      };
+    })
+  );
 }
 
 interface PostBody {
