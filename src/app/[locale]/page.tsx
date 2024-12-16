@@ -2,7 +2,7 @@ import Link from "next/link";
 import CategoryList from "./_component/CategoryList";
 import Hero from "./_component/Hero";
 import getDictionary from "@/dictionary/dictionary";
-import { Category } from "@/model";
+import { Category, Store } from "@/model";
 import fetchData from "@/lib/fetchData";
 
 type Params = Promise<{ locale: string }>;
@@ -12,6 +12,9 @@ export default async function Page(props: { params: Params }) {
   const categories: Category[] = (await fetchData<Category[]>(
     `${process.env.URL}/api/category`
   )) as Category[];
+  const stores: Store[] = (await fetchData<Store[]>(
+    `${process.env.URL}/api/store`
+  )) as Store[];
   return (
     <>
       <Hero />
@@ -25,6 +28,19 @@ export default async function Page(props: { params: Params }) {
         locale={(await props.params).locale}
         categories={categories}
       />
+      <div className="text-center">
+        <h4>Popular shops</h4>
+        <div className="store-list">
+          {stores.map((el) => (
+            <div
+              className="store-item mx-4 my-2 px-4 py-2 text-center border border-gray-300 inline-block rounded-md"
+              key={el.id}
+            >
+              <Link href={`/store/${el.id}`}>{el.name}</Link>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
