@@ -10,11 +10,11 @@ export default async function CategoryList({
 }) {
   return (
     <div className="p-4">
-      <div className="flex flex-row flex-wrap gap-1">
+      <div className="">
         {categories.map((ele) => (
           <div
             key={ele.id}
-            className="flex flex-col items-center justify-center p-1 min-w-40 bg-white border-black shadow-category-card rounded-lg "
+            className="mx-4 my-2 px-4 py-2 text-center border border-gray-300 inline-block rounded-md"
           >
             <Link href={`/product?categoryId=${ele.id}&page=1&sort=sold-desc`}>
               <p className="text-lg font-medium text-gray-800">
