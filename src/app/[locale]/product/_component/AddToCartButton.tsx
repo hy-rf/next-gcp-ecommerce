@@ -43,7 +43,7 @@ export default function AddToCartButton({
   return (
     <>
       {/* Right side: Controls (Specs, Quantity, Add to Cart) */}
-      <div className="flex flex-col items-end space-y-4">
+      <div className="flex flex-col items-end">
         {/* Specification Dropdown */}
         {showSpec && product.specs && product.specs.length > 0 && (
           <div className="w-full">
@@ -86,7 +86,7 @@ export default function AddToCartButton({
         )}
         <button
           onClick={() => handleAddToCart(product, quantity)}
-          className="bg-add-to-cart-button-bg-color text-white font-medium p-1 rounded-md transition duration-200 overflow-hidden text-ellipsis"
+          className="bg-add-to-cart-button-bg-color text-white font-medium px-1 rounded-md transition duration-200 overflow-hidden text-ellipsis"
           style={{
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",
