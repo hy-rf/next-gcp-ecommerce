@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function PageContent({ product }: { product: Product }) {
-  const [showImageZoom, setShowImageZoom] = useState(true);
+  const [showImageZoom, setShowImageZoom] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(2);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const handleMovingZoomPosition = (
