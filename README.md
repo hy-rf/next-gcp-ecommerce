@@ -110,7 +110,7 @@ bun dev
 
 `GET` `/api/product` get products
 
-- **Params**:
+- **Search params**:
 
 - page: current page number
 - categoryId: ids of categories, separated by ","
@@ -124,8 +124,8 @@ bun dev
 ```json
 {
   "pages": "max number of pages",
-  "products": ["product1", "product2", "..."],
-  "total": "numbers of all products in all pages"
+  "products": [],
+  "total": "total number of products"
 }
 ```
 
@@ -134,6 +134,21 @@ bun dev
 `POST` `/api/product` add product
 
 `GET` `/api/category` get categories
+
+`GET` `/api/subcategory/:id` get sub category by id
+
+- **Params**:
+- id: id of sub category
+- **Request body**:
+- `none`
+- **Response**:
+
+```json
+{
+  "id": "",
+  "name": ""
+}
+```
 
 ### Payment
 
