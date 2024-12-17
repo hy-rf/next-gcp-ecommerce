@@ -75,7 +75,7 @@ export async function middleware(request: NextRequest) {
     if (cookie && cookie.value === pathname.slice(1, 6)) return;
     request.nextUrl.pathname = `/${currentLocale}/${pathname.slice(6)}`;
   } else {
-    // current the locale in pathname when locale in pathname doesn't match locale in cookie
+    // currect the locale in pathname when locale in pathname doesn't match locale in cookie
     request.nextUrl.pathname = `/${currentLocale}${pathname}`;
   }
   // final result is setting locale cookie and redirect
