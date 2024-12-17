@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import FileUploader from "./_component/FileUploader";
 import FileNameHint from "./_component/FileNameHint";
 import Image from "next/image";
-import Modal from "@/components/Modal";
+import Modal from "@/app/[locale]/Modal";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
