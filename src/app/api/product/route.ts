@@ -191,12 +191,12 @@ export async function POST(req: NextRequest) {
     return Response.error();
   }
 
-  // check if category is created
+  // check if category was created
   let categoryId: string = "";
   const categoryRef = db
     .collection("Category")
     .where("name", "==", body.category);
-  // Add new category if input category is not found else get category id for new product
+  // Add new category if input category was not found else get category id for new product
   if ((await categoryRef.get()).empty) {
     const newCategory: Category = {
       name: body.category,
@@ -207,12 +207,12 @@ export async function POST(req: NextRequest) {
     categoryId = (await categoryRef.limit(1).get()).docs[0].id;
   }
 
-  // check if subcategory is created
+  // check if subcategory was created
   let subCategoryId: string = "";
   const subCategoryRef = db
     .collection("SubCategory")
     .where("name", "==", body.subCategory);
-  // Add new sub category if input category is not found else get sub category id for new product
+  // Add new sub category if input category was not found else get sub category id for new product
   if ((await subCategoryRef.get()).empty) {
     const newSubCategory: SubCategory = {
       name: body.subCategory,
