@@ -6,7 +6,7 @@ beforeAll(() => {
   global.URL.createObjectURL = jest.fn(() => "mockedObjectURL");
 });
 
-jest.mock("../src/components/Modal.tsx", () => ({
+jest.mock("../src/app/[locale]/Modal.tsx", () => ({
   __esModule: true,
   default: ({
     action,
@@ -23,7 +23,7 @@ jest.mock("../src/components/Modal.tsx", () => ({
 }));
 
 jest.mock(
-  "../src/app/[locale]/user/store/product/new-product/component/FileUploader.tsx",
+  "../src/app/[locale]/user/product/new-product/component/FileUploader.tsx",
   () => ({
     __esModule: true,
     default: ({
