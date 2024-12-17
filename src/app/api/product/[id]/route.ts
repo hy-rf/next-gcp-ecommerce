@@ -1,10 +1,11 @@
 import database from "@/lib/database/database";
+import { NextRequest } from "next/server";
 
 /**
  * Working api
  */
 export async function GET(
-  req: Request,
+  req: NextRequest,
   {
     params,
   }: {
