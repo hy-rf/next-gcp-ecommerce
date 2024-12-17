@@ -8,7 +8,7 @@ import { useRef } from "react";
 import LocaleContext from "./LocaleContext";
 import fetchData from "@/lib/fetchData";
 import { AuthContext } from "@/services/auth/AuthContext";
-import Throttle from "@/lib/Throttle";
+import Throttle from "@/utils/Throttle";
 
 export default function NavigationBar() {
   const { user } = useContext(AuthContext);
