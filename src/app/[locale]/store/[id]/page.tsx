@@ -1,5 +1,5 @@
 import { Product } from "@/model";
-import Link from "next/link";
+import Filter from "@/app/[locale]/store/[id]/Filter";
 
 export default async function Page({
   params,
@@ -26,10 +26,14 @@ export default async function Page({
   }
   return (
     <>
-      {products.map((el) => (
-        <div key={el.id}>{el.name}</div>
-      ))}
-      <Link href={`/store/${id}?page=1&sort=sold-asc`}>to</Link>
+      <div>
+        {products.map((el) => (
+          <div key={el.id}>{el.name}</div>
+        ))}
+      </div>
+      <div>
+        <Filter />
+      </div>
     </>
   );
 }

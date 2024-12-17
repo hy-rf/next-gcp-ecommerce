@@ -89,7 +89,7 @@ export default function Page() {
           <h1 className="text-2xl font-bold">{dict.auth_login_title}</h1>
           <div
             id="login-register-form"
-            className="w-60 mt-4 mb-4 flex flex-col items-end gap-6 items-stretch"
+            className="w-60 mt-4 mb-4 flex flex-col gap-6 items-stretch"
           >
             <TextField
               variant="outlined"

@@ -1,13 +1,17 @@
 import database from "@/lib/database/database";
+import { NextRequest } from "next/server";
 
-export async function GET({
-  params,
-}: {
-  params: Promise<{
-    id: string;
-  }>;
-}) {
-  const { id } = await params;
+export async function GET(
+  req: NextRequest,
+  {
+    params,
+  }: {
+    params: {
+      id: string;
+    };
+  }
+) {
+  const { id } = params;
   const subCategorySnapshot = await database()
     .collection("SubCategory")
     .doc(id)
