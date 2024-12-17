@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
   if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
     const cookie = cookies();
     const token = cookie.get("token");
-    console.log(token);
+    console.log("token: ", token);
 
     // if isn't admin redirect to another page
     if (false) {

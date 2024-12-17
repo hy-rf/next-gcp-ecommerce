@@ -1,10 +1,10 @@
 "use client";
 
-import Organizer from "@/app/[locale]/product/_component/Organizer";
+import Organizer from "@/app/[locale]/product/component/Organizer";
 import { Category, FilterOptions, Product } from "@/model";
 import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
-import LocaleContext from "../../_component/LocaleContext";
+import LocaleContext from "../../component/LocaleContext";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Pagination } from "@mui/material";
@@ -76,7 +76,6 @@ export default function FilteredProducts({
       return;
     } else {
       setIsLoading(true);
-      console.log("load new set of sorted and filtered product");
       let searchParam = `page=${options.page}`;
       if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
       if (options.categoryId !== "")
@@ -89,7 +88,6 @@ export default function FilteredProducts({
       if (options.sortOption) {
         searchParam += `&sort=${options.sortOption}`;
       }
-      console.log(options.sortOption);
 
       fetch(`/api/product?${searchParam}`)
         .then((res) => res.json())

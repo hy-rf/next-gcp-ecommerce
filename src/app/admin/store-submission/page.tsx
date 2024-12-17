@@ -1,7 +1,7 @@
 import fetchData from "@/lib/fetchData";
 import { StoreSubmission } from "@/model";
 import { cookies } from "next/headers";
-import StoreSubmissionItem from "./_component/StoreSubmissionItem";
+import StoreSubmissionItem from "./component/StoreSubmissionItem";
 
 export default async function Page() {
   const storeSubmissions: StoreSubmission[] = (await fetchData<

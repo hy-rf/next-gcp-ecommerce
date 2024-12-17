@@ -1,6 +1,6 @@
 "use client";
 
-import LocaleContext from "@/app/[locale]/_component/LocaleContext";
+import LocaleContext from "@/app/[locale]/component/LocaleContext";
 import fetchData from "@/lib/fetchData";
 import { User } from "@/model";
 import { useRouter } from "next/navigation";

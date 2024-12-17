@@ -1,5 +1,5 @@
 import { Category, FilterOptions, Product } from "@/model";
-import FilteredProducts from "./_component/FilteredProducts";
+import FilteredProducts from "./component/FilteredProducts";
 import fetchData from "@/lib/fetchData";
 
 type SearchParams = {

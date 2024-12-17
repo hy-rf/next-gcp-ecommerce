@@ -2,7 +2,7 @@
 
 import { Category } from "@/model";
 import { Dispatch, SetStateAction, useContext } from "react";
-import LocaleContext from "../../_component/LocaleContext";
+import LocaleContext from "../../component/LocaleContext";
 
 export default function CategoryFilterCheckboxGroup({
   selectedCategories,

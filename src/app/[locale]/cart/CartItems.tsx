@@ -24,7 +24,7 @@ import {
   ChangeCartItemMode,
 } from "@/services/cart/CartProvider";
 import Addresses from "./Addresses";
-import LocaleContext from "../_component/LocaleContext";
+import LocaleContext from "../component/LocaleContext";
 import Image from "next/image";
 
 export default function CartItems() {

@@ -53,8 +53,6 @@ function PaypalPayment({ order }: { order: Order }) {
 
               const orderData = await response.json();
 
-              console.log(orderData.id);
-
               if (orderData.id) {
                 return orderData.id;
               } else {
@@ -79,7 +77,6 @@ function PaypalPayment({ order }: { order: Order }) {
               });
 
               const orderData = await response.json();
-              console.log(orderData);
 
               // Three cases to handle:
               //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
@@ -104,11 +101,6 @@ function PaypalPayment({ order }: { order: Order }) {
                   orderData.purchase_units[0].payments.captures[0];
                 setMessage(
                   `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
-                );
-                console.log(
-                  "Capture result",
-                  orderData,
-                  JSON.stringify(orderData, null, 2)
                 );
               }
             } catch (error) {

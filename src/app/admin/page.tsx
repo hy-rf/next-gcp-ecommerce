@@ -1,4 +1,4 @@
-import Hero from "../[locale]/_component/Hero";
+import Hero from "../[locale]/component/Hero";
 
 export default function Page() {
   return (

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useContext } from "react";
-import LocaleContext from "../../_component/LocaleContext";
+import LocaleContext from "../../component/LocaleContext";
 import { AuthActionsContext } from "@/services/auth/AuthContext";
 
 export default function Logout() {

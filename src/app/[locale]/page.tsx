@@ -1,6 +1,6 @@
 import Link from "next/link";
-import CategoryList from "./_component/CategoryList";
-import Hero from "./_component/Hero";
+import CategoryList from "./component/CategoryList";
+import Hero from "./component/Hero";
 import getDictionary from "@/dictionary/dictionary";
 import { Category, Store } from "@/model";
 import fetchData from "@/lib/fetchData";

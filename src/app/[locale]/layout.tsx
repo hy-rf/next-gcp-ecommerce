@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import type React from "react";
 import "./layout.css";
-import Header from "@/app/[locale]/_component/Header";
+import Header from "@/app/[locale]/component/Header";
 import getDictionary from "@/dictionary/dictionary";
-import LocaleProvider from "./_component/LocaleProvider";
+import LocaleProvider from "./component/LocaleProvider";
 import { Toaster } from "sonner";
 import AuthProvider from "@/services/auth/AuthProvider";
 import { CartItem, User } from "@/model";
@@ -52,8 +52,6 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<Params>;
 }) {
-  console.log(process.env.CE);
-
   const { locale } = await params;
   const dict = await getDictionary(locale, "index");
   let user: User | null;

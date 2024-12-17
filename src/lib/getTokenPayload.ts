@@ -13,7 +13,7 @@ export default async function getTokenPayload(): Promise<tokenPayload | null> {
     return jwt.verify(token, process.env.JWT_SECRET!) as tokenPayload;
   } catch (err) {
     if (err instanceof TokenExpiredError) {
-      console.log("TokenExpiredError");
+      throw err;
     }
     return null;
   }

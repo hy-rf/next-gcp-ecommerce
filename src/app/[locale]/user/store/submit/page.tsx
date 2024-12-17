@@ -1,4 +1,4 @@
-import SubmitStoreForm from "./_component/SubmitStoreForm";
+import SubmitStoreForm from "./component/SubmitStoreForm";
 
 export default async function Page() {
   return (

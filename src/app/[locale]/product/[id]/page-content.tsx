@@ -1,7 +1,7 @@
 "use client";
 
 import { Product } from "@/model";
-import AddToCartButton from "../_component/AddToCartButton";
+import AddToCartButton from "../component/AddToCartButton";
 import Image from "next/image";
 import { useState } from "react";
 

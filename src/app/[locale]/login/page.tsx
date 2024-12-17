@@ -4,7 +4,7 @@ import { TextField } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import LocaleContext from "../_component/LocaleContext";
+import LocaleContext from "../component/LocaleContext";
 import fetchData from "@/lib/fetchData";
 import { User } from "@/model";
 import { AuthActionsContext } from "@/services/auth/AuthContext";

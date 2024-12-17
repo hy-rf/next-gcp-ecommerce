@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 import CategoryFilterCheckboxGroup from "./CategoryFilterCheckboxGroup";
-import LocaleContext from "../../_component/LocaleContext";
+import LocaleContext from "../../component/LocaleContext";
 
 export default function ProductFilter({
   filterOption,

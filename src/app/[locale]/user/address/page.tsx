@@ -1,5 +1,5 @@
 import { Address } from "@/model";
-import AddAddressForm from "./_component/AddAddressForm";
+import AddAddressForm from "./component/AddAddressForm";
 import fetchData from "@/lib/fetchData";
 
 export default async function Page() {

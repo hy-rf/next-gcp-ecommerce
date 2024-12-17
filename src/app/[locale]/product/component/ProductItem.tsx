@@ -3,8 +3,6 @@ import Image from "next/image";
 import { Product } from "@/model";
 import AddToCartButton from "./AddToCartButton";
 import Link from "next/link";
-// import { useContext } from "react";
-// import LocaleContext from "../../_component/LocaleContext";
 /**
  * Product Item Card with localization
  */

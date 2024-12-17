@@ -2,7 +2,7 @@
 
 import { CartItem, Product } from "@/model";
 import { useContext, useState } from "react";
-import LocaleContext from "../../_component/LocaleContext";
+import LocaleContext from "../../component/LocaleContext";
 import { toast } from "sonner";
 import { AuthContext } from "@/services/auth/AuthContext";
 import { CartActionContext } from "@/services/cart/CartProvider";

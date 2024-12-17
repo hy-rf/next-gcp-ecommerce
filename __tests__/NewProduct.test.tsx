@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import NewProduct from "../src/app/[locale]/user/store/product/new-product/page";
+import NewProduct from "../src/app/[locale]/user/product/new-product/page";
 import "@testing-library/jest-dom";
 
 beforeAll(() => {
@@ -23,7 +23,7 @@ jest.mock("../src/components/Modal.tsx", () => ({
 }));
 
 jest.mock(
-  "../src/app/[locale]/user/store/product/new-product/_component/FileUploader.tsx",
+  "../src/app/[locale]/user/store/product/new-product/component/FileUploader.tsx",
   () => ({
     __esModule: true,
     default: ({
