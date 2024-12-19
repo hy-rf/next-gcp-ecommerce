@@ -19,5 +19,6 @@ export async function GET(
   return Response.json({
     id: productSnapshot.id,
     ...productSnapshot.data(),
+    createdAtJSDate: productSnapshot.data()!.createdDate.toDate(),
   });
 }

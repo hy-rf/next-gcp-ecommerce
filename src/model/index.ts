@@ -33,6 +33,7 @@ export interface Dictionary {
   auth_login_input_username_label: string;
   auth_login_input_password_label: string;
   cart_checkout_button_inner_text: string;
+  order_payment_paypal_test_account_text: string;
 }
 
 export interface User {
@@ -126,6 +127,7 @@ export interface Order {
   total: number;
   createdAt: Date;
   orderItems: OrderItem[];
+  fireBaseTimeStamp?: FireStoreTimeStamp;
 }
 
 export interface OrderItem {
@@ -195,3 +197,5 @@ export interface FilterOptions {
   maxPrice: number;
   sortOption?: string;
 }
+
+type FireStoreTimeStamp = { _seconds: number; _nanoseconds: number };

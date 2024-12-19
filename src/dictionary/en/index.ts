@@ -35,5 +35,6 @@ const index: Dictionary = {
   auth_register_accept_terms_of_services_text_end: ".",
   auth_login_input_username_label: "username",
   auth_login_input_password_label: "password",
+  order_payment_paypal_test_account_text: "Test account",
 };
 export default index;

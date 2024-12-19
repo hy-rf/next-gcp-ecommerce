@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   PayPalScriptProvider,
   PayPalButtons,
   ReactPayPalScriptOptions,
 } from "@paypal/react-paypal-js";
 import { Order } from "@/model";
+import LocaleContext from "../component/LocaleContext";
 
 // Renders errors or successfull transactions on the screen.
 function Message({ content }: { content: string }) {
@@ -26,10 +27,12 @@ function PaypalPayment({ order }: { order: Order }) {
   };
 
   const [message, setMessage] = useState("");
-
+  const { dict } = useContext(LocaleContext);
   return (
     <div>
-      <h5>Test account</h5>
+      <div className="text-center">
+        <h5>{dict.order_payment_paypal_test_account_text}</h5>
+      </div>
       <p>Email:sb-vl4gr34366980@personal.example.com</p>
       <p>Password:EFKTh#7a</p>
       <PayPalScriptProvider options={initialOptions}>

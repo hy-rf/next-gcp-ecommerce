@@ -17,9 +17,12 @@ export async function GET(
   if (!orderRef.exists) {
     return new Response(null, { status: 404 });
   }
+  console.log(orderRef.data()!.createdAt);
+
   return new Response(
     JSON.stringify({
       id: orderRef.id,
+      fireBaseTimeStamp: orderRef.data()!.createdAt,
       ...orderRef.data(),
     }),
     {

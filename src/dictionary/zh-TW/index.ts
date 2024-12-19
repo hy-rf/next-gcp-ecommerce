@@ -34,5 +34,6 @@ const index: Dictionary = {
   auth_register_accept_terms_of_services_text_end: "。",
   auth_login_input_username_label: "帳號",
   auth_login_input_password_label: "密碼",
+  order_payment_paypal_test_account_text: "測試帳號",
 };
 export default index;
