@@ -100,7 +100,8 @@ export default function FilteredProducts({
           setFilteredProducts(data.products);
           setMaxPages(data.pages);
           setTotal(data.total);
-          if (maxPages < options.page) {
+          if (data.pages < options.page) {
+            // TODO: this causes one additonal re-render and api call
             setOptions((old) => {
               return {
                 ...old,
@@ -190,8 +191,8 @@ export default function FilteredProducts({
             ))}
           </div>
 
-          <div className="flex relative mt-auto">
-            <div className="pagination flex text-center relative bottom-0 mt-auto mx-auto gap-8">
+          <div className="flex relative mt-auto pb-4">
+            <div className="pagination flex text-center relative bottom-0 mt-auto mx-auto gap-8 pb-4">
               <Pagination
                 page={parseInt(options.page.toString())}
                 count={maxPages}
@@ -205,6 +206,8 @@ export default function FilteredProducts({
                     };
                   });
                 }}
+                siblingCount={1}
+                boundaryCount={0}
                 sx={{
                   "& .MuiPaginationItem-root": {
                     fontSize: "1rem", // Default size
@@ -218,11 +221,9 @@ export default function FilteredProducts({
                   },
                 }}
               />
-              <br />
-              <br />
             </div>
             <select
-              className="absolute h-8 ml-auto right-0"
+              className="md:absolute relative h-10 md:h-8 ml-auto right-4"
               onChange={(e) =>
                 setOptions((old) => {
                   return {

@@ -59,7 +59,7 @@ export default async function Page({
     `${process.env.URL}/api/category/`
   )) as Category[];
   return (
-    <div>
+    <div className="h-full">
       <h2 className="text-2xl font-semibold text-gray-800">{filter}</h2>
       <div className="hidden">
         {products.map((ele, index) => (
