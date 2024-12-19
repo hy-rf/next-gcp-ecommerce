@@ -37,6 +37,7 @@ export default function FilteredProducts({
       const maxPrice = searchParams.get("maxPrice");
       const page = searchParams.get("page");
       const sort = searchParams.get("sort");
+      const pageSize = searchParams.get("pageSize");
       setOptions({
         page: page ? parseInt(page) : 1,
         storeId: storeId ? storeId : "",
@@ -45,6 +46,7 @@ export default function FilteredProducts({
         minPrice: minPrice ? parseFloat(minPrice) : 0,
         maxPrice: maxPrice ? parseFloat(maxPrice) : Infinity,
         sortOption: sort ? sort : "sold-desc",
+        pageSize: pageSize ? parseInt(pageSize) : 10,
       });
     };
 
@@ -87,6 +89,9 @@ export default function FilteredProducts({
         searchParam += `&maxPrice=${options.maxPrice}`;
       if (options.sortOption) {
         searchParam += `&sort=${options.sortOption}`;
+      }
+      if (options.pageSize) {
+        searchParam += `&pageSize=${options.pageSize}`;
       }
 
       fetch(`/api/product?${searchParam}`)
@@ -184,35 +189,55 @@ export default function FilteredProducts({
               <ProductItem product={ele} key={ele.id} />
             ))}
           </div>
-          <div className="pagination text-center relative bottom-0 mt-auto mx-auto">
-            <Pagination
-              page={parseInt(options.page.toString())}
-              count={maxPages}
-              showFirstButton
-              showLastButton
-              onChange={(_: React.ChangeEvent<unknown>, page: number) => {
+
+          <div className="flex relative mt-auto">
+            <div className="pagination flex text-center relative bottom-0 mt-auto mx-auto gap-8">
+              <Pagination
+                page={parseInt(options.page.toString())}
+                count={maxPages}
+                showFirstButton
+                showLastButton
+                onChange={(_: React.ChangeEvent<unknown>, page: number) => {
+                  setOptions((old) => {
+                    return {
+                      ...old,
+                      page: page,
+                    };
+                  });
+                }}
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    fontSize: "1rem", // Default size
+                  },
+                  "@media (max-width: 767px)": {
+                    "& .MuiPaginationItem-root": {
+                      fontSize: "1.5rem", // Larger font size for smaller screens
+                      padding: "8px 16px", // Larger padding for smaller screens
+                      marginBottom: "1rem !important",
+                    },
+                  },
+                }}
+              />
+              <br />
+              <br />
+            </div>
+            <select
+              className="absolute h-8 ml-auto right-0"
+              onChange={(e) =>
                 setOptions((old) => {
                   return {
                     ...old,
-                    page: page,
+                    pageSize: parseInt(e.target.value, 10), // Convert the value to an integer
                   };
-                });
-              }}
-              sx={{
-                "& .MuiPaginationItem-root": {
-                  fontSize: "1rem", // Default size
-                },
-                "@media (max-width: 767px)": {
-                  "& .MuiPaginationItem-root": {
-                    fontSize: "1.5rem", // Larger font size for smaller screens
-                    padding: "8px 16px", // Larger padding for smaller screens
-                    marginBottom: "1rem !important",
-                  },
-                },
-              }}
-            />
-            <br />
-            <br />
+                })
+              }
+              value={options.pageSize} // Bind the value to the current page size
+            >
+              <option value="1">1</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
           </div>
         </div>
       </div>

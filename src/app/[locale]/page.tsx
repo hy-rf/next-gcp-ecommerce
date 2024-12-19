@@ -36,7 +36,7 @@ export default async function Page(props: { params: Params }) {
               className="store-item mx-4 my-2 px-4 py-2 text-center border border-gray-300 inline-block rounded-md"
               key={el.id}
             >
-              <Link href={`/store/${el.id}`}>{el.name}</Link>
+              <Link href={`/store/${el.id}?page=1`}>{el.name}</Link>
             </div>
           ))}
         </div>

@@ -196,6 +196,7 @@ export interface FilterOptions {
   minPrice: number;
   maxPrice: number;
   sortOption?: string;
+  pageSize: number;
 }
 
 type FireStoreTimeStamp = { _seconds: number; _nanoseconds: number };

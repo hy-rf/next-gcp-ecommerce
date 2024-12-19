@@ -11,6 +11,7 @@ type SearchParams = {
   maxPrice: number;
   storeId: string;
   sort: string;
+  pageSize: number;
 };
 
 export default async function Page({
@@ -27,6 +28,7 @@ export default async function Page({
     minPrice,
     maxPrice,
     storeId,
+    pageSize,
   } = await searchParams;
   const defaultFilterOptions: FilterOptions = {
     page: 1,
@@ -36,6 +38,7 @@ export default async function Page({
     minPrice: 0,
     maxPrice: Infinity,
     sortOption: "sold-desc",
+    pageSize: 10,
   };
 
   let searchParam = `page=${page}`;
@@ -45,6 +48,7 @@ export default async function Page({
   if (minPrice) searchParam += `&minPrice=${minPrice}`;
   if (maxPrice) searchParam += `&maxPrice=${maxPrice}`;
   if (sort) searchParam += `&sort=${sort}`;
+  if (pageSize) searchParam += `&pageSize=${pageSize}`;
   const response = await fetch(
     `${process.env.URL}/api/product?${searchParam}`
   ).then((res) => res.json());
@@ -79,6 +83,7 @@ export default async function Page({
           minPrice: minPrice || 0,
           maxPrice: maxPrice || Infinity,
           sortOption: "sold-desc",
+          pageSize: pageSize || 10,
         }}
         defaultFilterOptions={defaultFilterOptions}
         products={products}
