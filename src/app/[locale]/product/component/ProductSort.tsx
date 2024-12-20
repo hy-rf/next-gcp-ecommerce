@@ -67,7 +67,7 @@ export default function ProductSort({
             name="group"
             value={ele.value}
             onChange={(e) => setSortOption(e.target.value)}
-            checked={sortOption == ele.value}
+            checked={filterOption.sortOption == ele.value}
             className="h-9"
           />
           <label className="flex justify-between w-full" htmlFor={ele.value}>

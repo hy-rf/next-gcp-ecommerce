@@ -25,12 +25,11 @@ export default function ProductFilter({
   categories: Category[];
 }) {
   const { dict } = useContext(LocaleContext);
-  const [localOption, setLocalOption] = useState<FilterOptions>(filterOption);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     filterOption.categoryId.split(",")
   );
   useEffect(() => {
-    setLocalOption((old) => {
+    setFilterOption((old) => {
       return {
         ...old,
         ...filterOption,
@@ -38,14 +37,6 @@ export default function ProductFilter({
       };
     });
   }, [selectedCategories]);
-  useEffect(() => {
-    setFilterOption((old) => {
-      return {
-        ...old,
-        ...localOption,
-      };
-    });
-  }, [localOption]);
   return (
     <>
       {/* Filter options */}
@@ -55,7 +46,7 @@ export default function ProductFilter({
         </label>
         <input
           onChange={(e) =>
-            setLocalOption((old) => {
+            setFilterOption((old) => {
               return {
                 ...old,
                 minPrice: parseInt(e.target.value),
@@ -63,13 +54,13 @@ export default function ProductFilter({
             })
           }
           type="number"
-          value={localOption.minPrice}
+          value={filterOption.minPrice}
           className="w-11 px-1 text-black rounded"
         />
         <span>-</span>
         <input
           onChange={(e) =>
-            setLocalOption((old) => {
+            setFilterOption((old) => {
               return {
                 ...old,
                 maxPrice: parseInt(e.target.value),
@@ -78,7 +69,9 @@ export default function ProductFilter({
           }
           type="number"
           value={
-            localOption.maxPrice == Infinity ? "Infinity" : localOption.maxPrice
+            filterOption.maxPrice == Infinity
+              ? "Infinity"
+              : filterOption.maxPrice
           }
           className="w-11 px-1 text-black rounded"
         />
@@ -96,21 +89,7 @@ export default function ProductFilter({
           {dict.product_filter_clear_button_text}
         </button>
       </div>
-
-      <button
-        className="hidden bg-gray-400 rounded-md px-6"
-        onClick={() => {
-          setFilterOption((old) => {
-            return {
-              ...old,
-              ...localOption,
-            };
-          });
-          setShowFilter(false);
-        }}
-      >
-        {dict.product_filter_apply_button_text}
-      </button>
+      <button onClick={() => setShowFilter(false)}>x</button>
     </>
   );
 }
