@@ -36,5 +36,7 @@ const index: Dictionary = {
   auth_login_input_username_label: "username",
   auth_login_input_password_label: "password",
   order_payment_paypal_test_account_text: "Test account",
+  product_select_products_per_page_text_left: "Show",
+  product_select_products_per_page_text_right: "Products",
 };
 export default index;

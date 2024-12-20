@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import LocaleContext from "../../component/LocaleContext";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { Pagination } from "@mui/material";
 /**
  * Content of filtered products
@@ -110,7 +109,6 @@ export default function FilteredProducts({
             });
           }
           setIsLoading(false);
-          toast("Refreshed");
           try {
             router.push(`product?${searchParam}`);
             // window.history.pushState(null, "", `product?${searchParam}`);
@@ -175,13 +173,39 @@ export default function FilteredProducts({
           categories={categories}
         />
         <div className="flex flex-col w-full">
-          <p className="text-center h-8">
-            {dict.product_total_1}
-            {total}
-            {dict.product_total_2}
-          </p>
+          <div className="flex px-8">
+            <p className="leading-8">
+              {dict.product_total_1}
+              {total}
+              {dict.product_total_2}
+            </p>
+            <p className="ml-auto leading-8">
+              {dict.product_select_products_per_page_text_left}
+            </p>
+            <select
+              className="mx-4"
+              onChange={(e) =>
+                setOptions((old) => {
+                  return {
+                    ...old,
+                    pageSize: parseInt(e.target.value, 10), // Convert the value to an integer
+                  };
+                })
+              }
+              value={options.pageSize} // Bind the value to the current page size
+            >
+              <option value="1">1</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+            <p className="leading-8">
+              {dict.product_select_products_per_page_text_right}
+            </p>
+          </div>
+
           <div
-            className="grid items-stretch grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4"
+            className="grid items-stretch grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 transform duration-100"
             style={{
               opacity: isLoading ? "0.5" : "1",
             }}
@@ -191,7 +215,7 @@ export default function FilteredProducts({
             ))}
           </div>
 
-          <div className="flex relative mt-auto pb-4">
+          <div className="flex relative mt-auto mb-12 md:pb-4">
             <div className="pagination flex text-center relative bottom-0 mt-auto mx-auto gap-8 pb-4">
               <Pagination
                 page={parseInt(options.page.toString())}
@@ -222,23 +246,6 @@ export default function FilteredProducts({
                 }}
               />
             </div>
-            <select
-              className="md:absolute relative h-10 md:h-8 ml-auto right-4"
-              onChange={(e) =>
-                setOptions((old) => {
-                  return {
-                    ...old,
-                    pageSize: parseInt(e.target.value, 10), // Convert the value to an integer
-                  };
-                })
-              }
-              value={options.pageSize} // Bind the value to the current page size
-            >
-              <option value="1">1</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
           </div>
         </div>
       </div>

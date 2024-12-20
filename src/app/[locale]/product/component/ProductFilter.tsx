@@ -38,6 +38,14 @@ export default function ProductFilter({
       };
     });
   }, [selectedCategories]);
+  useEffect(() => {
+    setFilterOption((old) => {
+      return {
+        ...old,
+        ...localOption,
+      };
+    });
+  }, [localOption]);
   return (
     <>
       {/* Filter options */}
@@ -82,7 +90,7 @@ export default function ProductFilter({
           setSelectedCategories={setSelectedCategories}
         />
         <button
-          className="rounded-md border border-[rgba(128, 128, 128, 0.3)] px-6"
+          className="rounded-md border border-[rgba(128, 128, 128, 0.8)] px-2"
           onClick={() => setSelectedCategories([])}
         >
           {dict.product_filter_clear_button_text}
@@ -90,7 +98,7 @@ export default function ProductFilter({
       </div>
 
       <button
-        className="bg-gray-400 rounded-md px-6"
+        className="hidden bg-gray-400 rounded-md px-6"
         onClick={() => {
           setFilterOption((old) => {
             return {

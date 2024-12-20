@@ -34,6 +34,8 @@ export interface Dictionary {
   auth_login_input_password_label: string;
   cart_checkout_button_inner_text: string;
   order_payment_paypal_test_account_text: string;
+  product_select_products_per_page_text_left: string;
+  product_select_products_per_page_text_right: string;
 }
 
 export interface User {

@@ -38,7 +38,10 @@ export default function Organizer({
 
   return (
     <>
-      <div className="fixed bottom-10 w-40 right-6 md:hidden">
+      <div
+        className="fixed bottom-10 w-40 right-6 md:hidden"
+        style={{ zIndex: 100 }}
+      >
         <div
           className={`justify-center flex m-auto p-0 rounded-[32px] shadow-category-card`}
           style={{ backdropFilter: "blur(1px)" }}
@@ -72,27 +75,27 @@ export default function Organizer({
       </div>
       <div
         id="desktop-filter"
-        className="fixed w-full md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40 md:backdrop-blur-sm md:border-r-0 md:shadow-organizer-card md:px-1"
+        className="fixed w-full md:flex-col-reverse md:flex md:justify-end gap-4 md:sticky md:left-0 md:top-0 md:w-40 md:backdrop-blur-sm md:border-r-0 md:shadow-organizer-card md:px-1 z-50"
       >
-        {showFilter && (
-          <div className="fixed w-full bottom-28  rounded-lg flex flex-col p-4 shadow-md items-center backdrop-blur-sm md:flex md:static bg-header-gray md:bg-transparent md:shadow-none">
-            <ProductFilter
-              categories={categories}
-              filterOption={filterOption}
-              setFilterOption={setFilterOption}
-              setShowFilter={setShowFilter}
-            />
-          </div>
-        )}
-        {showSort && (
-          <div className="fixed w-full bottom-28 rounded-lg flex flex-col p-4 shadow-md backdrop-blur-sm md:static md:flex bg-header-gray md:bg-transparent md:shadow-none">
-            <ProductSort
-              filterOption={filterOption}
-              setFilterOption={setFilterOption}
-              setShowSort={setShowSort}
-            />
-          </div>
-        )}
+        <div
+          className={`${showFilter ? "" : "hidden"} fixed w-full bottom-28  rounded-lg flex flex-col p-4 shadow-md items-center backdrop-blur-sm md:flex md:static bg-header-gray md:bg-transparent md:shadow-none`}
+        >
+          <ProductFilter
+            categories={categories}
+            filterOption={filterOption}
+            setFilterOption={setFilterOption}
+            setShowFilter={setShowFilter}
+          />
+        </div>
+        <div
+          className={`${showSort ? "" : "hidden"} fixed w-full bottom-28 rounded-lg flex flex-col p-4 shadow-md backdrop-blur-sm md:static md:flex bg-header-gray md:bg-transparent md:shadow-none`}
+        >
+          <ProductSort
+            filterOption={filterOption}
+            setFilterOption={setFilterOption}
+            setShowSort={setShowSort}
+          />
+        </div>
         {/* <button
           onClick={() =>
             setFilterOption({

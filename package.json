@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "rm -rf .next && next dev",
     "warm-up": "wait-on http://localhost:3000 && node warm-up.js",
-    "dev-warmup": "concurrently --no-kill-others \"npm run start-dev\" \"npm run warm-up\"",
+    "dev-warmup": "concurrently --no-kill-others \"npm run dev\" \"npm run warm-up\"",
     "build": "rm -rf .next && next build",
     "start": "next start",
     "lint": "next lint",

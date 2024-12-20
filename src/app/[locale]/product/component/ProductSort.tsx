@@ -1,7 +1,13 @@
 "use client";
 
 import { FilterOptions } from "@/model";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import LocaleContext from "../../component/LocaleContext";
 
 export default function ProductSort({
@@ -17,6 +23,14 @@ export default function ProductSort({
   const [sortOption, setSortOption] = useState<string>(
     filterOption.sortOption || "sold-desc"
   );
+  useEffect(() => {
+    setFilterOption((old) => {
+      return {
+        ...old,
+        sortOption: sortOption,
+      };
+    });
+  }, [sortOption]);
   const sortOptions = [
     {
       value: "sold-desc",
@@ -63,6 +77,7 @@ export default function ProductSort({
         </div>
       ))}
       <button
+        className="hidden bg-gray-400 rounded-md"
         onClick={() => {
           setFilterOption((old) => {
             return {
@@ -72,7 +87,6 @@ export default function ProductSort({
           });
           setShowSort(false);
         }}
-        className="bg-gray-400 rounded-md"
       >
         {dict.product_sort_apply}
       </button>
