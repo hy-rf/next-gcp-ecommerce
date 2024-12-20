@@ -16,6 +16,7 @@ export default function Page() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [oauth2Endpoint, setOauth2Endpoint] = useState("");
   const [params, setParams] = useState({});
   useEffect(() => {
@@ -34,6 +35,55 @@ export default function Page() {
     });
   }, []);
   async function handleLoginOrRegister() {
+    if (name.trim() === "" || password.trim() === "") {
+      toast.error(
+        dict.auth_register_name_or_password_could_not_be_empty_warning_text
+      );
+      return;
+    }
+    if (isRegistering) {
+      if (password !== confirmPassword) {
+        toast.error(dict.auth_register_wrong_confirm_password);
+        return;
+      }
+      const response = await fetch("/api/user", {
+        method: "post",
+        body: JSON.stringify({
+          name: name,
+          password: password,
+        }),
+      });
+      if (response.status === 206) {
+        const loginResponse = await fetch("/api/user", {
+          method: "post",
+          body: JSON.stringify({
+            name: name,
+            password: password,
+          }),
+        });
+        if (loginResponse.status === 201) {
+          toast.success(dict.auth_message_login_success);
+          // this should be moved to context provider
+          await fetchData<User>("/api/user").then((user) => setUser(user!));
+          router.replace("/");
+          return;
+        }
+      } else {
+        toast.error(dict.auth_message_login_error_wrong_password);
+      }
+    }
+    const isUserExistResponse = await fetch("/api/user/exists", {
+      method: "post",
+      body: JSON.stringify({
+        name: name,
+        password: password,
+      }),
+    });
+    if (isUserExistResponse.status === 206) {
+      setIsRegistering(true);
+      return;
+    }
+    // exist user -> login
     const response = await fetch("/api/user", {
       method: "post",
       body: JSON.stringify({
@@ -41,11 +91,6 @@ export default function Page() {
         password: password,
       }),
     });
-    if (response.status === 206) {
-      setIsRegistering(true);
-      setPassword("");
-      return;
-    }
     if (response.status === 201) {
       toast.success(dict.auth_message_login_success);
       // this should be moved to context provider
@@ -71,8 +116,8 @@ export default function Page() {
             <TextField
               type="password"
               label="confirm password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <button
               type="submit"

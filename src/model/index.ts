@@ -29,6 +29,8 @@ export interface Dictionary {
   auth_register_accept_terms_of_services_text: string;
   auth_register_accept_terms_of_services_text_end: string;
   auth_register_accept_terms_of_services_link_text: string;
+  auth_register_name_or_password_could_not_be_empty_warning_text: string;
+  auth_register_wrong_confirm_password: string;
   auth_login_title: string;
   auth_login_input_username_label: string;
   auth_login_input_password_label: string;

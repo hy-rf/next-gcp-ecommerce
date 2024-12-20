@@ -37,5 +37,8 @@ const index: Dictionary = {
   order_payment_paypal_test_account_text: "測試帳號",
   product_select_products_per_page_text_left: "顯示",
   product_select_products_per_page_text_right: "件商品",
+  auth_register_name_or_password_could_not_be_empty_warning_text:
+    "帳號密碼不能為空！",
+  auth_register_wrong_confirm_password: "兩次密碼輸入不一樣！",
 };
 export default index;

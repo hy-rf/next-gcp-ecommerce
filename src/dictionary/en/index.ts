@@ -38,5 +38,9 @@ const index: Dictionary = {
   order_payment_paypal_test_account_text: "Test account",
   product_select_products_per_page_text_left: "Show",
   product_select_products_per_page_text_right: "Products",
+  auth_register_name_or_password_could_not_be_empty_warning_text:
+    "Name or Password COULD NOT be empty!",
+  auth_register_wrong_confirm_password:
+    "Confirm Password MUST be the same as password!",
 };
 export default index;
