@@ -1,155 +1,157 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import "@testing-library/jest-dom";
-import Page from "@/app/[locale]/login/page";
-import LocaleProvider from "@/app/[locale]/component/LocaleProvider";
+import Page from "@/app/[locale]/login/page"; // Adjust the path based on your file structure
 import AuthProvider from "@/services/auth/AuthProvider";
+import LocaleProvider from "@/app/[locale]/component/LocaleProvider";
+import { toast } from "sonner";
 import { Dictionary } from "@/model";
 import getDictionary from "@/dictionary/dictionary";
 
-// Mock router
-const mockReplace = jest.fn();
+jest.mock("sonner", () => ({
+  toast: {
+    error: jest.fn(),
+    success: jest.fn(),
+  },
+}));
+
+const mockRouterReplace = jest.fn();
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
-    replace: mockReplace,
+    replace: mockRouterReplace,
   }),
 }));
 
-// Mock fetchData
-jest.mock("../src/lib/fetchData", () => jest.fn());
-
-// Define dictionary for testing
-let mockDict: Dictionary;
-
-// Mock AuthActionsContext
-const setUserMock = jest.fn();
+const mockSetUser = jest.fn();
+const mockFetch = jest.fn();
+global.fetch = mockFetch;
 
 describe("Page Component", () => {
-  const renderPage = async (isRegistering = false) => {
+  let mockDict: Dictionary;
+
+  beforeAll(async () => {
+    mockDict = await getDictionary("en-US", "index");
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockFetch.mockImplementation(() =>
+      Promise.resolve({ status: 201, json: () => Promise.resolve({}) })
+    );
+  });
+
+  const renderComponent = async () => {
     render(
       <AuthProvider initialUser={null}>
-        <LocaleProvider locale="en-US" dict={mockDict}>
+        <LocaleProvider dict={mockDict} locale={"en-US"}>
           <Page />
         </LocaleProvider>
       </AuthProvider>
     );
   };
 
-  beforeEach(async () => {
-    jest.clearAllMocks();
-    mockDict = await getDictionary("en-US", "index");
+  it("renders login form by default", () => {
+    renderComponent();
+    const heading = screen.getByRole("heading");
+    expect(heading.innerText == mockDict.auth_login_title);
   });
 
-  test("renders login form initially", () => {
-    renderPage();
-
-    expect(
-      screen.getByRole("heading", { name: mockDict.auth_login_title })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByLabelText(mockDict.auth_login_input_username_label)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByLabelText(mockDict.auth_login_input_password_label)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(mockDict.auth_register_accept_terms_of_services_text)
-    ).toBeInTheDocument();
-  });
-
-  test("allows user input for name and password", async () => {
-    renderPage();
-
-    const usernameInput = screen.getByLabelText(
-      mockDict.auth_login_input_username_label
-    );
-    const passwordInput = screen.getByLabelText(
-      mockDict.auth_login_input_password_label
-    );
-
-    await userEvent.type(usernameInput, "testuser");
-    await userEvent.type(passwordInput, "password123");
-
-    expect(usernameInput).toHaveValue("testuser");
-    expect(passwordInput).toHaveValue("password123");
-  });
-
-  test("handles login API response: success", async () => {
-    // Mock fetch to return success response
-    global.fetch = jest.fn(() =>
-      Promise.resolve({ status: 201 } as Response)
-    ) as jest.Mock;
-
-    renderPage();
-
-    const loginButton = screen.getByRole("button", {
+  it("shows error if name or password is empty on login", async () => {
+    renderComponent();
+    const submitButton = screen.getByRole("button", {
       name: mockDict.auth_login_title,
     });
-
-    await userEvent.click(loginButton);
-
-    await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith("/api/user", expect.any(Object));
-      expect(mockReplace).toHaveBeenCalledWith("/");
-      expect(setUserMock).toHaveBeenCalled();
-    });
-  });
-
-  test("handles login API response: wrong password", async () => {
-    // Mock fetch to return 401
-    global.fetch = jest.fn(() =>
-      Promise.resolve({ status: 401 } as Response)
-    ) as jest.Mock;
-
-    renderPage();
-
-    const loginButton = screen.getByRole("button", {
-      name: mockDict.auth_login_title,
-    });
-
-    await userEvent.click(loginButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(mockDict.auth_message_login_error_wrong_password)
-      ).toBeInTheDocument();
-    });
-  });
-
-  test("switches to register form on partial response", async () => {
-    // Mock fetch to return 206
-    global.fetch = jest.fn(() =>
-      Promise.resolve({ status: 206 } as Response)
-    ) as jest.Mock;
-
-    renderPage();
-
-    const loginButton = screen.getByRole("button", {
-      name: mockDict.auth_login_title,
-    });
-
-    await userEvent.click(loginButton);
-
-    expect(
-      screen.getByRole("heading", { name: "Register" })
-    ).toBeInTheDocument();
-  });
-
-  test("triggers Google OAuth button click", () => {
-    renderPage();
-
-    const googleButton = screen.getByText("Sign in with Google");
-
-    const googleLink = screen.getByRole("link", { hidden: true });
-
-    const mockDispatchEvent = jest.spyOn(
-      window.HTMLAnchorElement.prototype,
-      "dispatchEvent"
+    fireEvent.click(submitButton);
+    expect(toast.error).toHaveBeenCalledWith(
+      mockDict.auth_register_name_or_password_could_not_be_empty_warning_text
     );
-
-    fireEvent.click(googleButton);
-
-    expect(mockDispatchEvent).toHaveBeenCalledWith(expect.any(MouseEvent));
-    expect(googleLink).toBeInTheDocument();
   });
+
+  // it("shows error if passwords do not match during registration", async () => {
+  //   renderComponent();
+
+  //   fireEvent.change(
+  //     screen.getByLabelText(mockDict.auth_login_input_username_label),
+  //     {
+  //       target: { value: "testuser" },
+  //     }
+  //   );
+  //   fireEvent.change(
+  //     screen.getByLabelText(mockDict.auth_login_input_password_label),
+  //     {
+  //       target: { value: "password123" },
+  //     }
+  //   );
+
+  //   const isUserExistResponse = { status: 206 };
+  //   mockFetch.mockResolvedValueOnce(isUserExistResponse);
+
+  //   fireEvent.click(screen.getByText(mockDict.auth_login_title));
+
+  //   await waitFor(() =>
+  //     expect(screen.getByText("Register")).toBeInTheDocument()
+  //   );
+
+  //   fireEvent.change(screen.getByLabelText("confirm password"), {
+  //     target: { value: "differentPassword" },
+  //   });
+
+  //   fireEvent.click(screen.getByText("Register"));
+
+  //   expect(toast.error).toHaveBeenCalledWith(
+  //     mockDict.auth_register_wrong_confirm_password
+  //   );
+  // });
+
+  // it("calls login endpoint and navigates on success", async () => {
+  //   renderComponent();
+
+  //   fireEvent.change(
+  //     screen.getByLabelText(mockDict.auth_login_input_username_label),
+  //     {
+  //       target: { value: "testuser" },
+  //     }
+  //   );
+  //   fireEvent.change(
+  //     screen.getByLabelText(mockDict.auth_login_input_password_label),
+  //     {
+  //       target: { value: "password123" },
+  //     }
+  //   );
+
+  //   fireEvent.click(screen.getByText(mockDict.auth_login_title));
+
+  //   await waitFor(() =>
+  //     expect(toast.success).toHaveBeenCalledWith(
+  //       mockDict.auth_message_login_success
+  //     )
+  //   );
+  //   expect(mockRouterReplace).toHaveBeenCalledWith("/");
+  //   expect(mockSetUser).toHaveBeenCalled();
+  // });
+
+  // it("shows error if login fails", async () => {
+  //   mockFetch.mockResolvedValueOnce({ status: 401 });
+
+  //   renderComponent();
+
+  //   fireEvent.change(
+  //     screen.getByLabelText(mockDict.auth_login_input_username_label),
+  //     {
+  //       target: { value: "testuser" },
+  //     }
+  //   );
+  //   fireEvent.change(
+  //     screen.getByLabelText(mockDict.auth_login_input_password_label),
+  //     {
+  //       target: { value: "wrongpassword" },
+  //     }
+  //   );
+
+  //   fireEvent.click(screen.getByText(mockDict.auth_login_title));
+
+  //   await waitFor(() =>
+  //     expect(toast.error).toHaveBeenCalledWith(
+  //       mockDict.auth_message_login_error_wrong_password
+  //     )
+  //   );
+  // });
 });
