@@ -29,14 +29,14 @@ export default function FilteredProducts({
   useEffect(() => {
     const handlePopState = () => {
       const searchParams = new URLSearchParams(window.location.search);
-      const storeId = searchParams.get("storeId");
-      const categoryId = searchParams.get("categoryId");
-      const subCategoryId = searchParams.get("subCategoryId");
-      const minPrice = searchParams.get("minPrice");
-      const maxPrice = searchParams.get("maxPrice");
+      const storeId = searchParams.get("store");
+      const categoryId = searchParams.get("category");
+      const subCategoryId = searchParams.get("subcategory");
+      const minPrice = searchParams.get("minprice");
+      const maxPrice = searchParams.get("maxprice");
       const page = searchParams.get("page");
       const sort = searchParams.get("sort");
-      const pageSize = searchParams.get("pageSize");
+      const pageSize = searchParams.get("pagesize");
       setOptions({
         page: page ? parseInt(page) : 1,
         storeId: storeId ? storeId : "",
@@ -78,19 +78,19 @@ export default function FilteredProducts({
     } else {
       setIsLoading(true);
       let searchParam = `page=${options.page}`;
-      if (options.storeId !== "") searchParam += `&storeId=${options.storeId}`;
+      if (options.storeId !== "") searchParam += `&store=${options.storeId}`;
       if (options.categoryId !== "")
-        searchParam += `&categoryId=${options.categoryId}`;
+        searchParam += `&category=${options.categoryId}`;
       if (options.subCategoryId !== "")
-        searchParam += `&subCategoryId=${options.subCategoryId}`;
-      if (options.minPrice > 0) searchParam += `&minPrice=${options.minPrice}`;
+        searchParam += `&subcategory=${options.subCategoryId}`;
+      if (options.minPrice > 0) searchParam += `&minprice=${options.minPrice}`;
       if (options.maxPrice < Infinity)
-        searchParam += `&maxPrice=${options.maxPrice}`;
+        searchParam += `&maxprice=${options.maxPrice}`;
       if (options.sortOption) {
         searchParam += `&sort=${options.sortOption}`;
       }
       if (options.pageSize) {
-        searchParam += `&pageSize=${options.pageSize}`;
+        searchParam += `&pagesize=${options.pageSize}`;
       }
 
       fetch(`/api/product?${searchParam}`)

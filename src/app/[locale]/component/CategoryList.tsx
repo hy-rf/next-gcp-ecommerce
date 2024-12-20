@@ -16,7 +16,7 @@ export default async function CategoryList({
             key={ele.id}
             className="mx-4 my-2 px-4 py-2 text-center border border-gray-300 inline-block rounded-md"
           >
-            <Link href={`/product?categoryId=${ele.id}&page=1&sort=sold-desc`}>
+            <Link href={`/product?category=${ele.id}&page=1&sort=sold-desc`}>
               <p className="text-lg font-medium text-gray-800">
                 {locale == "en-US"
                   ? ele.name
