@@ -1,0 +1,14 @@
+#dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.chunk {
+  padding: 20px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  cursor: grab;
+}
+.chunk.dragging {
+  opacity: 0.5;
+}

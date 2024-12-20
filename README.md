@@ -1,4 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# E-Commerce powered by Next.js
+
+[![zh-tw](https://img.shields.io/badge/lang-zh--tw-green.svg)](https://github.com/hy-rf/next-gcp-ecommerce/blob/main/README.zh-tw.md)
+
+## Features
+
+### Localization
+
+### SEO
+
+### Product filter/sort
+
+Customizable and expandable product filter/sort solution.
+
+### Cart
+
+Add product to cart and change quantity of cart items.
+
+### Password login
+
+Login method which is available for public before app publish.
+
+### Google login
+
+### Order
+
+Place order.
+
+## Features in Dev/Test
+
+### OAuth2.0 Link providers
+
+Link other oauth login providers
+
+### Product search
 
 ## Getting Started
 
@@ -14,23 +48,203 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API list
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### User
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`POST` `/api/user/login` oauth login
 
-## Learn More
+`GET` `/api/user/login-method` get login methods
 
-To learn more about Next.js, take a look at the following resources:
+`GET` `/api/user/store` get owned store
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`PUT` `/api/user/locale` change locale
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`GET` `/api/user/token` Get new token, it is used when other api requests failed for expired token.
 
-## Deploy on Vercel
+### Cart
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`GET` `/api/v2/cart-item` get cart items
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`POST` `/api/v2/cart-item` add cart item
+
+`PUT` `/api/v2/cart-item` change cart item
+
+`DELETE` `/api/v2/cart-item` delete cart item
+
+- **Request body**:
+
+```json
+[
+  {
+    "id": "string",
+    "productId": "string"
+  }
+]
+```
+
+## **Response**
+
+### **Successful Response**
+
+- **Status Code**: `200 OK`
+- **Response Body**: A JSON object confirming the deletion of the cart item and the updated stock of the associated product.
+
+```json
+{
+  "time": "add to cart time"
+}
+```
+
+### **Error Responses**
+
+- **Status Code**: `401 Unauthorized`
+
+- **Reason**: Authentication token is missing or invalid.
+
+- **Status Code**: `403 Forbidden`
+
+- **Reason**: The user does not own the cart item.
+
+### Cart
+
+`GET` `/api/product` get products
+
+- **Search params**:
+
+- page: current page number
+- categoryId: ids of categories, separated by ","
+- subCategoryId: ids of sub categories, separated by ","
+- minPrice: number
+- maxPrice: number
+- sort: way of sort, ex:price-asc
+
+- **Response**:
+
+```json
+{
+  "pages": "max number of pages",
+  "products": [],
+  "total": "total number of products"
+}
+```
+
+`GET` `/api/product/:id` get product
+
+`POST` `/api/product` add product
+
+`GET` `/api/category` get categories
+
+`GET` `/api/subcategory/:id` get sub category by id
+
+- **Params**:
+- id: id of sub category
+- **Request body**:
+- `none`
+- **Response**:
+
+```json
+{
+  "id": "",
+  "name": ""
+}
+```
+
+### Payment
+
+`POST` `/api/pay` create paypal order
+
+`POST` `/api/pay?id=<paypal order id>` send money to seller
+
+<!-- ## API list
+
+### User
+
+#### User login
+
+- **Endpoint**: `/user/login/api`
+- **Description**: User login and get login result.
+- **Request Body**:
+  ```json
+  {
+    "id": "user id from oauth provider",
+    "oauth_provider": "provider name"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "code": "200/300/400",
+    "message": "string"
+  }
+  ```
+
+### Store
+
+#### Get stores owned by certain user
+
+- **Endpoint**: `/user/store/api`
+- **Method**: `GET`
+- **Description**: Get stores owned by authenticated user.
+- **Parameters**: None
+- **Response**:
+  ```json
+  [
+    {
+      "name": "string",
+      "description": "string",
+      "createdUserId": "string",
+      "ownerUserId": "string"
+    }
+  ]
+  ```
+
+---
+
+#### Get all store submissions
+
+- **Endpoint**: `/store-submission/api`
+- **Method**: `GET`
+- **Description**: Get stores submissions by all user.
+- **Parameters**:
+  ```json
+  [{}, {}]
+  ```
+
+---
+
+#### Get stores by given id
+
+- **Endpoint**: `/store/api`
+- **Method**: `GET`
+- **Description**: Get stores owned by authenticated user.
+- **Parameters**: `id:string`
+- **Response**:
+  ```json
+  {
+    "name": "string",
+    "description": "string",
+    "createdUserId": "string",
+    "ownerUserId": "string"
+  }
+  ```
+
+### Cart
+
+#### Get cart items by cart id
+
+- **Endpoint**: `/cart/cartitem/api`
+- **Method**: `GET`
+- **Description**: Get cart item in certain cart.
+- **Parameters**: `id:string`
+- **Response**:
+  ```json
+  {
+    "name": "string",
+    "description": "string",
+    "createdUserId": "string",
+    "ownerUserId": "string"
+  }
+  ```
+
+--- -->

@@ -1,0 +1,27 @@
+
+
+.toggle-user-menu-button::after {
+  transform: rotate(45deg);
+  transition: 0.3s;
+}
+
+.toggle-user-menu-button::before {
+  transform: rotate(-45deg);
+  transition: 0.3s;
+}
+
+.toggled::after {
+  transform: rotate(-45deg);
+}
+.toggled::before {
+  transform: rotate(45deg);
+}
+
+
+
+@media (min-width: 768px) {
+  .links {
+    opacity: 100;
+    height: auto !important;
+  }
+}

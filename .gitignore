@@ -10,6 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 
+# ci/cd
+app.yaml
+
 # testing
 /coverage
 
@@ -31,6 +34,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -38,3 +42,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# api key
+key.json
+*storybook.log
