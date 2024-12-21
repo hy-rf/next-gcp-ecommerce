@@ -38,6 +38,13 @@ export interface Dictionary {
   order_payment_paypal_test_account_text: string;
   product_select_products_per_page_text_left: string;
   product_select_products_per_page_text_right: string;
+
+  business_subtitle_sales_performance_metrics: string;
+  business_subtitle_customer_satisfaction_metrics: string;
+  business_subtitle_market_comparison: string;
+  business_subtitle_trust_and_reliability_indicators: string;
+
+  business_metric_title_sales_performance_metrics: string;
 }
 
 export interface User {
@@ -98,7 +105,6 @@ export interface Review {
   stars: number;
   productId: string;
   userId: string;
-  numberOfUsersLike: string;
 }
 
 export interface Category {

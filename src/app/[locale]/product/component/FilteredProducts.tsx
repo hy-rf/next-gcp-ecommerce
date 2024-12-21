@@ -207,7 +207,7 @@ export default function FilteredProducts({
           </div>
 
           <div
-            className="grid items-stretch grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 transform duration-100"
+            className="grid items-stretch grid-cols-1 md:grid-cols-2 gap-6 p-4 transform duration-100"
             style={{
               opacity: isLoading ? "0.5" : "1",
             }}

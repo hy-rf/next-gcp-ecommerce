@@ -40,5 +40,10 @@ const index: Dictionary = {
   auth_register_name_or_password_could_not_be_empty_warning_text:
     "帳號密碼不能為空！",
   auth_register_wrong_confirm_password: "兩次密碼輸入不一樣！",
+  business_subtitle_sales_performance_metrics: "銷售績效指標",
+  business_subtitle_customer_satisfaction_metrics: "顧客滿意度指標",
+  business_subtitle_market_comparison: "市場比較",
+  business_subtitle_trust_and_reliability_indicators: "信任與可靠性指標",
+  business_metric_title_sales_performance_metrics: "",
 };
 export default index;

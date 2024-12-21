@@ -17,8 +17,8 @@ function getLocale(request: NextRequest, locales: Array<string>) {
 }
 
 export async function middleware(request: NextRequest) {
-  const geo = request.geo;
-  console.log(geo);
+  // const geo = request.geo;
+  // console.log(geo);
 
   const { pathname } = request.nextUrl;
   if (
@@ -71,7 +71,6 @@ export async function middleware(request: NextRequest) {
       currentLocale = "en-US";
     }
   }
-  request.cookies.set("geo", JSON.stringify(geo));
   if (pathContainsLocale) {
     // this if is for avoiding repeating redirect when locale in cookie matches locale in pathneme
     if (cookie && cookie.value === pathname.slice(1, 6)) return;

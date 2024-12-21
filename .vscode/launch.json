@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "npm run dev",
+      "command": "npm run dev-turbo",
       "name": "dev server",
       "request": "launch",
       "type": "node-terminal"
@@ -15,12 +15,6 @@
       "name": "build",
       "request": "launch",
       "type": "node-terminal"
-    },
-    {
-      "name": "Next.js: debug client-side (Firefox)",
-      "type": "firefox",
-      "request": "launch",
-      "url": "http://localhost:3000",
-    },
+    }
   ]
 }
