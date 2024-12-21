@@ -77,6 +77,8 @@ export default function FilteredProducts({
       return;
     } else {
       setIsLoading(true);
+      console.log("GETTING");
+
       let searchParam = `page=${options.page}`;
       if (options.storeId !== "") searchParam += `&store=${options.storeId}`;
       if (options.categoryId !== "")

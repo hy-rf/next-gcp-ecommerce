@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { ChangeEvent, DragEvent, useEffect, useState } from "react";
 import { AiOutlineCheckCircle, AiOutlineCloudUpload } from "react-icons/ai";
 import { MdClear } from "react-icons/md";
 import "./drag-drop.css";
@@ -9,8 +9,8 @@ interface FileSelectionHandler {
 
 const FileUploader: React.FC<FileSelectionHandler> = ({ onFilesSelected }) => {
   const [files, setFiles] = useState<File[]>([]);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [isOnDragZone, setIsOnDragZone] = useState(false);
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
       const newFiles = Array.from(selectedFiles);
@@ -18,7 +18,11 @@ const FileUploader: React.FC<FileSelectionHandler> = ({ onFilesSelected }) => {
     }
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+    setIsOnDragZone(true);
+    setTimeout(() => {
+      setIsOnDragZone(false);
+    }, 1000);
     event.preventDefault();
     const droppedFiles = event.dataTransfer.files;
     if (droppedFiles.length > 0) {
@@ -37,9 +41,9 @@ const FileUploader: React.FC<FileSelectionHandler> = ({ onFilesSelected }) => {
 
   return (
     <div
-      className={`document-uploader ${
+      className={`document-uploader border ${
         files.length > 0 ? "upload-box active" : "upload-box"
-      }`}
+      } ${isOnDragZone ? "border-green-500" : ""}`}
       onDrop={handleDrop}
       onDragOver={(event) => event.preventDefault()}
     >

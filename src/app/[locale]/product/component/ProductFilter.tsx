@@ -25,18 +25,6 @@ export default function ProductFilter({
   categories: Category[];
 }) {
   const { dict } = useContext(LocaleContext);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    filterOption.categoryId.split(",")
-  );
-  useEffect(() => {
-    setFilterOption((old) => {
-      return {
-        ...old,
-        ...filterOption,
-        categoryId: selectedCategories.filter((ele) => ele !== "").join(","),
-      };
-    });
-  }, [selectedCategories]);
   return (
     <>
       {/* Filter options */}
@@ -78,18 +66,27 @@ export default function ProductFilter({
       </div>
       <div className="items-center gap-2 m-2">
         <CategoryFilterCheckboxGroup
+          setFilteredOptions={setFilterOption}
           categories={categories}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
+          filterOptions={filterOption}
         />
         <button
           className="rounded-md border border-[rgba(128, 128, 128, 0.8)] px-2"
-          onClick={() => setSelectedCategories([])}
+          onClick={() =>
+            setFilterOption((old) => {
+              return {
+                ...old,
+                categoryId: "",
+              };
+            })
+          }
         >
           {dict.product_filter_clear_button_text}
         </button>
       </div>
-      <button onClick={() => setShowFilter(false)}>x</button>
+      <button className="hidden" onClick={() => setShowFilter(false)}>
+        x
+      </button>
     </>
   );
 }
