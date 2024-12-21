@@ -7,6 +7,7 @@ import {
 } from "@paypal/react-paypal-js";
 import { Order } from "@/model";
 import LocaleContext from "../component/LocaleContext";
+import { toast } from "sonner";
 
 // Renders errors or successfull transactions on the screen.
 function Message({ content }: { content: string }) {
@@ -50,7 +51,6 @@ function PaypalPayment({ order }: { order: Order }) {
                 headers: {
                   "Content-Type": "application/json",
                 },
-
                 body: JSON.stringify(order),
               });
 
@@ -77,6 +77,7 @@ function PaypalPayment({ order }: { order: Order }) {
                 headers: {
                   "Content-Type": "application/json",
                 },
+                body: JSON.stringify(order),
               });
 
               const orderData = await response.json();
@@ -105,10 +106,16 @@ function PaypalPayment({ order }: { order: Order }) {
                 setMessage(
                   `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
                 );
+                toast.success(
+                  `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
+                );
               }
             } catch (error) {
               console.error(error);
               setMessage(
+                `Sorry, your transaction could not be processed...${error}`
+              );
+              toast.error(
                 `Sorry, your transaction could not be processed...${error}`
               );
             }
