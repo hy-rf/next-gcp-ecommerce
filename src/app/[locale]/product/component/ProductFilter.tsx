@@ -1,15 +1,6 @@
 "use client";
-/* TODO: setFilterOption after clicking apply button
-    add local state for this component
- */
 import { Category, FilterOptions } from "@/model";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import CategoryFilterCheckboxGroup from "./CategoryFilterCheckboxGroup";
 import LocaleContext from "../../component/LocaleContext";
 
