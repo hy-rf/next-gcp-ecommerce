@@ -19,6 +19,7 @@ export default function ClientProcessingUserLogin() {
   const { setUser } = useContext(AuthActionsContext);
   const fetchUserInfo = async () => {
     const token = document.URL.split("#")[1].split("&")[1].split("=")[1];
+    if (token === "") return;
     try {
       const response = await fetch(
         `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token}`
@@ -33,8 +34,8 @@ export default function ClientProcessingUserLogin() {
         }),
       }).then((res) => res.json());
       if ((await loginResult).code == 200) {
-        toast.success(dict.auth_message_login_success);
         await fetchData<User>("/api/user").then((user) => setUser(user!));
+        toast.success(dict.auth_message_login_success);
         router.replace("/");
         return;
       }

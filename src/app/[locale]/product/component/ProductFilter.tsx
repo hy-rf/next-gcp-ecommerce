@@ -1,15 +1,6 @@
 "use client";
-/* TODO: setFilterOption after clicking apply button
-    add local state for this component
- */
 import { Category, FilterOptions } from "@/model";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import CategoryFilterCheckboxGroup from "./CategoryFilterCheckboxGroup";
 import LocaleContext from "../../component/LocaleContext";
 
@@ -25,27 +16,6 @@ export default function ProductFilter({
   categories: Category[];
 }) {
   const { dict } = useContext(LocaleContext);
-  const [localOption, setLocalOption] = useState<FilterOptions>(filterOption);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    filterOption.categoryId.split(",")
-  );
-  useEffect(() => {
-    setLocalOption((old) => {
-      return {
-        ...old,
-        ...filterOption,
-        categoryId: selectedCategories.filter((ele) => ele !== "").join(","),
-      };
-    });
-  }, [selectedCategories]);
-  useEffect(() => {
-    setFilterOption((old) => {
-      return {
-        ...old,
-        ...localOption,
-      };
-    });
-  }, [localOption]);
   return (
     <>
       {/* Filter options */}
@@ -55,7 +25,7 @@ export default function ProductFilter({
         </label>
         <input
           onChange={(e) =>
-            setLocalOption((old) => {
+            setFilterOption((old) => {
               return {
                 ...old,
                 minPrice: parseInt(e.target.value),
@@ -63,13 +33,13 @@ export default function ProductFilter({
             })
           }
           type="number"
-          value={localOption.minPrice}
+          value={filterOption.minPrice}
           className="w-11 px-1 text-black rounded"
         />
         <span>-</span>
         <input
           onChange={(e) =>
-            setLocalOption((old) => {
+            setFilterOption((old) => {
               return {
                 ...old,
                 maxPrice: parseInt(e.target.value),
@@ -78,38 +48,35 @@ export default function ProductFilter({
           }
           type="number"
           value={
-            localOption.maxPrice == Infinity ? "Infinity" : localOption.maxPrice
+            filterOption.maxPrice == Infinity
+              ? "Infinity"
+              : filterOption.maxPrice
           }
           className="w-11 px-1 text-black rounded"
         />
       </div>
       <div className="items-center gap-2 m-2">
         <CategoryFilterCheckboxGroup
+          setFilteredOptions={setFilterOption}
           categories={categories}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
+          filterOptions={filterOption}
         />
         <button
           className="rounded-md border border-[rgba(128, 128, 128, 0.8)] px-2"
-          onClick={() => setSelectedCategories([])}
+          onClick={() =>
+            setFilterOption((old) => {
+              return {
+                ...old,
+                categoryId: "",
+              };
+            })
+          }
         >
           {dict.product_filter_clear_button_text}
         </button>
       </div>
-
-      <button
-        className="hidden bg-gray-400 rounded-md px-6"
-        onClick={() => {
-          setFilterOption((old) => {
-            return {
-              ...old,
-              ...localOption,
-            };
-          });
-          setShowFilter(false);
-        }}
-      >
-        {dict.product_filter_apply_button_text}
+      <button className="hidden" onClick={() => setShowFilter(false)}>
+        x
       </button>
     </>
   );

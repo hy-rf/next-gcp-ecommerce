@@ -1,27 +1,35 @@
 "use client";
 
-import { Category } from "@/model";
+import { Category, FilterOptions } from "@/model";
 import { Dispatch, SetStateAction, useContext } from "react";
 import LocaleContext from "../../component/LocaleContext";
 
 export default function CategoryFilterCheckboxGroup({
-  selectedCategories,
-  setSelectedCategories,
+  filterOptions,
+  setFilteredOptions,
   categories,
 }: {
-  selectedCategories: string[];
-  setSelectedCategories: Dispatch<SetStateAction<string[]>>;
+  filterOptions: FilterOptions;
+  setFilteredOptions: Dispatch<SetStateAction<FilterOptions>>;
   categories: Category[];
 }) {
   const { locale } = useContext(LocaleContext);
-  const handleCheckboxChange = (value: string) => {
-    setSelectedCategories(
-      (prev) =>
-        prev.includes(value)
-          ? prev.filter((val) => val !== value) // Remove if already selected
-          : [...prev, value] // Add if not selected
-    );
-  };
+  async function handleCheckboxChange(value: string) {
+    setFilteredOptions((old) => {
+      const newCategories = filterOptions.categoryId.includes(value)
+        ? filterOptions.categoryId
+            .split(",")
+            .filter((val) => val !== value)
+            .filter((el) => el !== "")
+            .join(",")
+        : filterOptions.categoryId + "," + value;
+      return {
+        ...old,
+        ...filterOptions,
+        categoryId: newCategories,
+      };
+    });
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -31,7 +39,7 @@ export default function CategoryFilterCheckboxGroup({
             <input
               type="checkbox"
               value={option.id}
-              checked={selectedCategories.includes(option.id!)}
+              checked={filterOptions.categoryId.includes(option.id!)}
               onChange={() => handleCheckboxChange(option.id!)}
             />
             <p className="leading-loose">

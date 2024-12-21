@@ -9,15 +9,18 @@ import { uploadBase64ImagesAndGetUrls } from "@/lib/database/storage";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const storeId = searchParams.get("storeId");
-  const categoryId = searchParams.get("categoryId");
-  const subCategoryId = searchParams.get("subCategoryId");
-  const minPrice = searchParams.get("minPrice");
-  const maxPrice = searchParams.get("maxPrice");
+  const q = searchParams.get("q");
+  console.log(q);
+
+  const storeId = searchParams.get("store");
+  const categoryId = searchParams.get("category");
+  const subCategoryId = searchParams.get("subcategory");
+  const minPrice = searchParams.get("minprice");
+  const maxPrice = searchParams.get("maxprice");
   let page = searchParams.get("page");
   const sort = searchParams.get("sort");
-  const productsPerPage = searchParams.get("pageSize")
-    ? parseInt(searchParams.get("pageSize")!)
+  const productsPerPage = searchParams.get("pagesize")
+    ? parseInt(searchParams.get("pagesize")!)
     : 10;
   const db = database();
 

@@ -27,17 +27,17 @@ export default function Hero() {
       {
         title: "test",
         description: "testD",
-        imageUrl: "/activity1.webp",
+        imageUrl: "/act1.webp",
       },
       {
         title: "test2",
         description: "testD2",
-        imageUrl: "/ElectronicsSale.webp",
+        imageUrl: "/act2.webp",
       },
       {
         title: "test3",
         description: "testD3",
-        imageUrl: "/3.jpg",
+        imageUrl: "/act3.webp",
       },
     ]);
   }, []);

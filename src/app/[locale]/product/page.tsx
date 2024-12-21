@@ -42,13 +42,13 @@ export default async function Page({
   };
 
   let searchParam = `page=${page}`;
-  if (storeId) searchParam += `&storeId=${storeId}`;
-  if (categoryId) searchParam += `&categoryId=${categoryId}`;
-  if (subCategoryId) searchParam += `&subCategoryId=${subCategoryId}`;
-  if (minPrice) searchParam += `&minPrice=${minPrice}`;
-  if (maxPrice) searchParam += `&maxPrice=${maxPrice}`;
+  if (storeId) searchParam += `&store=${storeId}`;
+  if (categoryId) searchParam += `&category=${categoryId}`;
+  if (subCategoryId) searchParam += `&subcategory=${subCategoryId}`;
+  if (minPrice) searchParam += `&minprice=${minPrice}`;
+  if (maxPrice) searchParam += `&maxprice=${maxPrice}`;
   if (sort) searchParam += `&sort=${sort}`;
-  if (pageSize) searchParam += `&pageSize=${pageSize}`;
+  if (pageSize) searchParam += `&pagesize=${pageSize}`;
   const response = await fetch(
     `${process.env.URL}/api/product?${searchParam}`
   ).then((res) => res.json());

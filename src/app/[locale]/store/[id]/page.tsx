@@ -18,7 +18,7 @@ export default async function Page({
 }) {
   const { id } = params;
   const { page, sort } = searchParams;
-  const queryString = `?page=${page || 1}&storeId=${id}&sort=${sort || "sold-desc"}`;
+  const queryString = `?page=${page || 1}&store=${id}&sort=${sort || "sold-desc"}`;
   const response = await fetch(`${process.env.URL}/api/product${queryString}`);
   let products: Product[] = [];
   if (response.status === 200) {

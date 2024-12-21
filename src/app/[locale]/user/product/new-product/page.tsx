@@ -220,10 +220,15 @@ export default function NewProduct() {
             Specs:
           </label>
           <button
-            style={{ alignSelf: "flex-end" }}
+            className="w-8 h-8 ml-auto mb-2"
             onClick={() => setSpecs((old) => [...old, ""])}
           >
-            +
+            <Image
+              src={"/plus.svg"}
+              alt={"plus"}
+              width={32}
+              height={32}
+            ></Image>
           </button>
           <div className="flex flex-col gap-1">
             {specs.map((ele, index) => (
@@ -244,12 +249,22 @@ export default function NewProduct() {
                   }}
                   min="0"
                   step="0.01"
-                  className="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full border border-gray-300 rounded-tl-md rounded-bl-md p-2 focus:ring-blue-500 focus:border-blue-500"
                   style={{
                     borderColor: !isSpecsValid ? "red" : "",
                   }}
                 />
-                <button onClick={() => handleDeleteSpec(index)}>x</button>
+                <button
+                  className="border border-l-0 border-gray-300 rounded-tr-md rounded-br-md w-[42px] flex flex-col items-center justify-center"
+                  onClick={() => handleDeleteSpec(index)}
+                >
+                  <Image
+                    src={"/x.svg"}
+                    alt={"remove"}
+                    width={26}
+                    height={26}
+                  ></Image>
+                </button>
               </div>
             ))}
           </div>
