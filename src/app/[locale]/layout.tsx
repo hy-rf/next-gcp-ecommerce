@@ -55,11 +55,11 @@ export default async function RootLayout({
   const { locale } = await params;
   const dict = await getDictionary(locale, "index");
   let user: User | null;
-  try {
+  if (cookies().get("token")) {
     user = await fetchData<User>(`${process.env.URL}/api/user/`, {
       headers: { Cookie: cookies().toString() },
     });
-  } catch {
+  } else {
     user = null;
   }
   let cart: CartItem[] = [];
