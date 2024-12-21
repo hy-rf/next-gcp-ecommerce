@@ -71,7 +71,7 @@ export async function middleware(request: NextRequest) {
       currentLocale = "en-US";
     }
   }
-  cookies().set("geo", JSON.stringify(geo));
+  request.cookies.set("geo", JSON.stringify(geo));
   if (pathContainsLocale) {
     // this if is for avoiding repeating redirect when locale in cookie matches locale in pathneme
     if (cookie && cookie.value === pathname.slice(1, 6)) return;

@@ -37,6 +37,7 @@ export default function CartItems() {
   >(new Map(cartItems.map((_, index) => [index, true])));
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<CartItem | null>(null);
+  console.table(cartItems);
 
   useEffect(() => {
     setSelectedCartItem(new Map(cartItems.map((_, index) => [index, true])));
