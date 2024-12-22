@@ -17,8 +17,9 @@ function getLocale(request: NextRequest, locales: Array<string>) {
 }
 
 export async function middleware(request: NextRequest) {
-  const lang = request.headers.get("Accept-Language");
-  console.warn("Accept-Language:", lang);
+  // const geo = request.geo;
+  // console.log(geo);
+
   const { pathname } = request.nextUrl;
   if (
     pathname.endsWith("jpg") ||

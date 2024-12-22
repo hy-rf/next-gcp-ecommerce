@@ -26,6 +26,14 @@ export default function FilteredProducts({
   defaultFilterOptions: FilterOptions;
   categories: Category[];
 }) {
+  const { dict } = useContext(LocaleContext);
+  const [options, setOptions] = useState<FilterOptions>(filterOptions);
+  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [maxPages, setMaxPages] = useState(maxP);
+  const [total, setTotal] = useState(totalFromServerCpomonent);
+  const [isNotFirstFetch, setIsNotFirstFetch] = useState(false);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const handlePopState = () => {
       const searchParams = new URLSearchParams(window.location.search);
@@ -55,7 +63,7 @@ export default function FilteredProducts({
       window.removeEventListener("popstate", handlePopState);
     };
   }, []);
-  const { dict } = useContext(LocaleContext);
+
   useEffect(() => {
     document?.addEventListener("click", (e) => {
       const target = e.target as HTMLElement; // Typecasting e.target as HTMLElement
@@ -64,67 +72,64 @@ export default function FilteredProducts({
       }
     });
   }, []);
-  const [options, setOptions] = useState<FilterOptions>(filterOptions);
-  const [filteredProducts, setFilteredProducts] = useState(products);
-  const [maxPages, setMaxPages] = useState(maxP);
-  const [total, setTotal] = useState(totalFromServerCpomonent);
-  const [isNotFirstFetch, setIsNotFirstFetch] = useState(false);
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (isNotFirstFetch === false) {
       setIsNotFirstFetch(true);
       return;
     } else {
-      setIsLoading(true);
-      console.log("GETTING");
+      if (filterOptions !== options) {
+        setIsLoading(true);
+        console.log("GETTING");
 
-      let searchParam = `page=${options.page}`;
-      if (options.storeId !== "") searchParam += `&store=${options.storeId}`;
-      if (options.categoryId !== "")
-        searchParam += `&category=${options.categoryId}`;
-      if (options.subCategoryId !== "")
-        searchParam += `&subcategory=${options.subCategoryId}`;
-      if (options.minPrice > 0) searchParam += `&minprice=${options.minPrice}`;
-      if (options.maxPrice < Infinity)
-        searchParam += `&maxprice=${options.maxPrice}`;
-      if (options.sortOption) {
-        searchParam += `&sort=${options.sortOption}`;
-      }
-      if (options.pageSize) {
-        searchParam += `&pagesize=${options.pageSize}`;
-      }
+        let searchParam = `page=${options.page}`;
+        if (options.storeId !== "") searchParam += `&store=${options.storeId}`;
+        if (options.categoryId !== "")
+          searchParam += `&category=${options.categoryId}`;
+        if (options.subCategoryId !== "")
+          searchParam += `&subcategory=${options.subCategoryId}`;
+        if (options.minPrice > 0)
+          searchParam += `&minprice=${options.minPrice}`;
+        if (options.maxPrice < Infinity)
+          searchParam += `&maxprice=${options.maxPrice}`;
+        if (options.sortOption) {
+          searchParam += `&sort=${options.sortOption}`;
+        }
+        if (options.pageSize) {
+          searchParam += `&pagesize=${options.pageSize}`;
+        }
 
-      fetch(`/api/product?${searchParam}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setFilteredProducts(data.products);
-          setMaxPages(data.pages);
-          setTotal(data.total);
-          if (data.pages < options.page) {
-            // TODO: this causes one additonal re-render and api call
-            setOptions((old) => {
-              return {
-                ...old,
-                page: data.pages,
-              };
-            });
-          }
-          setIsLoading(false);
-          try {
-            router.push(`product?${searchParam}`);
-            // window.history.pushState(null, "", `product?${searchParam}`);
-          } catch {
-            console.log("fail to update url");
-          }
-        });
+        fetch(`/api/product?${searchParam}`)
+          .then((res) => res.json())
+          .then((data) => {
+            setFilteredProducts(data.products);
+            setMaxPages(data.pages);
+            setTotal(data.total);
+            if (data.pages < options.page) {
+              // TODO: this causes one additonal re-render and api call
+              setOptions((old) => {
+                return {
+                  ...old,
+                  page: data.pages,
+                };
+              });
+            }
+            setIsLoading(false);
+            try {
+              router.push(`product?${searchParam}`);
+              // window.history.pushState(null, "", `product?${searchParam}`);
+            } catch {
+              console.log("fail to update url");
+            }
+          });
+      }
     }
   }, [options]);
   return (
     <>
       <div className="flex h-full">
         {false && (
-          <div className="bg-white p-6 rounded-lg shadow-md w-full ">
+          <div className="bg-white p-6 rounded-lg shadow-md w-full">
             <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
               Filter Options
             </h3>
@@ -207,7 +212,7 @@ export default function FilteredProducts({
           </div>
 
           <div
-            className="grid items-stretch grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 transform duration-100"
+            className="grid items-stretch grid-cols-1 md:grid-cols-2 gap-6 p-4 transform duration-100"
             style={{
               opacity: isLoading ? "0.5" : "1",
             }}

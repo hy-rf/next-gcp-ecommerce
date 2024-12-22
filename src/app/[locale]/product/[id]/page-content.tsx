@@ -1,11 +1,20 @@
 "use client";
 
-import { Product } from "@/model";
+import { Category, Product, SubCategory } from "@/model";
 import AddToCartButton from "../component/AddToCartButton";
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
-export default function PageContent({ product }: { product: Product }) {
+export default function PageContent({
+  product,
+  category,
+  subCategory,
+}: {
+  product: Product;
+  category: Category;
+  subCategory: SubCategory;
+}) {
   const [showImageZoom, setShowImageZoom] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(2);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
@@ -68,14 +77,16 @@ export default function PageContent({ product }: { product: Product }) {
 
           {/* Product Category and Subcategory */}
           <div className="space-y-2">
-            <p className="text-sm text-gray-600">
-              <span className="font-medium">Category ID:</span>{" "}
-              {product.categoryId}
-            </p>
-            <p className="text-sm text-gray-600">
-              <span className="font-medium">Subcategory ID:</span>{" "}
-              {product.subCategoryId}
-            </p>
+            <Link
+              href={`/product?page=1&sort=sold-desc&pagesize=10&category=${product.categoryId}`}
+            >
+              <p className="text-sm text-gray-600">{category.name}</p>
+            </Link>
+            <Link
+              href={`/product?page=1&sort=sold-desc&pagesize=10&subcategory=${product.subCategoryId}`}
+            >
+              <p className="text-sm text-gray-600">{subCategory.name}</p>
+            </Link>
           </div>
 
           {/* Timestamps */}

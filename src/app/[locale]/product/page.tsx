@@ -5,13 +5,13 @@ import fetchData from "@/lib/fetchData";
 type SearchParams = {
   page?: number;
   filter?: string;
-  categoryId?: string;
-  subCategoryId?: string;
-  minPrice: number;
-  maxPrice: number;
-  storeId: string;
+  category?: string;
+  subcategory?: string;
+  minprice: number;
+  maxprice: number;
+  storeid: string;
   sort: string;
-  pageSize: number;
+  pagesize: number;
 };
 
 export default async function Page({
@@ -23,12 +23,12 @@ export default async function Page({
     page,
     sort,
     filter,
-    categoryId,
-    subCategoryId,
-    minPrice,
-    maxPrice,
-    storeId,
-    pageSize,
+    category,
+    subcategory,
+    minprice,
+    maxprice,
+    storeid,
+    pagesize,
   } = await searchParams;
   const defaultFilterOptions: FilterOptions = {
     page: 1,
@@ -42,13 +42,13 @@ export default async function Page({
   };
 
   let searchParam = `page=${page}`;
-  if (storeId) searchParam += `&store=${storeId}`;
-  if (categoryId) searchParam += `&category=${categoryId}`;
-  if (subCategoryId) searchParam += `&subcategory=${subCategoryId}`;
-  if (minPrice) searchParam += `&minprice=${minPrice}`;
-  if (maxPrice) searchParam += `&maxprice=${maxPrice}`;
+  if (storeid) searchParam += `&store=${storeid}`;
+  if (category) searchParam += `&category=${category}`;
+  if (subcategory) searchParam += `&subcategory=${subcategory}`;
+  if (minprice) searchParam += `&minprice=${minprice}`;
+  if (maxprice) searchParam += `&maxprice=${maxprice}`;
   if (sort) searchParam += `&sort=${sort}`;
-  if (pageSize) searchParam += `&pagesize=${pageSize}`;
+  if (pagesize) searchParam += `&pagesize=${pagesize}`;
   const response = await fetch(
     `${process.env.URL}/api/product?${searchParam}`
   ).then((res) => res.json());
@@ -77,13 +77,13 @@ export default async function Page({
       <FilteredProducts
         filterOptions={{
           page: page || 1,
-          storeId: storeId || "",
-          categoryId: categoryId || "",
-          subCategoryId: subCategoryId || "",
-          minPrice: minPrice || 0,
-          maxPrice: maxPrice || Infinity,
+          storeId: storeid || "",
+          categoryId: category || "",
+          subCategoryId: subcategory || "",
+          minPrice: minprice || 0,
+          maxPrice: maxprice || Infinity,
           sortOption: "sold-desc",
-          pageSize: pageSize || 10,
+          pageSize: pagesize || 10,
         }}
         defaultFilterOptions={defaultFilterOptions}
         products={products}

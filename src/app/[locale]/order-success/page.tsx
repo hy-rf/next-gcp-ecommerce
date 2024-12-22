@@ -6,7 +6,7 @@ export default function Page({
   searchParams: { id: string };
 }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-6">
+    <div className="flex flex-col items-center justify-center bg-gray-100 p-6">
       <div className="w-full max-w-lg rounded-lg bg-white shadow-lg p-8 text-center">
         <h3 className="text-2xl font-bold text-gray-800 mb-4">
           Order Success!

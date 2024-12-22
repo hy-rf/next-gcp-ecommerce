@@ -14,10 +14,10 @@ export default function AuthProvider({
   const [user, setUser] = useState<User | null>(initialUser);
 
   const logOut = async () => {
+    setUser(null);
     Cookies.remove("token");
     Cookies.remove("refresh");
     Cookies.remove("loggedIn");
-    setUser(null);
   };
 
   const contextActionsValue = useMemo(

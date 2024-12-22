@@ -35,6 +35,11 @@ export default function Page() {
     });
   }, []);
   async function handleLoginOrRegister() {
+    // any name or pwd is "" or spaces -> fail msg
+    // enter right name and pwd -> login success
+    // enter existed name but wrong password -> fail clear input
+    // enter non exist name and any pwd -> enter register mode -> enter confirm password -> matched pwd -> register success then auto login
+    // TODO: anyone register a name that another user trying to register with, handle conflict.
     if (name.trim() === "" || password.trim() === "") {
       toast.error(
         dict.auth_register_name_or_password_could_not_be_empty_warning_text
@@ -68,8 +73,15 @@ export default function Page() {
           router.replace("/");
           return;
         }
+      } else if (response.status === 401) {
+        setIsRegistering(false);
+        setName("");
+        setPassword("");
+        setConfirmPassword("");
+        return;
       } else {
         toast.error(dict.auth_message_login_error_wrong_password);
+        return;
       }
     }
     const isUserExistResponse = await fetch("/api/user/exists", {

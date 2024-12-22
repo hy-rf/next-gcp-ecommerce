@@ -42,5 +42,12 @@ const index: Dictionary = {
     "Name or Password COULD NOT be empty!",
   auth_register_wrong_confirm_password:
     "Confirm Password MUST be the same as password!",
+  business_subtitle_sales_performance_metrics: "Sales Performance Metrics",
+  business_subtitle_customer_satisfaction_metrics:
+    "Customer Satisfaction Metrics",
+  business_subtitle_market_comparison: "Market Comparison",
+  business_subtitle_trust_and_reliability_indicators:
+    "Trust & Reliability Indicators",
+  business_metric_title_sales_performance_metrics: "",
 };
 export default index;

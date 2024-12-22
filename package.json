@@ -9,7 +9,8 @@
     "build": "rm -rf .next && next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "dev-turbo": "next dev --turbo"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.5",
