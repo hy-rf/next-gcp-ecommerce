@@ -1,6 +1,8 @@
 import database from "@/lib/database/database";
 import { NextRequest } from "next/server";
-
+/**
+ * Get sub category by id
+ */
 export async function GET(
   req: NextRequest,
   {

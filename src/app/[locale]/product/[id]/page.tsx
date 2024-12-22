@@ -1,5 +1,5 @@
 import fetchData from "@/lib/fetchData";
-import { Product } from "@/model";
+import { Category, Product, SubCategory } from "@/model";
 
 import type { Metadata } from "next";
 import PageContent from "./page-content";
@@ -15,6 +15,24 @@ async function getProduct(id: string) {
   )) as Product;
   return product;
 }
+async function getCategory(id: string) {
+  const category: Category = (await fetchData<Category>(
+    `${process.env.URL}/api/category/${id}`
+  )) as Category;
+  return category;
+}
+async function getSubCategory(id: string) {
+  const subCategory: SubCategory = (await fetchData<Category>(
+    `${process.env.URL}/api/subcategory/${id}`
+  )) as SubCategory;
+  return subCategory;
+}
+// async function getReviews(productId: string) {
+//   const reviews: Review[] = (await fetchData<Review[]>(
+//     `${process.env.URL}/api/review?productid=${productId}`
+//   )) as Review[];
+//   return reviews;
+// }
 
 export async function generateMetadata({
   params,
@@ -25,11 +43,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const product: Product = await getProduct(id);
+  const category: Category = await getCategory(product.categoryId);
+  const subCategory: SubCategory = await getSubCategory(product.subCategoryId);
+
   return {
     title: product.name,
     description: product.description,
     applicationName: "E-Commerce",
-    keywords: `${product.name},${product.description}`,
+    keywords: `${product.name},${category.name},${subCategory.name}`,
     openGraph: {
       title: product.name,
       description: product.description,
@@ -56,6 +77,14 @@ export default async function Page({
 }) {
   const { id } = await params;
   const product: Product = await getProduct(id);
+  const category: Category = await getCategory(product.categoryId);
+  const subCategory: SubCategory = await getSubCategory(product.subCategoryId);
 
-  return <PageContent product={product} />;
+  return (
+    <PageContent
+      product={product}
+      category={category}
+      subCategory={subCategory}
+    />
+  );
 }
