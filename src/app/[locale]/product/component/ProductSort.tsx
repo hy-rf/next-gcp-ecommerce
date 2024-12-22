@@ -1,7 +1,13 @@
 "use client";
 
 import { FilterOptions } from "@/model";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import LocaleContext from "../../component/LocaleContext";
 
 export default function ProductSort({
@@ -17,14 +23,14 @@ export default function ProductSort({
   const [sortOption, setSortOption] = useState<string>(
     filterOption.sortOption || "sold-desc"
   );
-  // useEffect(() => {
-  //   setFilterOption((old) => {
-  //     return {
-  //       ...old,
-  //       sortOption: sortOption,
-  //     };
-  //   });
-  // }, [sortOption]);
+  useEffect(() => {
+    setFilterOption((old) => {
+      return {
+        ...old,
+        sortOption: sortOption,
+      };
+    });
+  }, [sortOption]);
   const sortOptions = [
     {
       value: "sold-desc",
