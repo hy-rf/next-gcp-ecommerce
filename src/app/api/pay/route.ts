@@ -4,6 +4,7 @@ import {
   CheckoutPaymentIntent,
   Client,
   Environment,
+  OrderCaptureRequest,
   OrderRequest,
   OrdersController,
   //PaymentsController,
@@ -16,7 +17,6 @@ export async function POST(req: NextRequest) {
 
   //const paymentsController = new PaymentsController(client);
   const { searchParams } = new URL(req.url);
-  const orderID = searchParams.get("id") as string;
   const client = new Client({
     clientCredentialsAuthCredentials: {
       oAuthClientId: process.env.PAYPAL_CLIENT_ID!,
@@ -31,9 +31,19 @@ export async function POST(req: NextRequest) {
     // },
   });
   const ordersController = new OrdersController(client);
+
+  // OrderID is that paypal treats this order with unique identifier that will be used at payment
+  const orderID = searchParams.get("id") as string;
+  // capture order(move money to seller who checked the order) if orderID was sent
   if (orderID) {
-    // capture order(move money to seller who checked the order) if orderID was sent
-    const collect = {
+    const collect: {
+      id: string;
+      paypalRequestId?: string;
+      prefer?: string;
+      paypalClientMetadataId?: string;
+      paypalAuthAssertion?: string;
+      body?: OrderCaptureRequest;
+    } = {
       id: orderID,
       prefer: "return=minimal",
     };
@@ -43,20 +53,23 @@ export async function POST(req: NextRequest) {
     return Response.json(JSON.parse(bodyres));
   }
   // create order if orderID wasn't sent
-  const body: Order = await req.json();
   const orderRequest: OrderRequest = {
     intent: CheckoutPaymentIntent.Capture,
     purchaseUnits: [
       {
         amount: {
           currencyCode: "USD",
-          value: body.total.toString(),
+          value: order.total.toString(),
         },
         payee: {
           emailAddress: "sb-pywkw34654204@business.example.com",
         },
       },
     ],
+    applicationContext: {
+      brandName: "test",
+      locale: "jp-JP",
+    },
   };
   const collect = {
     body: orderRequest,
