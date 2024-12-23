@@ -103,6 +103,7 @@ export interface Product {
 export interface Review {
   id?: string;
   stars: number;
+  content?: string;
   productId: string;
   userId: string;
 }

@@ -1,6 +1,7 @@
 import database from "@/lib/database/database";
 import getTokenPayload from "@/lib/getTokenPayload";
 import { Review, tokenPayload } from "@/model";
+import { AddReviewDto } from "@/model/dto";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -27,17 +28,12 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  let postBody: {
-    stars: number;
-    productId: string;
-  };
+  let postBody: AddReviewDto;
   try {
     postBody = await req.json();
   } catch {
     return new Response(null, { status: 400 });
   }
-  console.log(postBody);
-
   const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
   if (!decoded) {
     return new Response(null, {
@@ -48,10 +44,22 @@ export async function POST(req: NextRequest) {
   // Check if user has permission to review product(bought, reviewed)
   // Check if review content is acceptable
   // Add review to database
-  return new Response(JSON.stringify(await req.json()), {
-    status: 200,
-    statusText: "OK",
-  });
+  const db = database();
+  const newReview: Review = {
+    stars: postBody.stars,
+    productId: postBody.productId,
+    userId: decoded.userId,
+  };
+  const result = await db.collection("Review").add(newReview);
+  return new Response(
+    JSON.stringify({
+      result,
+    }),
+    {
+      status: 200,
+      statusText: "OK",
+    }
+  );
 }
 
 export async function PUT(req: NextRequest) {
