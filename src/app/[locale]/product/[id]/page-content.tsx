@@ -3,9 +3,10 @@
 import { Category, Product, SubCategory } from "@/model";
 import AddToCartButton from "../component/AddToCartButton";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
 import AddReviewForm from "./AddReviewForm";
+import { AuthContext } from "@/services/auth/AuthContext";
 
 export default function PageContent({
   product,
@@ -19,6 +20,7 @@ export default function PageContent({
   const [showImageZoom, setShowImageZoom] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(2);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const { user } = useContext(AuthContext);
   const handleMovingZoomPosition = (
     event: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
@@ -109,8 +111,8 @@ export default function PageContent({
           showSpec={true}
           showQuantity={true}
         />
-        <AddReviewForm productId={product.id!} />
       </div>
+      {user && <AddReviewForm productId={product.id!} />}
     </div>
   );
 }
