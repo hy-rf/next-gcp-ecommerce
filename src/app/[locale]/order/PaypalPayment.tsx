@@ -18,20 +18,18 @@ function PaypalPayment({ order }: { order: Order }) {
   const initialOptions: ReactPayPalScriptOptions = {
     clientId:
       "AdAwNGwtEh9YZNq30hDpOwVXgcjU4Avq1p8Ulf3J6mKKHG_gSQRiweYoKTHfcd76NnIrROzy5iQYwl1i",
-    enableFunding: "venmo",
-    disableFunding: "",
+    disableFunding: "credit",
     buyerCountry: "US",
     currency: "USD",
     "data-page-type": "product-details",
     components: "buttons",
-    "dataSdkIntegration-source": "developer-studio",
   };
 
   const [message, setMessage] = useState("");
   const { dict } = useContext(LocaleContext);
   return (
     <div>
-      <div className="text-center">
+      <div className="text-center -z-40">
         <h5>{dict.order_payment_paypal_test_account_text}</h5>
       </div>
       <p>Email:sb-vl4gr34366980@personal.example.com</p>
@@ -39,9 +37,8 @@ function PaypalPayment({ order }: { order: Order }) {
       <PayPalScriptProvider options={initialOptions}>
         <PayPalButtons
           style={{
-            shape: "rect",
             layout: "vertical",
-            color: "gold",
+            color: "silver",
             label: "paypal",
           }}
           createOrder={async () => {
@@ -119,6 +116,12 @@ function PaypalPayment({ order }: { order: Order }) {
                 `Sorry, your transaction could not be processed...${error}`
               );
             }
+          }}
+          onCancel={async () => {
+            toast.info("Payment canceled!");
+          }}
+          onClick={async () => {
+            toast.info("Transaction begin");
           }}
         />
       </PayPalScriptProvider>

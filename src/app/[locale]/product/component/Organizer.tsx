@@ -93,7 +93,6 @@ export default function Organizer({
           <ProductSort
             filterOption={filterOption}
             setFilterOption={setFilterOption}
-            setShowSort={setShowSort}
           />
         </div>
         {/* <button

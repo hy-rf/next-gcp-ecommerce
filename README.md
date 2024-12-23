@@ -4,35 +4,23 @@
 
 ## Features
 
+### Password login
+
+### Google login
+
 ### Localization
 
 ### SEO
 
-### Product filter/sort
+### JWT and token refresh
 
-Customizable and expandable product filter/sort solution.
+### Product filter/sort
 
 ### Cart
 
-Add product to cart and change quantity of cart items.
-
-### Password login
-
-Login method which is available for public before app publish.
-
-### Google login
-
 ### Order
 
-Place order.
-
-## Features in Dev/Test
-
-### OAuth2.0 Link providers
-
-Link other oauth login providers
-
-### Product search
+### Paypal payment
 
 ## Getting Started
 

@@ -26,3 +26,9 @@ export interface CartItemViewModel {
   spec?: string;
   imageUrl: string;
 }
+
+export type AddReviewDto = {
+  stars: number;
+  content?: string;
+  productId: string;
+};

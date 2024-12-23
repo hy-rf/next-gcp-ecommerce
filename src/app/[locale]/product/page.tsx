@@ -88,7 +88,7 @@ export default async function Page({
         defaultFilterOptions={defaultFilterOptions}
         products={products}
         maxP={maxPages}
-        totalFromServerCpomonent={total}
+        total={total}
         categories={categories}
       />
     </div>

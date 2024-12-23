@@ -5,6 +5,7 @@ import AddToCartButton from "../component/AddToCartButton";
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
+import AddReviewForm from "./AddReviewForm";
 
 export default function PageContent({
   product,
@@ -108,6 +109,7 @@ export default function PageContent({
           showSpec={true}
           showQuantity={true}
         />
+        <AddReviewForm productId={product.id!} />
       </div>
     </div>
   );

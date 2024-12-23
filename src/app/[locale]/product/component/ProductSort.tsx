@@ -1,36 +1,17 @@
 "use client";
 
 import { FilterOptions } from "@/model";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import LocaleContext from "../../component/LocaleContext";
 
 export default function ProductSort({
   filterOption,
   setFilterOption,
-  setShowSort,
 }: {
   filterOption: FilterOptions;
   setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
-  setShowSort: Dispatch<SetStateAction<boolean>>;
 }) {
   const { dict } = useContext(LocaleContext);
-  const [sortOption, setSortOption] = useState<string>(
-    filterOption.sortOption || "sold-desc"
-  );
-  useEffect(() => {
-    setFilterOption((old) => {
-      return {
-        ...old,
-        sortOption: sortOption,
-      };
-    });
-  }, [sortOption]);
   const sortOptions = [
     {
       value: "sold-desc",
@@ -58,7 +39,7 @@ export default function ProductSort({
     },
   ];
   return (
-    <>
+    <div key={filterOption.sortOption}>
       {sortOptions.map((ele) => (
         <div key={ele.value} className="flex gap-2 w-32">
           <input
@@ -66,7 +47,14 @@ export default function ProductSort({
             type="radio"
             name="group"
             value={ele.value}
-            onChange={(e) => setSortOption(e.target.value)}
+            onChange={() =>
+              setFilterOption((old) => {
+                return {
+                  ...old,
+                  sortOption: ele.value,
+                };
+              })
+            }
             checked={filterOption.sortOption == ele.value}
             className="h-9"
           />
@@ -76,20 +64,6 @@ export default function ProductSort({
           </label>
         </div>
       ))}
-      <button
-        className="hidden bg-gray-400 rounded-md"
-        onClick={() => {
-          setFilterOption((old) => {
-            return {
-              ...old,
-              sortOption: sortOption,
-            };
-          });
-          setShowSort(false);
-        }}
-      >
-        {dict.product_sort_apply}
-      </button>
-    </>
+    </div>
   );
 }
