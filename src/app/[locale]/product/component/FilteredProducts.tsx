@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import LocaleContext from "../../component/LocaleContext";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRouter as useR } from "next/router";
 import { Pagination } from "@mui/material";
 /**
  * Content of filtered products
@@ -16,23 +15,20 @@ export default function FilteredProducts({
   products,
   filterOptions,
   maxP,
-  totalFromServerCpomonent,
+  total,
   defaultFilterOptions,
   categories,
 }: {
   products: Product[];
   filterOptions: FilterOptions;
   maxP: number;
-  totalFromServerCpomonent: number;
+  total: number;
   defaultFilterOptions: FilterOptions;
   categories: Category[];
 }) {
   // const r = useR();
   const { dict } = useContext(LocaleContext);
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
-  const [filteredProducts, setFilteredProducts] = useState(products);
-  const [maxPages, setMaxPages] = useState(maxP);
-  const [total, setTotal] = useState(totalFromServerCpomonent);
   const [isNotFirstFetch, setIsNotFirstFetch] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -46,6 +42,10 @@ export default function FilteredProducts({
     });
   }, []);
   useEffect(() => {
+    setIsLoading(false);
+  }, [products]);
+  useEffect(() => {
+    if (!isNotFirstFetch) setIsLoading(true);
     const newOptions: FilterOptions = {
       page: parseInt(searchParams.get("page") || "1"),
       storeId: searchParams.get("store") || "",
@@ -81,29 +81,6 @@ export default function FilteredProducts({
       }
       router.push(`/product?${searchParam}`);
       return;
-      fetch(`/api/product?${searchParam}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setFilteredProducts(data.products);
-          setMaxPages(data.pages);
-          setTotal(data.total);
-          if (data.pages < options.page) {
-            // TODO: this causes one additonal re-render and api call
-            setOptions((old) => {
-              return {
-                ...old,
-                page: data.pages,
-              };
-            });
-          }
-          setIsLoading(false);
-          try {
-            router.push(`product?${searchParam}`);
-            // window.history.pushState(null, "", `product?${searchParam}`);
-          } catch {
-            console.log("fail to update url");
-          }
-        });
     }
   }, [options]);
   return (

@@ -1,23 +1,15 @@
 "use client";
 
 import { FilterOptions } from "@/model";
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import LocaleContext from "../../component/LocaleContext";
 
 export default function ProductSort({
   filterOption,
   setFilterOption,
-  setShowSort,
 }: {
   filterOption: FilterOptions;
   setFilterOption: Dispatch<SetStateAction<FilterOptions>>;
-  setShowSort: Dispatch<SetStateAction<boolean>>;
 }) {
   const { dict } = useContext(LocaleContext);
   const sortOptions = [
@@ -55,7 +47,7 @@ export default function ProductSort({
             type="radio"
             name="group"
             value={ele.value}
-            onChange={(e) =>
+            onChange={() =>
               setFilterOption((old) => {
                 return {
                   ...old,
