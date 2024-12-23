@@ -5,7 +5,8 @@ import { Category, FilterOptions, Product } from "@/model";
 import { useContext, useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import LocaleContext from "../../component/LocaleContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter as useR } from "next/router";
 import { Pagination } from "@mui/material";
 /**
  * Content of filtered products
@@ -26,6 +27,7 @@ export default function FilteredProducts({
   defaultFilterOptions: FilterOptions;
   categories: Category[];
 }) {
+  // const r = useR();
   const { dict } = useContext(LocaleContext);
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
   const [filteredProducts, setFilteredProducts] = useState(products);
@@ -34,36 +36,7 @@ export default function FilteredProducts({
   const [isNotFirstFetch, setIsNotFirstFetch] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
-    const handlePopState = () => {
-      const searchParams = new URLSearchParams(window.location.search);
-      const storeId = searchParams.get("store");
-      const categoryId = searchParams.get("category");
-      const subCategoryId = searchParams.get("subcategory");
-      const minPrice = searchParams.get("minprice");
-      const maxPrice = searchParams.get("maxprice");
-      const page = searchParams.get("page");
-      const sort = searchParams.get("sort");
-      const pageSize = searchParams.get("pagesize");
-      setOptions({
-        page: page ? parseInt(page) : 1,
-        storeId: storeId ? storeId : "",
-        categoryId: categoryId ? categoryId : "",
-        subCategoryId: subCategoryId ? subCategoryId : "",
-        minPrice: minPrice ? parseFloat(minPrice) : 0,
-        maxPrice: maxPrice ? parseFloat(maxPrice) : Infinity,
-        sortOption: sort ? sort : "sold-desc",
-        pageSize: pageSize ? parseInt(pageSize) : 10,
-      });
-    };
-
-    window.addEventListener("popstate", handlePopState);
-
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-    };
-  }, []);
-
+  const searchParams = useSearchParams();
   useEffect(() => {
     document?.addEventListener("click", (e) => {
       const target = e.target as HTMLElement; // Typecasting e.target as HTMLElement
@@ -72,15 +45,25 @@ export default function FilteredProducts({
       }
     });
   }, []);
-
+  useEffect(() => {
+    const newOptions: FilterOptions = {
+      page: parseInt(searchParams.get("page") || "1"),
+      storeId: searchParams.get("store") || "",
+      categoryId: searchParams.get("category") || "",
+      subCategoryId: searchParams.get("subcategory") || "",
+      minPrice: parseInt(searchParams.get("minprice") || "0"),
+      maxPrice: parseInt(searchParams.get("maxprice") || "Infinity"),
+      pageSize: parseInt(searchParams.get("pagesize") || "10"),
+      sortOption: searchParams.get("sort") || "sold-desc",
+    };
+    setOptions(newOptions);
+  }, [filterOptions]);
   useEffect(() => {
     if (isNotFirstFetch === false) {
       setIsNotFirstFetch(true);
       return;
     } else {
-      setIsLoading(true);
-      console.log("GETTING");
-
+      // setIsLoading(true);
       let searchParam = `page=${options.page}`;
       if (options.storeId !== "") searchParam += `&store=${options.storeId}`;
       if (options.categoryId !== "")
@@ -96,7 +79,8 @@ export default function FilteredProducts({
       if (options.pageSize) {
         searchParam += `&pagesize=${options.pageSize}`;
       }
-
+      router.push(`/product?${searchParam}`);
+      return;
       fetch(`/api/product?${searchParam}`)
         .then((res) => res.json())
         .then((data) => {
@@ -125,52 +109,6 @@ export default function FilteredProducts({
   return (
     <>
       <div className="flex h-full">
-        {false && (
-          <div className="bg-white p-6 rounded-lg shadow-md w-full">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              Filter Options
-            </h3>
-            <div className="space-y-4 flex justify-around w-full">
-              <div className="w-full m-0" style={{ marginTop: 0 }}>
-                <p className="text-gray-600 font-medium mb-1">Sort Option:</p>
-                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                  {options.sortOption}
-                </p>
-              </div>
-              <div className="w-full m-0" style={{ marginTop: 0 }}>
-                <p className="text-gray-600 font-medium mb-1">Min Price:</p>
-                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                  ${options.minPrice}
-                </p>
-              </div>
-              <div className="w-full m-0" style={{ marginTop: 0 }}>
-                <p className="text-gray-600 font-medium mb-1">Max Price:</p>
-                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                  ${options.maxPrice}
-                </p>
-              </div>
-              <div className="w-full m-0" style={{ marginTop: 0 }}>
-                <p className="text-gray-600 font-medium mb-1">Category:</p>
-                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                  {options.categoryId || "All"}
-                </p>
-              </div>
-              <div className="w-full m-0" style={{ marginTop: 0 }}>
-                <p className="text-gray-600 font-medium mb-1">Subcategory:</p>
-                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                  {options.subCategoryId || "All"}
-                </p>
-              </div>
-              <div className="w-full m-0" style={{ marginTop: 0 }}>
-                <p className="text-gray-600 font-medium mb-1">Store:</p>
-                <p className="bg-gray-100 px-4 py-2 rounded-md text-gray-800">
-                  {options.storeId || "All"}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
         <Organizer
           filterOption={options}
           setFilterOption={setOptions}
@@ -196,7 +134,7 @@ export default function FilteredProducts({
                   };
                 })
               }
-              value={options.pageSize} // Bind the value to the current page size
+              value={filterOptions.pageSize} // Bind the value to the current page size
             >
               <option value="1">1</option>
               <option value="5">5</option>
@@ -214,7 +152,7 @@ export default function FilteredProducts({
               opacity: isLoading ? "0.5" : "1",
             }}
           >
-            {filteredProducts.map((ele) => (
+            {products.map((ele) => (
               <ProductItem product={ele} key={ele.id} />
             ))}
           </div>
@@ -223,7 +161,7 @@ export default function FilteredProducts({
             <div className="pagination flex text-center relative bottom-0 mt-auto mx-auto gap-8 pb-4">
               <Pagination
                 page={parseInt(options.page.toString())}
-                count={maxPages}
+                count={maxP}
                 showFirstButton
                 showLastButton
                 onChange={(_: React.ChangeEvent<unknown>, page: number) => {
