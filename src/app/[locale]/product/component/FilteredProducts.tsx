@@ -26,13 +26,13 @@ export default function FilteredProducts({
   defaultFilterOptions: FilterOptions;
   categories: Category[];
 }) {
-  // const r = useR();
   const { dict } = useContext(LocaleContext);
   const [options, setOptions] = useState<FilterOptions>(filterOptions);
   const [isNotFirstFetch, setIsNotFirstFetch] = useState(false);
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const searchParams = useSearchParams();
+  // Handle click on product page link on header
   useEffect(() => {
     document?.addEventListener("click", (e) => {
       const target = e.target as HTMLElement; // Typecasting e.target as HTMLElement
@@ -44,8 +44,8 @@ export default function FilteredProducts({
   useEffect(() => {
     setIsLoading(false);
   }, [products]);
+  // Set options which is used by all child component when filterOptions passed from parent is changed
   useEffect(() => {
-    if (!isNotFirstFetch) setIsLoading(true);
     const newOptions: FilterOptions = {
       page: parseInt(searchParams.get("page") || "1"),
       storeId: searchParams.get("store") || "",
@@ -58,28 +58,27 @@ export default function FilteredProducts({
     };
     setOptions(newOptions);
   }, [filterOptions]);
+  // Push route to url with new search params when options at client component is changed
   useEffect(() => {
     if (isNotFirstFetch === false) {
       setIsNotFirstFetch(true);
       return;
     } else {
-      // setIsLoading(true);
-      let searchParam = `page=${options.page}`;
-      if (options.storeId !== "") searchParam += `&store=${options.storeId}`;
+      const searchParams = new URLSearchParams();
+      searchParams.append("page", options.page.toString());
+      if (options.storeId !== "") searchParams.append("store", options.storeId);
       if (options.categoryId !== "")
-        searchParam += `&category=${options.categoryId}`;
+        searchParams.append("category", options.categoryId);
       if (options.subCategoryId !== "")
-        searchParam += `&subcategory=${options.subCategoryId}`;
-      if (options.minPrice > 0) searchParam += `&minprice=${options.minPrice}`;
+        searchParams.append("subcategory", options.subCategoryId);
+      if (options.minPrice > 0)
+        searchParams.append("minprice", options.minPrice.toString());
       if (options.maxPrice < Infinity)
-        searchParam += `&maxprice=${options.maxPrice}`;
-      if (options.sortOption) {
-        searchParam += `&sort=${options.sortOption}`;
-      }
-      if (options.pageSize) {
-        searchParam += `&pagesize=${options.pageSize}`;
-      }
-      router.push(`/product?${searchParam}`);
+        searchParams.append("maxprice", options.maxPrice.toString());
+      if (options.sortOption) searchParams.append("sort", options.sortOption);
+      if (options.pageSize)
+        searchParams.append("pagesize", options.pageSize.toString());
+      router.push(`/product?${searchParams.toString()}`);
       return;
     }
   }, [options]);
