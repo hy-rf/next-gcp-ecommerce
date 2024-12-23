@@ -78,51 +78,48 @@ export default function FilteredProducts({
       setIsNotFirstFetch(true);
       return;
     } else {
-      if (filterOptions !== options) {
-        setIsLoading(true);
-        console.log("GETTING");
+      setIsLoading(true);
+      console.log("GETTING");
 
-        let searchParam = `page=${options.page}`;
-        if (options.storeId !== "") searchParam += `&store=${options.storeId}`;
-        if (options.categoryId !== "")
-          searchParam += `&category=${options.categoryId}`;
-        if (options.subCategoryId !== "")
-          searchParam += `&subcategory=${options.subCategoryId}`;
-        if (options.minPrice > 0)
-          searchParam += `&minprice=${options.minPrice}`;
-        if (options.maxPrice < Infinity)
-          searchParam += `&maxprice=${options.maxPrice}`;
-        if (options.sortOption) {
-          searchParam += `&sort=${options.sortOption}`;
-        }
-        if (options.pageSize) {
-          searchParam += `&pagesize=${options.pageSize}`;
-        }
-
-        fetch(`/api/product?${searchParam}`)
-          .then((res) => res.json())
-          .then((data) => {
-            setFilteredProducts(data.products);
-            setMaxPages(data.pages);
-            setTotal(data.total);
-            if (data.pages < options.page) {
-              // TODO: this causes one additonal re-render and api call
-              setOptions((old) => {
-                return {
-                  ...old,
-                  page: data.pages,
-                };
-              });
-            }
-            setIsLoading(false);
-            try {
-              router.push(`product?${searchParam}`);
-              // window.history.pushState(null, "", `product?${searchParam}`);
-            } catch {
-              console.log("fail to update url");
-            }
-          });
+      let searchParam = `page=${options.page}`;
+      if (options.storeId !== "") searchParam += `&store=${options.storeId}`;
+      if (options.categoryId !== "")
+        searchParam += `&category=${options.categoryId}`;
+      if (options.subCategoryId !== "")
+        searchParam += `&subcategory=${options.subCategoryId}`;
+      if (options.minPrice > 0) searchParam += `&minprice=${options.minPrice}`;
+      if (options.maxPrice < Infinity)
+        searchParam += `&maxprice=${options.maxPrice}`;
+      if (options.sortOption) {
+        searchParam += `&sort=${options.sortOption}`;
       }
+      if (options.pageSize) {
+        searchParam += `&pagesize=${options.pageSize}`;
+      }
+
+      fetch(`/api/product?${searchParam}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setFilteredProducts(data.products);
+          setMaxPages(data.pages);
+          setTotal(data.total);
+          if (data.pages < options.page) {
+            // TODO: this causes one additonal re-render and api call
+            setOptions((old) => {
+              return {
+                ...old,
+                page: data.pages,
+              };
+            });
+          }
+          setIsLoading(false);
+          try {
+            router.push(`product?${searchParam}`);
+            // window.history.pushState(null, "", `product?${searchParam}`);
+          } catch {
+            console.log("fail to update url");
+          }
+        });
     }
   }, [options]);
   return (

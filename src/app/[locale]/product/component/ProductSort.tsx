@@ -25,12 +25,15 @@ export default function ProductSort({
   );
   useEffect(() => {
     setFilterOption((old) => {
+      if (old.sortOption === sortOption) {
+        return old; // Prevent unnecessary updates if the value hasn't changed
+      }
       return {
         ...old,
         sortOption: sortOption,
       };
     });
-  }, [sortOption]);
+  }, [sortOption, setFilterOption]);
   const sortOptions = [
     {
       value: "sold-desc",
