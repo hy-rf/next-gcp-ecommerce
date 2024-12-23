@@ -1,5 +1,6 @@
 import { Product } from "@/model";
 import Filter from "@/app/[locale]/store/[id]/Filter";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -32,6 +33,17 @@ export default async function Page({
         ))}
       </div>
       <div>
+        <Link
+          href={{
+            pathname: `/store/${id}`,
+            query: {
+              sort: "sold-asc",
+              page: 1,
+            },
+          }}
+        >
+          to asc
+        </Link>
         <Filter />
       </div>
     </>
