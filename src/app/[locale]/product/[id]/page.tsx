@@ -1,5 +1,5 @@
 import fetchData from "@/lib/fetchData";
-import { Category, Product, SubCategory } from "@/model";
+import { Category, Product, Review, SubCategory } from "@/model";
 
 import type { Metadata } from "next";
 import PageContent from "./page-content";
@@ -27,12 +27,12 @@ async function getSubCategory(id: string) {
   )) as SubCategory;
   return subCategory;
 }
-// async function getReviews(productId: string) {
-//   const reviews: Review[] = (await fetchData<Review[]>(
-//     `${process.env.URL}/api/review?productid=${productId}`
-//   )) as Review[];
-//   return reviews;
-// }
+async function getReviews(productId: string) {
+  const reviews: Review[] = (await fetchData<Review[]>(
+    `${process.env.URL}/api/review?productid=${productId}`
+  )) as Review[];
+  return reviews;
+}
 
 export async function generateMetadata({
   params,
@@ -79,12 +79,13 @@ export default async function Page({
   const product: Product = await getProduct(id);
   const category: Category = await getCategory(product.categoryId);
   const subCategory: SubCategory = await getSubCategory(product.subCategoryId);
-
+  const reviews: Review[] = await getReviews(id);
   return (
     <PageContent
       product={product}
       category={category}
       subCategory={subCategory}
+      reviews={reviews}
     />
   );
 }

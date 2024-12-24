@@ -1,21 +1,24 @@
 "use client";
 
-import { Category, Product, SubCategory } from "@/model";
+import { Category, Product, Review, SubCategory } from "@/model";
 import AddToCartButton from "../component/AddToCartButton";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import Link from "next/link";
 import AddReviewForm from "./AddReviewForm";
 import { AuthContext } from "@/services/auth/AuthContext";
+import Reviews from "./Reviews";
 
 export default function PageContent({
   product,
   category,
   subCategory,
+  reviews,
 }: {
   product: Product;
   category: Category;
   subCategory: SubCategory;
+  reviews: Review[];
 }) {
   const [showImageZoom, setShowImageZoom] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(2);
@@ -113,6 +116,7 @@ export default function PageContent({
         />
       </div>
       {user && <AddReviewForm productId={product.id!} />}
+      <Reviews reviews={reviews} />
     </div>
   );
 }

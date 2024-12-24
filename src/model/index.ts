@@ -38,6 +38,7 @@ export interface Dictionary {
   order_payment_paypal_test_account_text: string;
   product_select_products_per_page_text_left: string;
   product_select_products_per_page_text_right: string;
+  product_review_content_label_text: string;
 
   business_subtitle_sales_performance_metrics: string;
   business_subtitle_customer_satisfaction_metrics: string;

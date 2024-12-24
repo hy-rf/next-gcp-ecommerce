@@ -10,6 +10,7 @@ export default function Reviews({ reviews }: { reviews: Review[] }) {
         return (
           <div key={el.id}>
             <p>{el.stars}</p>
+            <p>{el.content}</p>
             <p>{el.userId}</p>
           </div>
         );

@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
   const db = database();
   const newReview: Review = {
     stars: postBody.stars,
+    content: postBody.content,
     productId: postBody.productId,
     userId: decoded.userId,
   };

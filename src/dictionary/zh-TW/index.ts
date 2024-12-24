@@ -45,5 +45,6 @@ const index: Dictionary = {
   business_subtitle_market_comparison: "市場比較",
   business_subtitle_trust_and_reliability_indicators: "信任與可靠性指標",
   business_metric_title_sales_performance_metrics: "",
+  product_review_content_label_text: "說點什麼吧！",
 };
 export default index;
