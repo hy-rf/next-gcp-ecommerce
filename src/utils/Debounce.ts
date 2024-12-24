@@ -2,7 +2,7 @@ type DebouncedFunction<T extends (...args: unknown[]) => unknown> = (
   ...args: Parameters<T>
 ) => void;
 
-function debounce<T extends (...args: unknown[]) => unknown>(
+export default function debounce<T extends (...args: unknown[]) => unknown>(
   callback: T,
   delay: number
 ): DebouncedFunction<T> {
