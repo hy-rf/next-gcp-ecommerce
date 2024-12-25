@@ -47,7 +47,11 @@ export default function FilteredProducts({
   // Set options which is used by all child component when filterOptions passed from parent is changed
   useEffect(() => {
     const newOptions: FilterOptions = {
-      page: parseInt(searchParams.get("page") || "1"),
+      page: searchParams.get("page")
+        ? parseInt(searchParams.get("page")!) > maxP
+          ? maxP
+          : parseInt(searchParams.get("page")!)
+        : 1,
       storeId: searchParams.get("store") || "",
       categoryId: searchParams.get("category") || "",
       subCategoryId: searchParams.get("subcategory") || "",
