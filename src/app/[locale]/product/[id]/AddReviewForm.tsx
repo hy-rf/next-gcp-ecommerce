@@ -7,11 +7,18 @@ import { toast } from "sonner";
 import LocaleContext from "../../component/LocaleContext";
 
 export default function AddReviewForm({ productId }: { productId: string }) {
+  // hover on stars star
   const [currentStar, setCurrentStar] = useState(0);
+
   const [content, setContent] = useState("");
+  // actually click star(s)
   const [stars, setStars] = useState(0);
   const { dict } = useContext(LocaleContext);
   const handleAddReview = async () => {
+    if (stars < 1) {
+      toast.error("Must be at least 1 star");
+      return;
+    }
     const postBody: AddReviewDto = {
       stars: stars,
       content: content,
