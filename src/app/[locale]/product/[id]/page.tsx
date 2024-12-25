@@ -81,6 +81,7 @@ export default async function Page({
   const subCategory: SubCategory = await getSubCategory(product.subCategoryId);
   const reviews: Review[] = await getReviews(id);
   const averageStars = reviews.reduce((acc, product) => acc + product.stars, 0);
+  console.log(averageStars)
   return (
     <PageContent
       product={product}
