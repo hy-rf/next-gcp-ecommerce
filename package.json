@@ -19,6 +19,7 @@
     "@formatjs/intl-localematcher": "^0.5.7",
     "@google-cloud/firestore": "^7.10.0",
     "@google-cloud/storage": "^7.14.0",
+    "@google/generative-ai": "^0.21.0",
     "@mui/material": "^6.1.10",
     "@mui/material-nextjs": "^6.1.9",
     "@mui/x-data-grid": "^7.23.1",

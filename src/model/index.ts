@@ -53,6 +53,7 @@ export interface User {
   name: string;
   lastLogin: string;
   password?: string;
+  refreshToken?: string;
 }
 
 export interface UserLoginMethod {
