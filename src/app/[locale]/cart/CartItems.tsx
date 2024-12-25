@@ -72,6 +72,25 @@ export default function CartItems() {
       router.replace(`/order-success?id=${await res.text()}`);
     }
   };
+  if (cartItems.length == 0) {
+    return (
+      <div className="text-center">
+        <p>No items</p>
+        <Link
+          href={{
+            pathname: "/product",
+            query: {
+              page: 1,
+              sort: "sold-desc",
+              pagesize: 10,
+            },
+          }}
+        >
+          Continue shopping
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <>
