@@ -54,9 +54,7 @@ export default function Page() {
       },
     };
 
-    const genAI = new GoogleGenerativeAI(
-      "AIzaSyBM0sEmzpyj4MTrdXGNMkL37BMyubvqy70"
-    );
+    const genAI = new GoogleGenerativeAI(process.env.AI_API_KEY!);
     const model = genAI.getGenerativeModel({
       model: "models/gemini-1.5-pro",
       generationConfig: {
