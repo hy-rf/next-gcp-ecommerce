@@ -60,8 +60,13 @@ export default function FilteredProducts({
       pageSize: parseInt(searchParams.get("pagesize") || "10"),
       sortOption: searchParams.get("sort") || "sold-desc",
     };
-    setOptions(newOptions);
-  }, [filterOptions]);
+    if (isNotFirstFetch === false) {
+      setIsNotFirstFetch(true);
+      return;
+    } else {
+      setOptions(newOptions);
+    }
+  }, [searchParams]);
   // Push route to url with new search params when options at client component is changed
   useEffect(() => {
     if (isNotFirstFetch === false) {
@@ -83,6 +88,9 @@ export default function FilteredProducts({
       if (options.pageSize)
         searchParams.append("pagesize", options.pageSize.toString());
       router.push(`/product?${searchParams.toString()}`);
+      console.log("Push new route because options changed");
+      console.log("New options:");
+      console.table(options);
       return;
     }
   }, [options]);
