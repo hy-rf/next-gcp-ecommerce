@@ -14,11 +14,13 @@ export default function PageContent({
   category,
   subCategory,
   reviews,
+  averageStars,
 }: {
   product: Product;
   category: Category;
   subCategory: SubCategory;
   reviews: Review[];
+  averageStars: number;
 }) {
   const [showImageZoom, setShowImageZoom] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(2);
@@ -53,7 +55,7 @@ export default function PageContent({
     <div className="flex flex-col gap-4 py-4">
       <div className="mx-auto w-full p-6 bg-white rounded-lg shadow-md space-y-6">
         <h4 className="text-2xl font-semibold text-gray-800">{product.name}</h4>
-
+        <p>{averageStars} stars</p>
         {/* Flex container for left (details) and right (controls) */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Product Images */}

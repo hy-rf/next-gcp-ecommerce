@@ -1,13 +1,8 @@
 "use client";
 
-import { GoogleGenerativeAI, SchemaType, Part } from "@google/generative-ai";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
-
-interface Content {
-  role: "user" | "model";
-  parts: Part[];
-}
+import { toast } from "sonner";
 
 function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -32,52 +27,16 @@ function fileToBase64(file: File): Promise<string> {
 export default function Page() {
   const [mimeType, setMimeType] = useState("");
   const [fileString, setFileString] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   async function handleGenerate() {
-    // if (!process.env.AI_API_KEY) {
-    //   toast.error("AI not enabled!");
-    //   return;
-    // }
-    const schema = {
-      description: "Product details",
-      type: SchemaType.OBJECT,
-      properties: {
-        name: {
-          type: SchemaType.STRING,
-          description: "Name of the product",
-          nullable: false,
-        },
-        description: {
-          type: SchemaType.STRING,
-          description: "Description of the product",
-          nullable: false,
-        },
-      },
-    };
-
-    const genAI = new GoogleGenerativeAI(process.env.AI_API_KEY!);
-    const model = genAI.getGenerativeModel({
-      model: "models/gemini-1.5-pro",
-      generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema: schema,
-      },
-    });
-    const contents: Content[] = [
-      {
-        role: "user",
-        parts: [
-          {
-            inlineData: {
-              data: fileString,
-              mimeType: mimeType,
-            },
-          },
-          { text: "Generate product name and description from the image" },
-        ],
-      },
-    ];
-    const result = await model.generateContent({ contents });
-    console.log(result.response.text());
+    // TODO: call api
+    if (mimeType === "" || fileString === "") {
+      toast.error("No image");
+      setName("");
+      setDescription("");
+      return;
+    }
   }
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
@@ -90,7 +49,11 @@ export default function Page() {
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleGenerate}>Generate name and description</button>
       <p>Preview</p>
-      <Image src={fileString} alt={""} width={300} height={300}></Image>
+      {fileString !== "" && (
+        <Image src={fileString} alt={""} width={300} height={300}></Image>
+      )}
+      <p>Name: {name}</p>
+      <p>Description: {description}</p>
     </>
   );
 }
