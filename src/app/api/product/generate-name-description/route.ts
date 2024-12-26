@@ -4,7 +4,7 @@ interface Content {
   role: "user" | "model";
   parts: Part[];
 }
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
   const postBody: { imageBase64: string; mimeType: string } = await req.json();
   const schema = {
     description: "Product details",
@@ -54,7 +54,6 @@ export async function GET(req: NextRequest) {
     },
   ];
   const result = await model.generateContent({ contents });
-  console.log(JSON.parse(result.response.text()));
   const data = JSON.parse(result.response.text());
   return new Response(JSON.stringify(data), {
     status: 200,

@@ -37,6 +37,19 @@ export default function Page() {
       setDescription("");
       return;
     }
+    const response = await fetch("/api/product/generate-name-description", {
+      method: "post",
+      body: JSON.stringify({
+        imageBase64: fileString,
+        mimeType: mimeType,
+      }),
+    });
+    let data: { name: string; description: string };
+    if (response.status == 200) {
+      data = await response.json();
+      setName(data.name);
+      setDescription(data.description);
+    }
   }
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
