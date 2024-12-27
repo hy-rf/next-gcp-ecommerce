@@ -202,6 +202,7 @@ export interface CarouselItem {
 }
 
 export interface FilterOptions {
+  q: string;
   page: number;
   storeId: string;
   categoryId: string;
