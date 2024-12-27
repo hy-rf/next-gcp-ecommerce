@@ -140,6 +140,7 @@ export interface Order {
   total: number;
   createdAt: Date;
   orderItems: OrderItem[];
+  address: string;
   fireBaseTimeStamp?: FireStoreTimeStamp;
 }
 
