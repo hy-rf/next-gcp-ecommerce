@@ -34,7 +34,6 @@ export interface Dictionary {
   auth_login_title: string;
   auth_login_input_username_label: string;
   auth_login_input_password_label: string;
-  cart_checkout_button_inner_text: string;
   order_payment_paypal_test_account_text: string;
   product_select_products_per_page_text_left: string;
   product_select_products_per_page_text_right: string;
@@ -46,6 +45,11 @@ export interface Dictionary {
   business_subtitle_trust_and_reliability_indicators: string;
 
   business_metric_title_sales_performance_metrics: string;
+
+  cart_checkout_button_inner_text: string;
+  cart_checkout_choose_address_text: string;
+  address_generate_button_text: string;
+  address_no_address_found_text: string;
 }
 
 export interface User {

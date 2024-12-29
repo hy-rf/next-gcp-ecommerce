@@ -50,5 +50,8 @@ const index: Dictionary = {
     "Trust & Reliability Indicators",
   business_metric_title_sales_performance_metrics: "",
   product_review_content_label_text: "Talk about the product",
+  cart_checkout_choose_address_text: "Choose an address",
+  address_generate_button_text: "Generate Address",
+  address_no_address_found_text: "No address found",
 };
 export default index;

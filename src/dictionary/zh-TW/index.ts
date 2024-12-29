@@ -46,5 +46,8 @@ const index: Dictionary = {
   business_subtitle_trust_and_reliability_indicators: "信任與可靠性指標",
   business_metric_title_sales_performance_metrics: "",
   product_review_content_label_text: "說點什麼吧！",
+  cart_checkout_choose_address_text: "選擇地址",
+  address_generate_button_text: "生成地址",
+  address_no_address_found_text: "沒有地址！",
 };
 export default index;
