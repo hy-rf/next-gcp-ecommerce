@@ -18,6 +18,8 @@
 
 ### Cart
 
+### Address generation
+
 ### Order
 
 ### Paypal payment
