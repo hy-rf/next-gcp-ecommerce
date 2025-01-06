@@ -1,14 +1,16 @@
-import { getRefreshTokenPayload } from "@/lib/getTokenPayload";
+import getTokenPayload, { getRefreshTokenPayload } from "@/lib/getTokenPayload";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
 export async function GET() {
-  // const token = await getTokenPayload();
-  // if (!token) {
-  //   return Response.error();
-  // }
+  const token = await getTokenPayload();
+  if (!token) {
+    return Response.error();
+  }
   const refreshToken = await getRefreshTokenPayload();
   if (!refreshToken) {
+    console.log("refresh expired");
+
     return new Response(null, {
       status: 400,
     });

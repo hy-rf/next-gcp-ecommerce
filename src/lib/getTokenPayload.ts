@@ -4,7 +4,7 @@ import jwt, { TokenExpiredError } from "jsonwebtoken";
 import { tokenPayload } from "@/model";
 
 export default async function getTokenPayload(): Promise<tokenPayload | null> {
-  const tokenInRequestCookie = (await cookies()).get("token");
+  const tokenInRequestCookie = cookies().get("token");
   if (!tokenInRequestCookie) {
     return null;
   }
@@ -13,7 +13,7 @@ export default async function getTokenPayload(): Promise<tokenPayload | null> {
     return jwt.verify(token, process.env.JWT_SECRET!) as tokenPayload;
   } catch (err) {
     if (err instanceof TokenExpiredError) {
-      throw err;
+      return null;
     }
     return null;
   }

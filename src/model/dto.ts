@@ -14,6 +14,7 @@ export interface R {
 
 export interface APIOrderPostBody {
   cartItems: CartItem[];
+  address: string;
 }
 
 export interface CartItemViewModel {

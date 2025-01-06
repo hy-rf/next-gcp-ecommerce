@@ -56,6 +56,7 @@ export async function POST(req: NextRequest) {
     userId: decoded.userId,
     total: total,
     createdAt: new Date(),
+    address: body.address,
     orderItems: orderItems,
   };
   body.cartItems.forEach((ele) => {

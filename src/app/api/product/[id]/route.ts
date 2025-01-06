@@ -16,9 +16,9 @@ export async function GET(
 ) {
   const { id } = await params;
   const productSnapshot = await database().collection("Product").doc(id).get();
+
   return Response.json({
     id: productSnapshot.id,
     ...productSnapshot.data(),
-    createdAtJSDate: productSnapshot.data()!.createdDate.toDate(),
   });
 }

@@ -7,6 +7,7 @@ import ProductItem from "./ProductItem";
 import LocaleContext from "../../component/LocaleContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Pagination } from "@mui/material";
+import Image from "next/image";
 /**
  * Content of filtered products
  * There is no need of token to fetch products
@@ -32,6 +33,7 @@ export default function FilteredProducts({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState("");
   // Handle click on product page link on header
   useEffect(() => {
     document?.addEventListener("click", (e) => {
@@ -47,7 +49,11 @@ export default function FilteredProducts({
   // Set options which is used by all child component when filterOptions passed from parent is changed
   useEffect(() => {
     const newOptions: FilterOptions = {
-      page: parseInt(searchParams.get("page") || "1"),
+      page: searchParams.get("page")
+        ? parseInt(searchParams.get("page")!) > maxP
+          ? maxP
+          : parseInt(searchParams.get("page")!)
+        : 1,
       storeId: searchParams.get("store") || "",
       categoryId: searchParams.get("category") || "",
       subCategoryId: searchParams.get("subcategory") || "",
@@ -55,9 +61,15 @@ export default function FilteredProducts({
       maxPrice: parseInt(searchParams.get("maxprice") || "Infinity"),
       pageSize: parseInt(searchParams.get("pagesize") || "10"),
       sortOption: searchParams.get("sort") || "sold-desc",
+      q: searchParams.get("q") || "",
     };
-    setOptions(newOptions);
-  }, [filterOptions]);
+    if (isNotFirstFetch === false) {
+      setIsNotFirstFetch(true);
+      return;
+    } else {
+      setOptions(newOptions);
+    }
+  }, [searchParams]);
   // Push route to url with new search params when options at client component is changed
   useEffect(() => {
     if (isNotFirstFetch === false) {
@@ -65,6 +77,8 @@ export default function FilteredProducts({
       return;
     } else {
       const searchParams = new URLSearchParams();
+      if (options.q !== "" && options.q !== undefined)
+        searchParams.append("q", options.q);
       searchParams.append("page", options.page.toString());
       if (options.storeId !== "") searchParams.append("store", options.storeId);
       if (options.categoryId !== "")
@@ -79,6 +93,10 @@ export default function FilteredProducts({
       if (options.pageSize)
         searchParams.append("pagesize", options.pageSize.toString());
       router.push(`/product?${searchParams.toString()}`);
+      console.log("Push new route because options changed");
+      console.log("New options:");
+      console.table(options);
+      setSearchTerm(options.q);
       return;
     }
   }, [options]);
@@ -90,18 +108,43 @@ export default function FilteredProducts({
           setFilterOption={setOptions}
           categories={categories}
         />
-        <div className="flex flex-col w-full">
-          <div className="flex px-8">
-            <p className="leading-8">
+        <div className="flex flex-col w-full pt-3">
+          <div className="flex px-4">
+            <p className="leading-8 ">
               {dict.product_total_1}
               {total}
-              {dict.product_total_2}
+              <span className="hidden md:inline">{dict.product_total_2}</span>
             </p>
+            <div className="flex px-2 gap-2">
+              <input
+                className="max-w-24"
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button
+                onClick={() =>
+                  setOptions((old) => {
+                    return {
+                      ...old,
+                      q: searchTerm,
+                    };
+                  })
+                }
+              >
+                <Image
+                  src={"/magnifier.svg"}
+                  alt={"search"}
+                  width={16}
+                  height={16}
+                ></Image>
+              </button>
+            </div>
             <p className="ml-auto leading-8">
               {dict.product_select_products_per_page_text_left}
             </p>
             <select
-              className="mx-4"
+              className="mx-2"
               onChange={(e) =>
                 setOptions((old) => {
                   return {
@@ -117,7 +160,7 @@ export default function FilteredProducts({
               <option value="10">10</option>
               <option value="15">15</option>
             </select>
-            <p className="leading-8">
+            <p className="leading-8 hidden md:block">
               {dict.product_select_products_per_page_text_right}
             </p>
           </div>

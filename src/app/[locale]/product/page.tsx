@@ -3,6 +3,7 @@ import FilteredProducts from "./component/FilteredProducts";
 import fetchData from "@/lib/fetchData";
 
 type SearchParams = {
+  q?: string;
   page?: number;
   filter?: string;
   category?: string;
@@ -20,6 +21,7 @@ export default async function Page({
   searchParams: Promise<SearchParams>;
 }) {
   const {
+    q,
     page,
     sort,
     filter,
@@ -31,6 +33,7 @@ export default async function Page({
     pagesize,
   } = await searchParams;
   const defaultFilterOptions: FilterOptions = {
+    q: "",
     page: 1,
     storeId: "",
     categoryId: "",
@@ -42,6 +45,7 @@ export default async function Page({
   };
 
   let searchParam = `page=${page}`;
+  if (q) searchParam += `&q=${q}`;
   if (storeid) searchParam += `&store=${storeid}`;
   if (category) searchParam += `&category=${category}`;
   if (subcategory) searchParam += `&subcategory=${subcategory}`;
@@ -76,6 +80,7 @@ export default async function Page({
       </div>
       <FilteredProducts
         filterOptions={{
+          q: q || "",
           page: page || 1,
           storeId: storeid || "",
           categoryId: category || "",

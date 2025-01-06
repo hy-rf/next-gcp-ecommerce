@@ -37,8 +37,7 @@ export default function CartItems() {
   >(new Map(cartItems.map((_, index) => [index, true])));
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<CartItem | null>(null);
-  console.table(cartItems);
-
+  const [selectedAddress, setSelectedAddress] = useState("");
   useEffect(() => {
     setSelectedCartItem(new Map(cartItems.map((_, index) => [index, true])));
   }, [cartItems]);
@@ -63,6 +62,7 @@ export default function CartItems() {
     }
     const postBody: APIOrderPostBody = {
       cartItems: selectedItems,
+      address: selectedAddress,
     };
     const res = await fetch("/api/order", {
       method: "POST",
@@ -72,6 +72,25 @@ export default function CartItems() {
       router.replace(`/order-success?id=${await res.text()}`);
     }
   };
+  if (cartItems.length == 0) {
+    return (
+      <div className="text-center">
+        <p>No items</p>
+        <Link
+          href={{
+            pathname: "/product",
+            query: {
+              page: 1,
+              sort: "sold-desc",
+              pagesize: 10,
+            },
+          }}
+        >
+          Continue shopping
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -263,7 +282,7 @@ export default function CartItems() {
                 gridArea: "Addresses",
               }}
             >
-              <Addresses />
+              <Addresses setSelectedAddress={setSelectedAddress} />
             </div>
             <div
               className="flex flex-col p-4 gap-2"

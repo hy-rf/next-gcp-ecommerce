@@ -10,7 +10,6 @@ import { uploadBase64ImagesAndGetUrls } from "@/lib/database/storage";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q");
-  console.log(q);
 
   const storeId = searchParams.get("store");
   const categoryId = searchParams.get("category");
@@ -80,6 +79,11 @@ export async function GET(req: NextRequest) {
       ...doc.data(),
     };
   }) as Product[];
+  if (q) {
+    products = products.filter((product) =>
+      product.name.toLowerCase().includes(q.toString().toLowerCase())
+    );
+  }
   if (minPrice) {
     products = products.filter((ele) => ele.price >= parseInt(minPrice));
   }

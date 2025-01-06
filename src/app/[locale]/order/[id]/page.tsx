@@ -86,6 +86,14 @@ export default async function Page({
           ))}
         </div>
 
+        {/* Delivery Section */}
+        <div className="w-full max-w-3xl bg-white shadow-md rounded-lg p-6 mt-6">
+          <h3 className="text-2xl font-bold text-gray-800 mb-4">Delivery</h3>
+          <p className="text-lg text-gray-600">
+            Address: <span className="font-semibold">{order.address}</span>
+          </p>
+        </div>
+
         {/* Payment Section */}
         {!paid && (
           <div className="w-full max-w-3xl bg-white shadow-md rounded-lg p-6 mt-6">

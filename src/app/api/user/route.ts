@@ -1,22 +1,18 @@
 import database from "@/lib/database/database";
 import { tokenPayload, User } from "@/model";
-import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
+import getTokenPayload from "@/lib/getTokenPayload";
 
 export async function GET() {
-  const tokenInRequestCookie = cookies().get("token");
-  if (!tokenInRequestCookie) {
+  const decoded: tokenPayload = (await getTokenPayload()) as tokenPayload;
+  if (!decoded) {
     return new Response(null, {
-      status: 400,
+      status: 401,
+      statusText: "Unauthorized",
     });
   }
-  const token = tokenInRequestCookie.value;
-  const decoded: tokenPayload = verify(
-    token,
-    process.env.JWT_SECRET!
-  ) as tokenPayload;
   const db = database();
   const user = (
     await db.collection("User").doc(decoded.userId).get()
@@ -70,6 +66,15 @@ export async function POST(req: NextRequest) {
     expiresIn: "24h",
   });
   const refreshToken = jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET!);
+  // Add user refresh token to db
+  if (
+    userData.refreshToken == undefined ||
+    userData.refreshToken.trim() == ""
+  ) {
+    db.collection("User").doc(userId).update({
+      refreshToken: refreshToken,
+    });
+  }
   const cookieStore = cookies();
   cookieStore.set("token", token);
   cookieStore.set("refresh", refreshToken);

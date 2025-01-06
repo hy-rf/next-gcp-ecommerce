@@ -1,0 +1,20 @@
+.loading {
+  height: 5rem;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.15) 25%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.15) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  animation: 3s linear infinite placeholder-shimmer;
+}
+@keyframes placeholder-shimmer {
+  0% {
+    background-position: -30vw 0;
+  }
+  100% {
+    background-position: 70vw 0;
+  }
+}

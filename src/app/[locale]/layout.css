@@ -67,6 +67,11 @@ footer {
   }
 }
 
+// Prevent paypal button from high z index
+iframe {
+  z-index: auto !important;
+}
+
 .gsi-material-button {
   -moz-user-select: none;
   -webkit-user-select: none;
